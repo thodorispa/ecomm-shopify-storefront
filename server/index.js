@@ -1,108 +1,90 @@
-import { } from 'dotenv/config'
-import express from 'express'
-import mongoose from 'mongoose'
-import http from 'http'
-import { Shopify, ApiVersion } from '@shopify/shopify-api'
-const app = express();
+// import { } from 'dotenv/config'
+import express from 'express';
 import next from 'next'
+import mongoose from 'mongoose';
+import cors from 'cors';
+import jwt from 'jsonwebtoken'
+import cookieParser from 'cookie-parser'
+import { Shopify, ApiVersion } from '@shopify/shopify-api';
 
-const dev = process.env.NODE_ENV !== 'production'
-const nextjs = next({ dev })
-const handle = nextjs.getRequestHandler()
+import product from './api/product.js'
+import shopify from './api/shopify.js'
 
-
-const { API_KEY, API_SECRET_KEY, SCOPES, SHOP, HOST, HOST_SCHEME, PORT, MONGO_URI, NODE_ENV } = process.env;
+const { API_KEY, API_SECRET_KEY, SCOPES, SHOP, HOST, HOST_SCHEME, TOKEN, PORT, MONGO_URI, NODE_ENV } = process.env;
 
 ////////////////////////////////////
 // MongoDB Connect
 ////////////////////////////////////
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.connection.on('open', () => console.log('DB Connected'));
 mongoose.connection.on('error', (err) => console.log('MongoDB connection error:', err));
 
+
 ////////////////////////////////////
-// Shopify Store Auth
+// App Init
 ////////////////////////////////////
-const ACTIVE_SHOPIFY_SHOPS = {};
+const app = next({ dev: NODE_ENV !== 'production' })
+const handle = app.getRequestHandler()
 
-Shopify.Context.initialize({
-    API_KEY,
-    API_SECRET_KEY,
-    SCOPES: [SCOPES],
-    HOST_NAME: HOST.replace(/https?:\/\//, ""),
-    HOST_SCHEME,
-    IS_EMBEDDED_APP: false,
-    API_VERSION: ApiVersion.July22
-});
-
-
-app.get("/", async function (req, res, next) {
-    if (typeof ACTIVE_SHOPIFY_SHOPS[SHOP] !== 'undefined') {
-        res.redirect('/teo');
-    } else {
-        res.redirect("/auth/shopify");
+app.prepare().then(() => {
+  const server = express()
+  server.enable('trust proxy')
+  server.use(cors({ 
+    credentials: true,
+    origin: ['http://localhost:3000']
+  }))
+  server.use(express.static('public'));
+  server.use(express.static('dist'));
+  server.use(express.urlencoded({ extended: false }));
+  server.use(express.json({ limit: '20mb' }));
+  server.use(cookieParser())
+  server.use(async (req, res, next) => {
+    req.env = NODE_ENV
+    
+    if (NODE_ENV === 'production' && !req.secure) {
+      return res.redirect('https://' + req.headers.host + req.url)
     }
-});
+    
+    Shopify.Context.initialize({
+        API_KEY,
+        API_SECRET_KEY,
+        SCOPES: [SCOPES],
+        HOST_NAME: HOST.replace(/https?:\/\//, ""),
+        HOST_SCHEME,
+        IS_EMBEDDED_APP: false,
+        API_VERSION: ApiVersion.July22
+    });
 
-app.get("/auth/shopify", async function (req, res, next) {
-    const authRoute = await Shopify.Auth.beginAuth(req, res, SHOP, '/auth/shopify/callback', false);
+      const client = new Shopify.Clients.Rest(
+        SHOP,
+        TOKEN
+      );
 
-    res.redirect(authRoute);
-});
+    // ADMIN CALL
+    //   var productId = '7354920009969'
+    //   const product = await client.get({
+    //     path: `products/${productId}`,
+    //     query: {id: 1, title: "title"}
+    //   });
+      
+    next()
+  })
 
-app.get("/auth/shopify/callback", async function (req, res, next) {
-    try {
-        const client_session = await Shopify.Auth.validateAuthCallback(
-            req,
-            res,
-            req.query);
-        ACTIVE_SHOPIFY_SHOPS[SHOP] = client_session.scope;
-        console.log(client_session.accessToken);
-    } catch (eek) {
-        res.redirect("/auth/shopify");
-        console.error("eek");
-        res.send('<html><body><p>${JSON.stringify(eek)}</p></body></html>')
-    }
-
-    return res.redirect('/teo');
-});
-
-////////////////////////////////////
-// Next.js React Connect
-////////////////////////////////////
-nextjs.prepare()
-    .then(() => {
+  ////////////////////////////////////
+  // App Routes
+  ////////////////////////////////////
+  server.use('/api/product', product)
+  server.use('/api/shopify', shopify)
 
 
-        app.get('/products', async (http_request, http_response) => {
-            const client_session = await Shopify.Utils.loadCurrentSession(http_request, http_response);
-            console.log('client_session: ' + JSON.stringify(client_session));
+  ////////////////////////////////////
+  // App React Template
+  ////////////////////////////////////
+  server.get('*', (req, res) => {
+    return handle(req, res)
+  })
 
-            const client = new Shopify.Clients.Rest(client_session.shop, client_session.accessToken);
+  server.listen(PORT || 3000, () => console.log(`Listening on port ${PORT || 3000}, mode: ${NODE_ENV}`));   
+})
 
-            const products = await client.get({
-                path: 'products'
-            });
-            console.log('Products: ' + JSON.stringify(products));
 
-            let product_names_formatted = '';
-            for (let i = 0; i < products.body.products.length; i++) {
-                product_names_formatted += '<p>' + products.body.products[i].title + '</p>';
-            }
-
-            console.log(products);
-            http_response.send(products);
-
-        });
-        app.get('*', (req, res) => {
-            return handle(req, res)
-        })
-    })
-    .catch((ex) => {
-        console.error(ex.stack)
-        process.exit(1)
-    })
-
-const httpServer = http.createServer(app);
-
-httpServer.listen(3000, () => console.log('Listening on port 3000.'));

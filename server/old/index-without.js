@@ -30,8 +30,8 @@ mongoose.connection.on('open', () => console.log('DB Connected'));
 mongoose.connection.on('error', (err) => console.log('MongoDB connection error:', err));
 
 
-import account from '../api/account.js'
-import shopify from './boilerplate-shopify.js'
+import account from './api/account.js'
+import shopify from './api/boilerplate-shopify.js'
 
 
 
