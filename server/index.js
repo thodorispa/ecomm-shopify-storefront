@@ -8,16 +8,17 @@ import cookieParser from 'cookie-parser'
 import { Shopify, ApiVersion } from '@shopify/shopify-api';
 
 import product from './api/product.js'
+import cart from './api/cart.js'
 import shopify from './api/shopify.js'
 
-const { API_KEY, API_SECRET_KEY, SCOPES, SHOP, HOST, HOST_SCHEME, TOKEN, PORT, MONGO_URI, NODE_ENV } = process.env;
+const { PORT, MONGO_URI, NODE_ENV } = process.env;
 
 ////////////////////////////////////
 // MongoDB Connect
 ////////////////////////////////////
-mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.connection.on('open', () => console.log('DB Connected'));
-mongoose.connection.on('error', (err) => console.log('MongoDB connection error:', err));
+// mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connection.on('open', () => console.log('DB Connected'));
+// mongoose.connection.on('error', (err) => console.log('MongoDB connection error:', err));
 
 
 ////////////////////////////////////
@@ -45,20 +46,6 @@ app.prepare().then(() => {
       return res.redirect('https://' + req.headers.host + req.url)
     }
     
-    Shopify.Context.initialize({
-        API_KEY,
-        API_SECRET_KEY,
-        SCOPES: [SCOPES],
-        HOST_NAME: HOST.replace(/https?:\/\//, ""),
-        HOST_SCHEME,
-        IS_EMBEDDED_APP: false,
-        API_VERSION: ApiVersion.July22
-    });
-
-      const client = new Shopify.Clients.Rest(
-        SHOP,
-        TOKEN
-      );
 
     // ADMIN CALL
     //   var productId = '7354920009969'
@@ -74,6 +61,7 @@ app.prepare().then(() => {
   // App Routes
   ////////////////////////////////////
   server.use('/api/product', product)
+  server.use('/api/cart', cart)
   server.use('/api/shopify', shopify)
 
 

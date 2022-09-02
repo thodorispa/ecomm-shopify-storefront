@@ -5,9 +5,11 @@ import Header from "../components/Header";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 const MyApp = ({ Component, pageProps }) => {
   return (
     <>
+    
       <Header {...pageProps} />
       <Component {...pageProps} />
     </>

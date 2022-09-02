@@ -1,40 +1,32 @@
 import { } from 'dotenv/config'
 import express from 'express'
-import { Shopify, ApiVersion } from '@shopify/shopify-api'
-import request from 'request-promise'
+import Client from 'shopify-buy';
 
-const { SHOP, STOREFRONT_TOKEN } = process.env;
-
-const client = new Shopify.Clients.Storefront(SHOP, STOREFRONT_TOKEN);
-
+const { SHOP, STOREFRONT_TOKEN, GID} = process.env;
 var router = express.Router()
 
-var gid = "gid://shopify/Product/"
+
+// Initializing a client to return content in the store's primary language
+const client = Client.buildClient({
+  domain: SHOP,
+  storefrontAccessToken: STOREFRONT_TOKEN
+});
+
 
 // Get all products
 router.get('/all', async (req, res) => {
 
-  const data = await client.query({
-    data: `query {
-      products(first: 50) {
-        edges {
-          node {
-            id
-            title
-            publishedAt
-          }
-        }
-      }
-    }
-    `,
-  });
+  const data = await client.product.fetchAll();
 
+  if (!data) {
+    return res.status(404).send({})
+  }
 
-  const products = data.body?.data?.products?.edges?.map(n => {
+  const products = data.map(n => {
     return {
-      id: n.node.id.replace(gid, ""),
-      title: n.node.title,
-      publishedAt: n.node.publishedAt,
+      id: n.id.replace(GID, ""),
+      title: n.title,
+      publishedAt: n.publishedAt,
     }
   }) || [];
 
@@ -46,79 +38,34 @@ router.get('/all', async (req, res) => {
 router.get('/data/:id', async (req, res) => {
   const productId = req.params.id; 
 
-  const data = await client.query({
-    data: `query  {
-      product(id: "${gid + productId}") {
-        title
-        id
-      }
-    }`,
-  });
+  const data = await client.product.fetch(productId) || null;
+  
+  if (!data) {
+    return res.status(404).send({})
+  }
   
   res.send(data.body.data.product);
 });
 
 // Get a product with media by id 
 router.get('/:id', async (req, res) => {
-  var productId = req.params.id; 
+  var productId = GID + req.params.id; 
+  
+  const data = await client.product.fetch(productId) || null;
 
-  const data = await client.query({
-    data: `query {
-      product(id: "${gid + productId}") {
-        id
-        title
-        media(first: 10) {
-          edges {
-            node {
-              mediaContentType
-              alt
-              ...mediaFieldsByType
-            }
-          }
-        }
-      }
-    }
-    fragment mediaFieldsByType on Media {
-      ...on ExternalVideo {
-        id
-        embeddedUrl
-      }
-      ...on MediaImage {
-        image {
-          url
-        }
-      }
-      ...on Model3d {
-        sources {
-          url
-          mimeType
-          format
-          filesize
-        }
-      }
-      ...on Video {
-        sources {
-          url
-          mimeType
-          format
-          height
-          width
-        }
-      }
-    }`,
-  });
-
-  const product = data.body?.data?.product || null;
-
-  if (!product) {
+  if (!data) {
     return res.status(404).send({})
   }
 
-
-  product.id = product.id.replace(gid, "");
-  product.title = product.title;
-  product.media = product.media.edges[0]?.node;
-
+  const product = {
+    id: data.id.replace(GID, ""),
+    title: data.title,
+    publishedAt: data.publishedAt,
+    media: {
+      src: data.images[0].src,
+      alt: data.images[0].alt,
+    }
+  }  
   res.send({ product });
 });
 

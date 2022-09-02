@@ -1,6 +1,6 @@
 import React from "react"
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, Row, Col, Container } from "react-bootstrap";
 
 
@@ -15,7 +15,6 @@ const AllProducts = ({ _products }) => {
 
       <section>
         <h1>Home Page</h1>
-
         <Container>
             <Row>
                 {products?.map((product, i) => (
@@ -40,10 +39,6 @@ const AllProducts = ({ _products }) => {
                 ))}
             </Row>
         </Container>
-        <section id="contact">
-
-          
-        </section>
       </section>
     </>
   );
@@ -70,6 +65,6 @@ export async function getServerSideProps() {
   }
 }
 
-export default AllProducts
+export default AllProducts;
 
 
