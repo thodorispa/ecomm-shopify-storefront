@@ -1,5 +1,7 @@
 import React from "react"
 import Head from "next/head";
+import Link from "next/link";
+import Axios from "axios";
 import { useEffect, useState } from "react";
 import { Card, Row, Col, Container } from "react-bootstrap";
 
@@ -10,11 +12,10 @@ const AllProducts = ({ _products }) => {
   return (
     <>
       <Head>
-        <title>Welcome || Amazing Soaps</title>
+        <title>Welcome to Katoi</title>
       </Head>
 
-      <section>
-        <h1>Home Page</h1>
+      <section className="feed">
         <Container>
             <Row>
                 {products?.map((product, i) => (
@@ -24,21 +25,29 @@ const AllProducts = ({ _products }) => {
                       md={4} 
                       lg={3}
                     >
-                        <Card>
-                            {/* <Card.Img 
-                              src={product.media.image.url} 
-                              alt={product.alt}
-                            /> */}
+                      <Link href={`/products/${product.id}`}>
+                        <a>
+                          <Card>
+                              {/* <Card.Img 
+                                src={product.media.image.url} 
+                                alt={product.alt}
+                              /> */}
 
-                            <Card.Body>
-                                <Card.Title>{product.title}</Card.Title>
-                                <Card.Text>{product.id}</Card.Text>
-                            </Card.Body>
-                        </Card>
+                              <Card.Body>
+                                  <Card.Title>{product.title}</Card.Title>
+                                  <Card.Text>{product.id}</Card.Text>
+                              </Card.Body>
+                          </Card>
+                        </a>
+                      </Link>
                     </Col>
                 ))}
             </Row>
         </Container>
+        <section id="contact">
+
+          
+        </section>
       </section>
     </>
   );
@@ -48,6 +57,7 @@ const AllProducts = ({ _products }) => {
 export async function getServerSideProps() {
   try {
     const { data } = await Axios.get(`http://localhost:3000/api/product/all`)
+
 
     const _products = data.products || []
 
@@ -59,7 +69,7 @@ export async function getServerSideProps() {
   } catch (err) {
     return {
       props: {
-        _products: []
+        _products: [],
       }
     }
   }

@@ -1,0 +1,12 @@
+.feed {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-width: 1200px;
+  top: 150px;
+  left: 150px;
+  margin-bottom: 10px;
+  animation: fadeIn 1s;
+  white-space:pre-wrap;
+}
