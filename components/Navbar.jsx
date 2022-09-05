@@ -42,8 +42,11 @@ const Navbar = () => {
           );
         })}
       </nav>
-         <div className="bar-toggle" onClick={navOnClick}>
-          <i className="fas fa-bars fa-lg"></i>
+         <div className="bar-toggle" >
+          <Link href="/cart">
+           <i id="icon" className="fas fa-shopping-cart"></i>
+          </Link>
+          <i id="icon" className="fas fa-bars fa-lg" onClick={navOnClick}></i>
         </div>
       </nav>
    );

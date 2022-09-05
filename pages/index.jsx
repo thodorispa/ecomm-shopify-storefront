@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import Head from "next/head";
 import { useEffect } from "react";
-import { Card, Row, Col, Container } from "react-bootstrap";
 import Link from "next/link";
 import Axios from "axios";
 

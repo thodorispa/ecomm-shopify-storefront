@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import Head from "next/head";
 import Axios from "axios"
-import { Card, Row, Col, Container, Button } from "react-bootstrap";
+import Card from "../../components/Card";
+// import { Card, Row, Col, Container, Button } from "react-bootstrap";
 import { FaShoppingCart } from 'react-icons/fa';
 
 
@@ -19,54 +20,35 @@ const SingleProduct = ({ _product }) => {
       .catch(err => {
         console.log(err)
       })
-
-    
   };
-
   return (
-    <>
+    <div >
       <Head>
         <title>{product.title} || Amazing Soaps</title>
       </Head>
 
-      <section>
-        <Container>
-            <Row>
-              <Col 
-                xs={12} 
-                md={4} 
-                lg={3}
-              >
-                  <Card>
-                      {product.media?.src && (
-                        <Card.Img 
-                          src={product.media.src} 
-                          alt={product.media.alt}
-                        />
-                      )}
-
-                      <Card.Body>
-                          <Card.Title>{product.title}</Card.Title>
-                          <Card.Text>{product.id}</Card.Text>
-
-                          <Button 
-                          variant="success"
-                          onClick={(e) => {
-                            addToCart(e);
-                          }}
-                          ><FaShoppingCart />
-                          </Button>{' '}
-
-                      </Card.Body>
-                  </Card>
-              </Col>
-            </Row>
-        </Container>
+      <section className="product">
+        {product.media?.src && (
+          <img 
+            className="prod_img"
+            src={product.media.src} 
+            alt={product.media.alt}
+          />
+        )}
+      <h1>{product.title}</h1>
+      <h2>{product.id}</h2>
+      <div className="add_btn">
+        <i className="fas fa-shopping-cart"></i>
+        <p onClick={(e) => {
+          addToCart(e);
+          }}>
+          ADD TO CART
+        </p>
+      </div>
       </section>
-    </>
+    </div>
   );
 }
-
 // This gets called on every request
 export async function getServerSideProps(ctx) {
   const productId = ctx.query?.id

@@ -9,7 +9,6 @@
   "dependencies": {
     "@shopify/shopify-api": "^5.0.1",
     "axios": "^0.27.2",
-    "bootstrap": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.18.1",
@@ -18,7 +17,6 @@
     "next": "latest",
     "prop-types": "^15.8.1",
     "react": "17.0.2",
-    "react-bootstrap": "^2.5.0-beta.1",
     "react-dom": "17.0.2",
     "react-icons": "^4.4.0",
     "react-redux": "^8.0.2",

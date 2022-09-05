@@ -2,8 +2,8 @@ import React from "react"
 import Head from "next/head";
 import Link from "next/link";
 import Axios from "axios";
+import Card from "../../components/Card";
 import { useEffect, useState } from "react";
-import { Card, Row, Col, Container } from "react-bootstrap";
 
 
 const AllProducts = ({ _products }) => {
@@ -16,34 +16,16 @@ const AllProducts = ({ _products }) => {
       </Head>
 
       <section className="feed">
-        <Container>
-            <Row>
+        
                 {products?.map((product, i) => (
-                    <Col 
-                      key={i}
-                      xs={12} 
-                      md={4} 
-                      lg={3}
-                    >
                       <Link href={`/products/${product.id}`}>
                         <a>
-                          <Card>
-                              {/* <Card.Img 
-                                src={product.media.image.url} 
-                                alt={product.alt}
-                              /> */}
-
-                              <Card.Body>
-                                  <Card.Title>{product.title}</Card.Title>
-                                  <Card.Text>{product.id}</Card.Text>
-                              </Card.Body>
-                          </Card>
+                        <Card product={product} />
                         </a>
+                         
                       </Link>
-                    </Col>
                 ))}
-            </Row>
-        </Container>
+
         <section id="contact">
 
           

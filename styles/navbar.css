@@ -3,8 +3,9 @@
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
+  justify-content: space-between;
   box-shadow: 0 1px 2px 0 rgba(208, 208, 208, 0.319), 0 2px 10px 0 rgba(0, 0, 0, 0.19);
-  min-height: 7vh;
+  max-height: 8vh;
   background-color: #2e6717;
   position: fixed;
   top: 0;
@@ -18,7 +19,6 @@ body {
   overflow-x: hidden;
 }
 .bar-toggle {
-  display: block;
   justify-content: flex-end;
   padding-right: 20px;
   cursor: pointer;
@@ -73,4 +73,9 @@ body {
 
 .active__ {
   z-index: -1;
+}
+
+#icon {
+  font-size: larger;
+  padding: 15px;
 }

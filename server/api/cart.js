@@ -14,7 +14,7 @@ const client = Client.buildClient({
 });
 
 router.get('/', async (req, res) => {
-  const checkoutId = req.cookies.checkoutId || null; 
+  const checkoutId = req.cookies.checkout || null; 
 
   if(checkoutId) {
     var checkout = await client.checkout.fetch(req.cookies.checkout) || null;
@@ -36,11 +36,11 @@ router.post('/add/:id', async (req, res) => {
   if (!checkoutId) {
     var checkout = await client.checkout.create();
 
-    res.cookie('checkout', checkout.id, { maxAge: 2 * 60 });
+    res.cookie('checkout', checkout.id, { maxAge: 86400000, httpOnly: true });
   } else {
     var checkout = await client.checkout.fetch(checkoutId);
     
-    res.cookie('checkout', checkout.id, { maxAge: 2 * 60 });
+    res.cookie('checkout', checkout.id, { maxAge: 86400000, httpOnly: true });
   }
 
   // Fetch product 
