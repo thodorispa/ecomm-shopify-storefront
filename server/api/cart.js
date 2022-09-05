@@ -14,7 +14,11 @@ const client = Client.buildClient({
 });
 
 router.get('/', async (req, res) => {
-  const checkout = await client.checkout.fetch(req.cookies.checkoutId) || null;
+  const checkoutId = req.cookies.checkoutId || null; 
+
+  if(checkoutId) {
+    var checkout = await client.checkout.fetch(req.cookies.checkout) || null;
+  }
 
   if (!checkout) {
     return res.send({})
