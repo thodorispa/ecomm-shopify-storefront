@@ -1,8 +1,10 @@
 import { } from 'dotenv/config'
 import express from 'express'
-import Client from 'shopify-buy';
+// import Client from 'shopify-buy';
+import Client from 'shopify-buy/index.unoptimized.umd';
 
-const { SHOP, STOREFRONT_TOKEN, GID} = process.env;
+
+const { SHOP, STOREFRONT_TOKEN, GID } = process.env;
 var router = express.Router()
 
 
@@ -34,23 +36,23 @@ router.get('/all', async (req, res) => {
 
 });
 
-// Get a product by id
+// Get product by id
 router.get('/data/:id', async (req, res) => {
-  const productId = req.params.id; 
+  const productId = req.params.id;
 
   const data = await client.product.fetch(productId) || null;
-  
+
   if (!data) {
     return res.status(404).send({})
   }
-  
+
   res.send(data.body.data.product);
 });
 
-// Get a product with media by id 
+// Get product with media by id 
 router.get('/:id', async (req, res) => {
-  var productId = GID + req.params.id; 
-  
+  var productId = GID + req.params.id;
+
   const data = await client.product.fetch(productId) || null;
 
   if (!data) {
@@ -62,10 +64,10 @@ router.get('/:id', async (req, res) => {
     title: data.title,
     publishedAt: data.publishedAt,
     media: {
-      src: data.images[0].src,
-      alt: data.images[0].alt,
+      src: data.images[0]?.src,
+      alt: data.images[0]?.alt,
     }
-  }  
+  }
   res.send({ product });
 });
 

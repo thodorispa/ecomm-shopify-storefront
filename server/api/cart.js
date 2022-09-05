@@ -1,6 +1,8 @@
 import { } from 'dotenv/config'
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import Client from 'shopify-buy';
+
 
 const { SHOP, STOREFRONT_TOKEN, GID } = process.env;
 
@@ -11,98 +13,93 @@ const client = Client.buildClient({
   storefrontAccessToken: STOREFRONT_TOKEN
 });
 
-// Create cart
-router.post('/:id', async (req, res) => {
-  // get product id from req 
-  const productId = req.params.id;
+router.get('/', async (req, res) => {
+  const checkout = await client.checkout.fetch(req.cookies.checkoutId) || null;
 
-  // TODO: check if cart exists
+  if (!checkout) {
+    return res.send({})
+  }
 
-  var checkout = await client.checkout.create();
-  const lineItemsToAdd = [
-    {
-      variantId: GID + productId,
-      quantity: 1,
-      customAttributes: [{key: "MyKey", value: "MyValue"}]
-    }
-  ];
+  res.send({ checkout });
+});
 
-  // Add an item to the checkout
-  const cart = await client.checkout.addLineItems(checkout.id, lineItemsToAdd).then((checkout) => {
-    // Do something with the updated checkout
-    console.log(checkout.lineItems); // Array with one additional line item
-  });
-  // return 200
-  res.status(200);
+// Add item to cart
+router.post('/add/:id', async (req, res) => {
+  const productGid = GID + req.params.id;
+  const checkoutId = req.cookies.checkout;
+
+  // Check if checkout exists
+  if (!checkoutId) {
+    var checkout = await client.checkout.create();
+
+    res.cookie('checkout', checkout.id, { maxAge: 2 * 60 });
+  } else {
+    var checkout = await client.checkout.fetch(checkoutId);
+    
+    res.cookie('checkout', checkout.id, { maxAge: 2 * 60 });
+  }
+
+  // Fetch product 
+  const product = await client.product.fetch(productGid) || null;
+
+  // search if item is already in cart if yes update quantity else add new item
+  const existingItem = checkout.lineItems.find(n => n.variant.id === product.variants[0].id) || null;
+
+  if (existingItem) {
+    // Update quantity
+    var updatedCheckout = await client.checkout.updateLineItems(checkout.id, [
+      {
+        id: existingItem.variant[0].id,
+        quantity: existingItem.quantity + 1
+      }
+    ]);
+  } else {
+    // Add new item
+    var updatedCheckout = await client.checkout.addLineItems(checkout.id, [
+      {
+        variantId: product.variants[0].id,
+        quantity: 1
+      }
+    ]);
+  }
+
+  console.log(updatedCheckout);
+  res.status(200).send({ updatedCheckout });
 })
 
-// router.post('/view', async (req, res) => {
-//   // get product id from req 
-//   const productId = req.params.id;
-//   console.log("geyt");
+// Remove item from cart
+router.post('/remove/:id', async (req, res) => {
+  const productGid = GID + req.params.id;
+  const checkoutId = req.cookies.checkout;
 
-//   const data = await client.query({
-//     data: `mutation {
-//       cartCreate(
-//         input: {
-//           lines: [
-//             {
-//               quantity: 1
-//               merchandiseId: "gid://shopify/ProductVariant/1"
-//             }
-//           ]
-//           attributes: { key: "cart_attribute", value: "This is a cart attribute" }
-//         }
-//       ) {
-//         cart {
-//           id
-//           createdAt
-//           updatedAt
-//           lines(first: 10) {
-//             edges {
-//               node {
-//                 id
-//                 merchandise {
-//                   ... on ProductVariant {
-//                     id
-//                   }
-//                 }
-//               }
-//             }
-//           }
-//           attributes {
-//             key
-//             value
-//           }
-//           cost {
-//             totalAmount {
-//               amount
-//               currencyCode
-//             }
-//             subtotalAmount {
-//               amount
-//               currencyCode
-//             }
-//             totalTaxAmount {
-//               amount
-//               currencyCode
-//             }
-//             totalDutyAmount {
-//               amount
-//               currencyCode
-//             }
-//           }
-//         }
-//       }
-//     }
+  // Fetch checkout
+  var checkout = await client.checkout.fetch(checkoutId);
+  
+  // Fetch product 
+  const product = await client.product.fetch(productGid) || null;
 
-//     `,
-//   });
+  // Check if product is in cart and has more than 1 quantity
+  const existingItem = checkout.lineItems.find(n => n.variant.id === product.variants[0].id).then(async n => {
+    if (n.quantity > 1) {
+      // Update quantity
+      var updatedCheckout = await client.checkout.updateLineItems(checkout.id, [
+        {
+          id: existingItem.variant[0].id,
+          quantity: existingItem.quantity - 1
+        }
+      ]);
+    } else {
+      // Remove item
+      var updatedCheckout = await client.checkout.removeLineItems(checkout.id, [
+        {
+          variantId: product.variants[0].id,
+        }
+      ]);
+    }
+  }) || null
 
-//   console.log(data.body);
-//   // return 200
-//   res.status(200);
-// })
+  res.status(200).send({ updatedCheckout });
+})
 
 
 export default router;
