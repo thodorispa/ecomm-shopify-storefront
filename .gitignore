@@ -1,7 +1,6 @@
 dist
 node_modules
 package-lock.json
-/.next/
-public
-database.sqlite
+
 .next
+database.sqlite

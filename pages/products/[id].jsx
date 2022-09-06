@@ -13,7 +13,7 @@ const SingleProduct = ({ _product }) => {
   const addToCart = (e) => {
     e.preventDefault()
 
-    Axios.post(`http://localhost:3000/api/cart/add/${product.id}`, {setwithCredentials: true})
+    Axios.post(`http://localhost:3000/api/cart/add/${product.id}`)
       .then(res => {
         console.log(res)
       })

@@ -17,7 +17,6 @@ const client = Client.buildClient({
 
 // Get all products
 router.get('/all', async (req, res) => {
-  const checkoutId = req.cookies.checkout;
   const data = await client.product.fetchAll();
 
   if (!data) {

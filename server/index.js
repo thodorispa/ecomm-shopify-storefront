@@ -29,11 +29,11 @@ const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
   const server = express()
-  // server.enable('trust proxy')
-  // server.use(cors({ 
-  //   origin: ['http://localhost:3000'],
-  //   credentials: true
-  // }))
+  server.enable('trust proxy')
+  server.use(cors({ 
+    credentials: true,
+    origin: ['http://localhost:3000']
+  }))
   server.use(express.static('public'));
   server.use(express.static('dist'));
   server.use(express.urlencoded({ extended: false }));

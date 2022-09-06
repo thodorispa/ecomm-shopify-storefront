@@ -16,19 +16,19 @@ const AllProducts = ({ _products }) => {
       </Head>
 
       <section className="feed">
-
-        {products?.map((product, i) => (
-          <Link href={`/products/${product.id}`}>
-            <a>
-              <Card product={product} />
-            </a>
-
-          </Link>
-        ))}
+        
+                {products?.map((product, i) => (
+                      <Link href={`/products/${product.id}`}>
+                        <a>
+                        <Card product={product} />
+                        </a>
+                         
+                      </Link>
+                ))}
 
         <section id="contact">
 
-
+          
         </section>
       </section>
     </>
