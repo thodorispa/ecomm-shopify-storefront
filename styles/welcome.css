@@ -1,0 +1,16 @@
+.welcome {
+  display: flex;
+  justify-content: center;
+}
+
+.showcase {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 150px;
+  text-align: center;
+  width: 70%;
+}

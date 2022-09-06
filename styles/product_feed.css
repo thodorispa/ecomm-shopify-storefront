@@ -1,0 +1,61 @@
+.feed {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-width: 1200px;
+  top: 150px;
+  left: 150px;
+  margin-bottom: 10px;
+  animation: fadeIn 1s;
+  white-space:pre-wrap;
+}
+
+.card {
+  /* Add shadows to create the "card" effect */
+  font-family: 'Helvetica Neue';
+  font-weight: 300;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: none;
+  position: relative;
+  margin: 10px;
+  margin-bottom: 30px;
+  width: 250px;
+  min-height: 170px;
+  top: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s;
+  transition: 0.4s;
+}
+.card * > {
+  max-height: 100%;
+}
+
+.card img {
+  height: 200px;
+}
+
+.card h2 {
+  font-weight: 400;
+  padding: 5px;
+  word-wrap: break-word;
+  color: #505050;
+}
+
+.card p {
+  word-wrap: break-word;
+  padding: 10px;
+  color: #505050;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  cursor: pointer;
+} 
+.container {
+  padding: 2px 16px;
+  min-width: 120px;
+}
