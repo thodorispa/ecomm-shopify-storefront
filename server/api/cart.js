@@ -53,6 +53,9 @@ router.post('/add/:id', async (req, res) => {
   
   // Fetch product 
   const product = await client.product.fetch(productGid) || null;
+
+  // log product quantity
+  console.log(product.variants[0].quantityAvailable);
   
   const existingItem = checkout.lineItems.find(n => n.variant.id === product.variants[0].id) || null;
   
