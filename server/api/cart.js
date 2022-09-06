@@ -1,7 +1,7 @@
 import { } from 'dotenv/config'
 import express from 'express'
-import Client from 'shopify-buy';
-
+// import Client from 'shopify-buy';
+const Client = require("shopify-buy/index.unoptimized.umd.min.js");
 
 const { SHOP, STOREFRONT_TOKEN, GID, GIDV } = process.env;
 
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
   const decodedCheckoutId = decodeURIComponent(checkoutId);
 
 
-  if(checkoutId) {  
+  if (checkoutId) {
     var checkout = await client.checkout.fetch(decodedCheckoutId) || null;
   }
 
@@ -50,15 +50,12 @@ router.post('/add/:id', async (req, res) => {
   } else {
     var checkout = await client.checkout.fetch(checkoutId);
   }
-  
+
   // Fetch product 
   const product = await client.product.fetch(productGid) || null;
 
-  // log product quantity
-  console.log(product.variants[0].quantityAvailable);
-  
   const existingItem = checkout.lineItems.find(n => n.variant.id === product.variants[0].id) || null;
-  
+
   if (existingItem) {
     // Update quantity
     var updatedCheckout = await client.checkout.updateLineItems(checkout.id, [
@@ -88,7 +85,7 @@ router.post('/remove/:id', async (req, res) => {
 
   // Fetch checkout
   var checkout = await client.checkout.fetch(checkoutId);
-  
+
   // Fetch product 
   const product = await client.product.fetch(productGid) || null;
 

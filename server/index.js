@@ -7,18 +7,19 @@ import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser'
 import { Shopify, ApiVersion } from '@shopify/shopify-api';
 
-import product from './api/product.js'
-import cart from './api/cart.js'
-import shopify from './api/shopify.js'
+import user from './api/user'
+import product from './api/product'
+import cart from './api/cart'
+import shopify from './api/shopify'
 
 const { PORT, MONGO_URI, NODE_ENV } = process.env;
 
 ////////////////////////////////////
 // MongoDB Connect
-////////////////////////////////////
-// mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
-// mongoose.connection.on('open', () => console.log('DB Connected'));
-// mongoose.connection.on('error', (err) => console.log('MongoDB connection error:', err));
+//////////////////////////////////
+mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connection.on('open', () => console.log('DB Connected'));
+mongoose.connection.on('error', (err) => console.log('MongoDB connection error:', err));
 
 
 ////////////////////////////////////
@@ -45,14 +46,6 @@ app.prepare().then(() => {
     if (NODE_ENV === 'production' && !req.secure) {
       return res.redirect('https://' + req.headers.host + req.url)
     }
-    
-
-    // ADMIN CALL
-    //   var productId = '7354920009969'
-    //   const product = await client.get({
-    //     path: `products/${productId}`,
-    //     query: {id: 1, title: "title"}
-    //   });
       
     next()
   })
@@ -60,6 +53,7 @@ app.prepare().then(() => {
   ////////////////////////////////////
   // App Routes
   ////////////////////////////////////
+  server.use('/api/user', user)
   server.use('/api/product', product)
   server.use('/api/cart', cart)
   server.use('/api/shopify', shopify)
