@@ -23,6 +23,7 @@ const Navbar = () => {
     return classes;
   }
   return ( 
+    <div>
       <nav className="navbar">
         <Link href="/">
           <a>
@@ -31,6 +32,12 @@ const Navbar = () => {
             </div>
           </a>
         </Link>
+        <div className="cart-toggle">
+        <Link href="/cart">
+         <i id="icon" class="fa-solid fa-cart-shopping"></i>
+        </Link>
+        </div>
+        
         <nav className={renderCssClasses()}>
         {navLinks.map((link, index) => {
           return (
@@ -42,13 +49,12 @@ const Navbar = () => {
           );
         })}
       </nav>
-         <div className="bar-toggle" >
-          <Link href="/cart">
-           <i id="icon" className="fas fa-shopping-cart"></i>
-          </Link>
-          <i id="icon" className="fas fa-bars fa-lg" onClick={navOnClick}></i>
-        </div>
+      <div className="bar-toggle" >
+        <i id="icon" className="fas fa-bars fa-lg" onClick={navOnClick}></i>
+      </div>
       </nav>
+    </div>
+
    );
 }
  

@@ -15,7 +15,7 @@ import '../styles/cart.css'
 const MyApp = ({ Component, pageProps }) => {
   return (
     <>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
       {/* <Header {...pageProps} /> */}
       <Navbar {...pageProps} />
       <Component {...pageProps} />
