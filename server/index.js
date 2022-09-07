@@ -5,9 +5,10 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser'
-import { Shopify, ApiVersion } from '@shopify/shopify-api';
 
 import user from './api/user'
+import customer from './api/customer'
+import address from './api/address'
 import product from './api/product'
 import cart from './api/cart'
 import shopify from './api/shopify'
@@ -54,6 +55,8 @@ app.prepare().then(() => {
   // App Routes
   ////////////////////////////////////
   server.use('/api/user', user)
+  server.use('/api/customer', customer)
+  server.use('/api/address', address)
   server.use('/api/product', product)
   server.use('/api/cart', cart)
   server.use('/api/shopify', shopify)

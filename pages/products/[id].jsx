@@ -7,7 +7,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 
 
 const SingleProduct = ({ _product }) => {
-  const [ product, setProduct ] = useState(_product)
+  const [product, setProduct] = useState(_product)
 
   // add to cart by product id
   const addToCart = (e) => {
@@ -28,23 +28,25 @@ const SingleProduct = ({ _product }) => {
       </Head>
 
       <section className="product">
-        {product.media?.src && (
-          <img 
+        {product.images[0]?.src && (
+          <img
             className="prod_img"
-            src={product.media.src} 
-            alt={product.media.alt}
+            src={product.images[0].src}
+            alt={product.images[0].altText}
           />
         )}
-      <h1>{product.title}</h1>
-      <h2>{product.id}</h2>
-      <div className="add_btn">
-        <i className="fas fa-shopping-cart"></i>
-        <p onClick={(e) => {
-          addToCart(e);
+        <h1>{product.title}</h1>
+        <p>{product.description}</p>
+        <p>{product.variants[0].priceV2.amount + product.variants[0].priceV2.currencyCode}</p>
+
+        <div className="add_btn">
+          <i className="fas fa-shopping-cart"></i>
+          <p onClick={(e) => {
+            addToCart(e);
           }}>
-          ADD TO CART
-        </p>
-      </div>
+            ADD TO CART
+          </p>
+        </div>
       </section>
     </div>
   );
@@ -72,8 +74,8 @@ export async function getServerSideProps(ctx) {
     }
   }
 
-  return { 
-    props: { _product } 
+  return {
+    props: { _product }
   }
 }
 

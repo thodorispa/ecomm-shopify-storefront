@@ -6,14 +6,15 @@ const Card = ({product}) => {
   return ( 
     <div className="card">
       <div className="container">
-      {product.media?.src && (
+      {product.images[0]?.src && (
           <img 
-            src={product.media.src} 
-            alt={product.media.alt}
+            src={product.images[0].src} 
+            alt={product.images[0].altText}
           />
         )}
-        <h2>{product.title}</h2>
-        <p>{product.id}</p>
+        <h2>{product.title}</h2>  
+        <p>{product.description}</p>
+        <p>{product.variants[0].priceV2.amount}</p>
       </div>
     </div>
    );

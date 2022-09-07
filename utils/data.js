@@ -15,7 +15,7 @@ export const navLinks = [
     path: "/contact",
   },
   {
-    name: "cart",
+    name: "Cart",
     path: "/cart",
   }
 ];
