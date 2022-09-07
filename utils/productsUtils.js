@@ -49,7 +49,7 @@ const fetchAll = async () => {
 
   const products  = query.body.data.products.edges.map(n => {
     return {
-      id: n.node.id.replace(GID, ""),
+      id: n.node.id.replace(GID, ''),
       title: n.node.title,
       publishedAt: n.node.publishedAt,
       images: n.node.images.edges.map(n => n.node),
@@ -62,7 +62,7 @@ const fetchAll = async () => {
 
 const fetchById = async (id) => {
   try {
-    var data = await client.query({
+    var query = await client.query({
       data: `query {
         product(id: "${GID}${id}") {
           id
@@ -98,7 +98,7 @@ const fetchById = async (id) => {
     console.log(e.response.errors);
   }
 
-  const { product } = data.body.data;
+  const { product } = query.body.data;
   product.images = product.images.edges.map(n => n.node);
   product.variants = product.variants.edges.map(n => n.node);
 

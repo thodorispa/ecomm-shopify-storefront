@@ -64,7 +64,6 @@ router.get('/update/:id', async (req, res) => {
       return res.status(400).send(customerUserErrors[0].message);
     }
 
-    console.log(customerAddress);
     res.send({ customerAddress });
   } catch (e) {
     console.log(e);
