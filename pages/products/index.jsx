@@ -38,11 +38,16 @@ const AllProducts = ({ _products }) => {
 // This gets called on every request
 export async function getServerSideProps() {
   try {
-    const { data } = await Axios.get(`http://localhost:3000/api/product/all`)
+    const { data } = await Axios.get(`http://localhost:3000/api/product/all`);
 
-
-    const _products = data.products || []
-
+    if (data.products) {
+      _products = data.products
+    } else {
+      // Return 404
+      return {
+        notFound: true,
+      }
+    }
     return {
       props: {
         _products
@@ -50,9 +55,7 @@ export async function getServerSideProps() {
     }
   } catch (err) {
     return {
-      props: {
-        _products: [],
-      }
+      notFound: true,
     }
   }
 }

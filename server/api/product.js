@@ -8,8 +8,12 @@ var router = express.Router()
 router.get('/all', async (req, res) => {
 
   try {
-    const products = await Product.fetchAll();
+    const { products, Errors } = await Product.fetchAll();
 
+    if (Errors) {
+      return res.status(400).send(Errors.message);
+    }
+    
     res.send({ products });
   } catch (e) {
     console.log(e);

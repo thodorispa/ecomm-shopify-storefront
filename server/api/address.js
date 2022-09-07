@@ -4,7 +4,6 @@ import * as Address from '../../utils/addressUtils'
 
 var router = express.Router()
 
-
 router.get('/', async (req, res) => {
   try {
     const { addresses, customerUserErrors } = await Address.findAll(req.cookies.accessToken);
@@ -19,7 +18,6 @@ router.get('/', async (req, res) => {
     res.status(500).send({});
   }
 });
-
 
 router.get('/create', async (req, res) => {
 
@@ -74,13 +72,12 @@ router.get('/update/:id', async (req, res) => {
   }
 });
 
-router.post('/delete/:id', async (req, res) => {
-
+router.get('/delete', async (req, res) => {
   try {
-    const { deletedCustomerAddressId, customerUserErrors } = await Address.deleteById(req.params.id, req.cookies.accessToken);
+    const { deletedCustomerAddressId, customerUserErrors } = await Address.deleteById(req.body.id, req.cookies.accessToken);
 
-    if (customerUserErrors) {
-      return res.status(400).send(customerUserErrors[0].message);
+    if (customerUserErrors.length > 0) {
+      return res.status(400).send(customerUserErrors[0]?.message);
     }
 
     res.send({ deletedCustomerAddressId });

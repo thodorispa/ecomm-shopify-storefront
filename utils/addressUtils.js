@@ -111,7 +111,7 @@ const update = async (address, accessToken) => {
           customerAccessToken: "${accessToken}",
           id: "${address.id}"
         ) 
-        {
+        
           customerUserErrors {
             code
             field
@@ -120,7 +120,7 @@ const update = async (address, accessToken) => {
           customerAddress {
             id
           }
-        }
+        
       }
       `,
     });
@@ -134,13 +134,13 @@ const update = async (address, accessToken) => {
   return { customerAddress, customerUserErrors };
 }
 
-const deleteById = async (address, accessToken) => {
+const deleteById = async (id, accessToken) => {
   try {
     var query = await client.query({
       data: `mutation {
         customerAddressDelete(
-          customerAccessToken: ${accessToken},
-          id: ${address.id}
+          customerAccessToken: "${accessToken}"
+          id: "${id}"
         ) {
           customerUserErrors {
             code

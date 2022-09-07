@@ -7,7 +7,7 @@ const client = new Shopify.Clients.Storefront(SHOP, STOREFRONT_TOKEN);
 
 const fetchAll = async () => {
   try {
-    var data = await client.query({
+    var query = await client.query({
       data: `query {
         products(first: 50) {
           edges {
@@ -15,7 +15,27 @@ const fetchAll = async () => {
               id
               title
               publishedAt
+              images(first: 1) {
+                edges {
+                  node {
+                    src
+                    altText
+                  }
+                }
+              }
+              variants(first: 1) {
+                edges {
+                  node {
+                    id
+                    priceV2 {
+                      amount
+                      currencyCode
+                    }
+                  }
+                }
+              }
             }
+            
           }
         }
       }
@@ -23,18 +43,21 @@ const fetchAll = async () => {
     });
   } catch (e) {
     console.log(e.response.errors);
+    return { Errors: { message: e.response.errors }};
   }
 
-  console.log(data.body.data.product);
-  const products = data.body.data.products.edges.map(n => {
+
+  const products  = query.body.data.products.edges.map(n => {
     return {
       id: n.node.id.replace(GID, ""),
       title: n.node.title,
       publishedAt: n.node.publishedAt,
+      images: n.node.images.edges.map(n => n.node),
+      variants: n.node.variants.edges.map(n => n.node)
     } || [];
   });
 
-  return products;
+  return { products };
 }
 
 const fetchById = async (id) => {
