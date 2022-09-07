@@ -16,19 +16,19 @@ const AllProducts = ({ _products }) => {
       </Head>
 
       <section className="feed">
-        
-                {products?.map((product, i) => (
-                      <Link href={`/products/${product.id}`}>
-                        <a>
-                        <Card product={product} />
-                        </a>
-                         
-                      </Link>
-                ))}
+
+        {products?.map((product, i) => (
+          <Link href={`/products/${product.id}`}>
+            <a>
+              <Card product={product} />
+            </a>
+
+          </Link>
+        ))}
 
         <section id="contact">
 
-          
+
         </section>
       </section>
     </>
@@ -37,8 +37,9 @@ const AllProducts = ({ _products }) => {
 
 // This gets called on every request
 export async function getServerSideProps() {
+  let _products = null
   try {
-    const { data } = await Axios.get(`http://localhost:3000/api/product/all`);
+    const { data } = await Axios.get(`http://localhost:3000/api/product/all`)
 
     if (data.products) {
       _products = data.products
@@ -48,15 +49,16 @@ export async function getServerSideProps() {
         notFound: true,
       }
     }
-    return {
-      props: {
-        _products
-      }
-    }
+
   } catch (err) {
+    // Return 404
     return {
       notFound: true,
     }
+  }
+
+  return {
+    props: { _products }
   }
 }
 
