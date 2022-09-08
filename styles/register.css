@@ -1,0 +1,92 @@
+.register {
+  display: flex;    
+  position: relative;
+  top: 100px;
+  padding: 20px;
+  overflow-y: hidden;
+  flex-direction: column;
+}
+
+.field {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.forms {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 500px;
+  padding: 10px;
+  align-items: flex-end;
+}
+
+.forms-label {
+  padding: 10px;
+  border: 1px solid #111b0d;
+  font-size: larger;
+  min-width: 160px;
+  text-align: end;
+}
+
+.forms-input {
+  padding: 7px;
+  border: 1px solid #111b0d;
+  min-width: 200px;
+  padding: 12px;
+  font-size: 17px;
+}
+
+.forms-input::placeholder {
+  font-family: monospace;
+}
+
+.validation {
+  display: inline-flex;
+  flex-direction: column;
+  margin-top: 8px;
+  margin-left: -10px;
+  height: 608px;
+  justify-content: flex-start;
+  align-items: flex-end;
+  animation: 0.3s fadeIn;
+}
+
+.validation i {
+  padding: 16px;
+  transition: 0.5s;
+  height: 15px;
+  animation: 0.3s fadeIn;
+}
+
+.register-btn {
+  padding: 7px;
+  border: 1px solid #111b0d;
+  background-color: transparent;
+  width: 226px;
+  margin-top: 15px;
+  padding: 12px;
+  font-size: 17px;
+  transition: 0.2s ease-in;
+}
+
+.register-btn:hover {
+  background-color: #111b0d;
+  color: rgb(255, 255, 255);
+  transition: 0.2s ease-in;
+}
+
+.validation small {
+  font-size: 16px;
+  padding: 16px;
+  padding-left: 5px;
+  height: 15px;
+  text-align: start;
+  align-self: flex-start;
+  animation: 0.3s fadeIn;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}

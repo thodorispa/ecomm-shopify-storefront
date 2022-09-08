@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import App from 'next/app'
 
-import Header from "../components/Header";
 import Card from "../components/Card";
 import Navbar from "../components/Navbar";
 
@@ -10,6 +9,7 @@ import '../styles/welcome.css';
 import '../styles/product_feed.css'
 import '../styles/product_details.css'
 import '../styles/cart.css'
+import '../styles/register.css'
 
 
 const MyApp = ({ Component, pageProps }) => {

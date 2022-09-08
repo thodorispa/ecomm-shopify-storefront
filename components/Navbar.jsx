@@ -4,6 +4,7 @@ import Link from "next/link";
 
 const Navbar = () => {
 
+  const [isLogged, setIsLogged] = useState(false);
   const [nav, setNav] = useState(false);
   const navOnClick = () => {
     setNav(!nav);
@@ -32,12 +33,6 @@ const Navbar = () => {
             </div>
           </a>
         </Link>
-        <div className="cart-toggle">
-        <Link href="/cart">
-         <i id="icon" class="fa-solid fa-cart-shopping"></i>
-        </Link>
-        </div>
-        
         <nav className={renderCssClasses()}>
         {navLinks.map((link, index) => {
           return (
@@ -49,6 +44,32 @@ const Navbar = () => {
           );
         })}
       </nav>
+      {!isLogged ? (
+        <div className="cart-toggle">
+        <Link href="/cart">
+         <i id="icon" className="fa-solid fa-cart-shopping"></i>
+        </Link>
+        <div className="user_toggle">
+          <i className="fa-solid fa-user"></i>
+          <div className="dropdown">
+          <Link href="/register"> 
+           <li className="drop-link">Register</li>
+          </Link>
+          <Link href="/signIn"> 
+           <li className="drop-link">Sign In</li>
+          </Link>
+          </div>
+          </div>
+        </div>
+      ) : (
+        <div className="cart-toggle">
+        <Link href="/cart">
+         <i id="icon" className="fa-solid fa-cart-shopping"></i>
+        </Link>
+        <i style={{position: "relative", right: "70px",fontSize:"larger" }}className="fa-solid fa-user"></i>
+        <pre style={{position: "absolute", right:"100px", top:"7px"}}>username</pre>
+        </div>
+      )}
       <div className="bar-toggle" >
         <i id="icon" className="fas fa-bars fa-lg" onClick={navOnClick}></i>
       </div>

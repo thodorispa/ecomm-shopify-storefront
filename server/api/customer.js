@@ -5,7 +5,7 @@ import * as Customer from '../../utils/customerUtils'
 var router = express.Router()
 
 // Create customer
-router.get('/sign-up', async (req, res) => {
+router.post('/sign-up', async (req, res) => {
 
   const user = {
     email: req.body.email,
@@ -14,7 +14,7 @@ router.get('/sign-up', async (req, res) => {
     password: req.body.password,
     phone: req.body.phone
   }
-
+  
   try {
     const { customer, customerUserErrors, customerAccessToken } = await Customer.create(user);
 
@@ -32,7 +32,7 @@ router.get('/sign-up', async (req, res) => {
   }
 });
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
 
   const user = {
     email: req.body.email,
