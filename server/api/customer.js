@@ -18,15 +18,16 @@ router.post('/sign-up', async (req, res) => {
   try {
     const { customer, customerUserErrors, customerAccessToken } = await Customer.create(user);
 
-    if (customerUserErrors[0]?.message) {
+    if (customerUserErrors) {
       return res.status(400).send(customerUserErrors[0].message);
     }
 
     const expiresAt = new Date(customerAccessToken.expiresAt) - new Date().getTime();
 
     res.cookie("accessToken", customerAccessToken.accessToken, { maxAge: expiresAt });
-    res.send({ customer, customerAccessToken });
+    return res.status(200).send({ customer, customerAccessToken });
   } catch (e) {
+
     console.log(e);
     res.status(500).send({});
   }
@@ -40,10 +41,10 @@ router.post('/login', async (req, res) => {
   }
 
   try {
-    const { customerUserErrors, customerAccessToken } = await Customer.createAccessToken(user);
+    const { customerAccessToken, customerUserErrors } = await Customer.createAccessToken(user);
 
-    if (customerUserErrors[0]?.message) {
-      return res.status(400).send(customerUserErrors[0].message);
+    if (customerUserErrors.length > 0) {
+      return res.status(400).send(customerUserErrors[0]?.message);
     }
 
     const customer = await Customer.getCustomer(customerAccessToken.accessToken);
