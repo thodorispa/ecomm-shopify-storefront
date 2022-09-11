@@ -30,6 +30,7 @@
     "sequelize": "^6.21.4",
     "shopify-buy": "^2.16.1",
     "shortid": "^2.2.16",
+    "swell-node": "^4.0.10",
     "validator": "^13.7.0"
   },
   "devDependencies": {

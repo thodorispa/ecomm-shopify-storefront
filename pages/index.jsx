@@ -9,7 +9,7 @@ const Home = ({ _products }) => {
 
   return (
     <div className="welcome">
-      <img className="header_img" src="https://images.pexels.com/photos/4202469/pexels-photo-4202469.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" />
+      <img className="header_img" src="https://images.pexels.com/photos/4202926/pexels-photo-4202926.jpeg" alt="" />
      <header className="showcase">
       <h1>Welcome to Katoi Soap</h1>
       <section>
