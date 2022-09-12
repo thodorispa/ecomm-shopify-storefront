@@ -13,16 +13,19 @@
   border-radius: none;
   border: 1px solid #505050;
   margin: 20px;
-  min-width: 280px;
-  min-height: 370px;
+  width: 350px;
+  min-height: 440px;
   animation: fadeIn 0.3s;
   transition: 0.4s;
 }
 
-.card img {
-  height: 10%;
-  width: 10%;
-  border-bottom: 1px solid #505050;
+.card-image-container {
+  height: 100%;
+  z-index: -1;
+}
+
+.card-image-container img {
+  max-width: 350px;
 }
 
 .card h2 {
