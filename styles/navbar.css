@@ -9,9 +9,11 @@
 }
 
 .bar-toggle {
-  display: none;
+  display: block;
+  visibility: hidden;
   float: left;
   cursor: pointer;
+  min-width: 72px;
   margin-left: 30px;
 }
 
@@ -37,6 +39,7 @@
   }
   .bar-toggle {
     display: block;
+    visibility: visible;
     align-self: center;
     z-index: 9999;
     margin-left: 20px;

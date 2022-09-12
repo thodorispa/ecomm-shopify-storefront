@@ -46,13 +46,13 @@ const Navbar = () => {
             {navLinks.map((link, index) => {
               return (
                 <ul className="link">
-                    <li onClick={navOnClick} key={index}>
+                    <li key={index}>
                       {link.name}
                     </li>
                     {link.name === "FACE" ? (
                       <div className="c-dropdown">
                       <Link href="/">
-                        <li className="drop-link">Peeling</li>
+                        <li onClick={navOnClick} className="drop-link">Peeling</li>
                       </Link>
                       <Link href="/">
                         <li className="drop-link">Lotion</li>
