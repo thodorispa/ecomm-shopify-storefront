@@ -33,14 +33,14 @@ const Navbar = () => {
           </a>
         </Link>
         <section style={{ width: "100%" }}>
-          <section style={{marginLeft: "30px"}}>
-            <section className="bar-toggle">
+          <section>
+            <div className="bar-toggle">
               <i
                 id="icon"
                 className="fas fa-bars fa-lg"
                 onClick={navOnClick}
               ></i>
-            </section>
+            </div>
           </section>
           <nav className={renderCssClasses()}>
             {navLinks.map((link, index) => {
@@ -55,9 +55,9 @@ const Navbar = () => {
               );
             })}
           </nav>
-          <section style={{marginRight: "30px"}}>
+          <section className="usr-menu">
             <div className="user_toggle">
-              <i style={{padding: "10px"}} className="fa-solid fa-user"></i>
+              <i style={{padding: "8px", cursor:"pointer"}} className="fa-solid fa-user"></i>
               <div className="dropdown">
                 <Link href="/register">
                   <li className="drop-link">Register</li>
@@ -68,7 +68,7 @@ const Navbar = () => {
               </div>
             </div>
             <Link href="/cart">
-              <i style={{fontSize:"20px", padding: "10px"}} className="fa-solid fa-cart-shopping"></i>
+              <i style={{fontSize:"20px", padding: "8px",  cursor:"pointer"}} className="fa-solid fa-cart-shopping"></i>
             </Link>
           </section>
         </section>

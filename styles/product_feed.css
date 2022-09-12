@@ -1,40 +1,27 @@
 .feed {
-  display: flex;
-  position: relative;
+  align-self: center;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  max-width: 1200px;
-  top: 150px;
-  left: 150px;
-  margin-bottom: 10px;
-  animation: fadeIn 1s;
-  white-space:pre-wrap;
+  width: 100%;
+  align-items: center;
 }
-
 .card {
   /* Add shadows to create the "card" effect */
   font-family: 'Helvetica Neue';
   font-weight: 300;
   text-align: center;
-  justify-content: center;
-  align-items: center;
   border-radius: none;
-  position: relative;
-  margin: 10px;
-  margin-bottom: 30px;
-  width: 250px;
-  min-height: 170px;
-  top: 50px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border: 1px solid #505050;
+  margin: 20px;
+  min-width: 280px;
+  min-height: 370px;
   animation: fadeIn 0.3s;
   transition: 0.4s;
 }
-.card * > {
-  max-height: 100%;
-}
 
 .card img {
-  height: 200px;
+  height: 10%;
+  width: 10%;
+  border-bottom: 1px solid #505050;
 }
 
 .card h2 {
@@ -55,7 +42,3 @@
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   cursor: pointer;
 } 
-.container {
-  padding: 2px 16px;
-  min-width: 120px;
-}

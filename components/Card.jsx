@@ -4,19 +4,20 @@ import Axios from "axios";
 const Card = ({product}) => {
 
   return ( 
-    <div className="card">
-      <div className="container">
+    <article className="card">
+      <article>
       {product.images[0]?.src && (
           <img 
             src={product.images[0].src} 
             alt={product.images[0].altText}
           />
         )}
+      </article>
+      <section style={{alignSelf: "flex-start"}}>
         <h2>{product.title}</h2>  
-        <p>{product.description}</p>
         <p>{product.variants[0].priceV2.amount}</p>
-      </div>
-    </div>
+        </section>
+    </article>
    );
 }
 

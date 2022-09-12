@@ -43,18 +43,16 @@ const SignIn = () => {
   }
 
   return (
-    <div className="register">
-
-      <header>
+    <header className="container">
+      <article className="register">
         <h1>Sign In</h1>
         <p 
         style={{
-          marginTop: "5px",
+          padding: "30px 10px",
           fontSize: "larger"
         }}>Welcome back, enter your credentials to sign in.</p>
-      </header>
-
-      <section>
+      </article>
+      <article>
 
         <div className="forms" style={{ alignItems: "flex-start", textAlign: "start" }}>
           <label style={{ textAlign: "start" }} className="forms-label">Email</label>
@@ -82,8 +80,8 @@ const SignIn = () => {
           </button>
 
         </form>
-      </section>
-    </div>
+      </article>
+    </header>
   );
 }
 
