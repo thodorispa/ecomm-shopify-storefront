@@ -5,37 +5,55 @@ const { SHOP, STOREFRONT_TOKEN, GID } = process.env;
 
 const client = new Shopify.Clients.Storefront(SHOP, STOREFRONT_TOKEN);
 
-const fetchAll = async () => {
+const createAndAdd = async (productId, quantity) => {
   try {
     var query = await client.query({
-      data: `query {
-        products(first: 50) {
-          edges {
-            node {
-              id
-              title
-              publishedAt
-              images(first: 1) {
-                edges {
-                  node {
-                    src
-                    altText
-                  }
-                }
+      data: `mutation {
+        cartCreate(
+          input: {
+            lines: [
+              {
+                quantity: ${quantity}
+                merchandiseId: "${productId}"
               }
-              variants(first: 1) {
-                edges {
-                  node {
-                    id
-                    priceV2 {
-                      amount
-                      currencyCode
+            ]
+          }
+        ) {
+          cart {
+            id
+            createdAt
+            updatedAt
+            lines(first: 10) {
+              edges {
+                node {
+                  id
+                  quantity
+                  merchandise {
+                    ... on ProductVariant {
+                      id
                     }
                   }
                 }
               }
             }
-            
+            cost {
+              totalAmount {
+                amount
+                currencyCode
+              }
+              subtotalAmount {
+                amount
+                currencyCode
+              }
+              totalTaxAmount {
+                amount
+                currencyCode
+              }
+              totalDutyAmount {
+                amount
+                currencyCode
+              }
+            }
           }
         }
       }
@@ -43,53 +61,116 @@ const fetchAll = async () => {
     });
   } catch (e) {
     console.log(e.response.errors);
-    return { Errors: { message: e.response.errors }};
+    return { Errors: { message: e.response.errors } };
   }
 
+  const { cart } = query.body.data.cartCreate;
+  cart.lines = cart.lines.edges.map(n => n.node);
 
-  const products  = query.body.data.products.edges.map(n => {
-    return {
-      id: n.node.id.replace(GID, ''),
-      title: n.node.title,
-      publishedAt: n.node.publishedAt,
-      images: n.node.images.edges.map(n => n.node),
-      variants: n.node.variants.edges.map(n => n.node)
-    } || [];
-  });
-
-  return { products };
+  return { cart };
 }
 
-const fetchById = async (id) => {
+const add = async (cartId, prodcutId, quantity) => {
   try {
     var query = await client.query({
-      data: `query {
-        product(id: "${GID}${id}") {
-          id
-          title
-          description
-          productType
-          publishedAt
-          tags
-          images(first: 1) {
-            edges {
-              node {
-                src
-                altText
+      data: `mutation {
+        cartLinesAdd(
+          cartId: "${cartId}"
+          lines: {
+            merchandiseId: "${prodcutId}"
+            quantity: ${quantity}
+          }
+        ) {
+          cart {
+            id
+            createdAt
+            updatedAt
+            lines(first: 10) {
+              edges {
+                node {
+                  id
+                  quantity
+                  merchandise {
+                    ... on ProductVariant {
+                      id
+                    }
+                  }
+                }
+              }
+            }
+            cost {
+              totalAmount {
+                amount
+                currencyCode
+              }
+              subtotalAmount {
+                amount
+                currencyCode
+              }
+              totalTaxAmount {
+                amount
+                currencyCode
+              }
+              totalDutyAmount {
+                amount
+                currencyCode
               }
             }
           }
-          variants(first: 1) {
+        }
+      }      
+      `,
+    });
+  } catch (e) {
+    console.log(e.response.errors);
+    return { Errors: { message: e.response.errors } };
+  }
+
+  const { cart } = query.body.data.cartLinesAdd;
+  cart.lines = cart.lines.edges.map(n => n.node);
+
+  return { cart };
+}
+
+const fetch = async (id) => {
+  try {
+    var query = await client.query({
+      data: `query {
+        cart(id: "${id}") {
+          id
+          createdAt
+          updatedAt
+          lines(first: 10) {
             edges {
               node {
                 id
-                priceV2 {
-                  amount
-                  currencyCode
+                quantity
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                  }
                 }
               }
             }
           }
+          cost {
+            totalAmount {
+              amount
+              currencyCode
+            }
+            subtotalAmount {
+              amount
+              currencyCode
+            }
+            totalTaxAmount {
+              amount
+              currencyCode
+            }
+            totalDutyAmount {
+              amount
+              currencyCode
+            }
+          }
         }
       }
       `,
@@ -98,16 +179,15 @@ const fetchById = async (id) => {
     console.log(e.response.errors);
   }
 
-  const { product } = query.body.data;
-  product.images = product.images.edges.map(n => n.node);
-  product.variants = product.variants.edges.map(n => n.node);
+  const { cart } = query.body.data;
+  cart.lines = cart.lines.edges.map(n => n.node);
 
-
-  return product;
+  return { cart };
 }
 
 
 export {
-  fetchAll,
-  fetchById,
+  createAndAdd,
+  add,
+  fetch,
 }

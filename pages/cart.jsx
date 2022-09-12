@@ -6,7 +6,6 @@ const Cart = ({ _checkout, _products }) => {
 
   const [products, setProduct] = useState(_products)
 
-
   return (
     <div className="cart">
       <h1>This is your cart</h1>

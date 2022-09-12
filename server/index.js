@@ -13,6 +13,7 @@ import product from './api/product'
 import collections from './api/collections'
 import cart from './api/cart'
 import shopify from './api/shopify'
+import * as Cart from '../utils/cartUtils'
 
 const { PORT, MONGO_URI, NODE_ENV } = process.env;
 
@@ -39,16 +40,25 @@ app.prepare().then(() => {
   }))
   server.use(express.static('public'));
   server.use(express.static('dist'));
-  server.use(express.urlencoded({ extended: false }));
+  server.use(express.urlencoded({ extended: true }));
   server.use(express.json({ limit: '20mb' }));
   server.use(cookieParser())
   server.use(async (req, res, next) => {
     req.env = NODE_ENV
-    
+
+    if (req.url.indexOf('/_next/') > -1) {
+      return next()
+    }
+
     if (NODE_ENV === 'production' && !req.secure) {
       return res.redirect('https://' + req.headers.host + req.url)
     }
-      
+
+    if (!req.cart && req.cookies.cart) {
+      const existingCart = decodeURIComponent(req.cookies.cart) || null;
+      req.cart = await Cart.fetch(existingCart);
+    }
+
     next()
   })
 

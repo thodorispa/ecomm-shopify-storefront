@@ -2,25 +2,36 @@ import React, { useState } from "react"
 import Head from "next/head";
 import Axios from "axios"
 import Card from "../../components/Card";
-// import { Card, Row, Col, Container, Button } from "react-bootstrap";
-import { FaShoppingCart } from 'react-icons/fa';
+import { cart } from "../../store/cart"
+import { useSelector, useDispatch } from "react-redux"
+
 
 
 const SingleProduct = ({ _product }) => {
-  const [product, setProduct] = useState(_product)
+  const dispatch = useDispatch()
 
-  // add to cart by product id
+  const [product, setProduct] = useState(_product)
+  const { cart } = useSelector(x => x)
+  console.log(cart);
+
+
   const addToCart = (e) => {
     e.preventDefault()
 
-    Axios.post(`http://localhost:3000/api/cart/add/${product.id}`)
+    const productId = product.variants[0].id;
+    // get the line id by productVariantId in cart
+    // const lineItem = cart.lineItems.find(x => x.variantId === productId)
+
+    Axios.post(`http://localhost:3000/api/cart/add`, { productId })
       .then(res => {
-        console.log(res)
+        dispatch({ type: "SET_CART", payload: res.data})
+
       })
       .catch(err => {
         console.log(err)
       })
   };
+
   return (
     <div >
       <Head>
