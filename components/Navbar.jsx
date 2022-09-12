@@ -46,11 +46,29 @@ const Navbar = () => {
             {navLinks.map((link, index) => {
               return (
                 <ul className="link">
-                  <Link className="link" href={link.path}>
                     <li onClick={navOnClick} key={index}>
                       {link.name}
                     </li>
-                  </Link>
+                    {link.name === "FACE" ? (
+                      <div className="c-dropdown">
+                      <Link href="/">
+                        <li className="drop-link">Peeling</li>
+                      </Link>
+                      <Link href="/">
+                        <li className="drop-link">Lotion</li>
+                      </Link>
+                    </div>
+                    ) : "" }
+                    {link.name === "BODY" ? (
+                      <div className="c-dropdown">
+                      <Link href="/">
+                        <li className="drop-link">Register</li>
+                      </Link>
+                      <Link href="/">
+                        <li className="drop-link">Sign In</li>
+                      </Link>
+                    </div>
+                    ) : "" }
                 </ul>
               );
             })}

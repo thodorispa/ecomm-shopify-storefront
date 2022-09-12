@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   width: 100%;
   align-items: center;
+  justify-content: space-around;
 }
 .card {
   /* Add shadows to create the "card" effect */
