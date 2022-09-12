@@ -1,14 +1,10 @@
 .navbar {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   box-shadow: 0 1px 2px 0 rgba(208, 208, 208, 0.319), 0 2px 10px 0 rgba(0, 0, 0, 0.19);
   background-color: #f0f1ee;
-  position: fixed;
-  top: 0;
-  left:0;
+  align-items: center;
   width: 100%;
-  height: inherit;
+  position: fixed;
+  width: 100%;
   border-bottom:1px solid#111b0d;
   z-index: 999;
 }
@@ -19,23 +15,10 @@
   cursor: pointer;
 }
 
-.cart-toggle {
-  display:inline-flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 7%;
-  align-self: flex-end;
-  margin: 0;
-  font-size: 20px;
-  color: #111b0d;
-  cursor: pointer;
-}
-
 .navlinks {
   display: flex;
   list-style: none;
   justify-content: space-around;
-  align-self: center;
   height: 50%;
   margin-top: 10px;
   width: 50%;
@@ -76,8 +59,8 @@
 }
 
 .logo h3{
-  display: flex;
   color: #111b0d;
+  align-self: center;
   justify-content: center;
   padding-left: 20px;
   font-size: 32px;
@@ -112,13 +95,13 @@
   z-index: -1;
 }
 
-
 .user_toggle {
   display: block;
   transition: 0.5s ease-in;
+  font-size: 20px;
 }
 
-.user_toggle, .cart_toggle i {
+.cart {
   font-size: 20px;
 }
 

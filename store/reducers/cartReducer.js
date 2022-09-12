@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 
-const cart = (state = { cart: [] }, action = {}) => {
+const cartReducer = (state = { cart: [] }, action = {}) => {
   switch (action.type) {
     case "SET_CART":
       return {
@@ -40,4 +40,4 @@ const cart = (state = { cart: [] }, action = {}) => {
   }
 }
 
-export default cart
+export default cartReducer;

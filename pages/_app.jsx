@@ -14,6 +14,7 @@ import '../styles/product_feed.css'
 import '../styles/product_details.css'
 import '../styles/cart.css'
 import '../styles/register.css'
+import '../styles/main.css'
 
 
 const MyApp = ({ Component, pageProps }) => {

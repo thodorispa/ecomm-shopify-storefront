@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import Head from "next/head";
 import Axios from "axios"
 import Card from "../../components/Card";
-import { cart } from "../../store/cart"
+import { cart } from "../../store/reducers/cartReducer.js"
 import { useSelector, useDispatch } from "react-redux"
 
 
