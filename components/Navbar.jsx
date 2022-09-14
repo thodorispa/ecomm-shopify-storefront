@@ -16,6 +16,7 @@ const Navbar = () => {
   //Render classes in order to change the menu bar when burger menu clicked, activate the menu
   const renderCssClasses = () => {
     let classes = "navlinks";
+    let drop_classes = "c-dropdown"
 
     if (nav) {
       classes += " activenav";
@@ -51,21 +52,21 @@ const Navbar = () => {
                     </li>
                     {link.name === "FACE" ? (
                       <div className="c-dropdown">
-                      <Link href="/">
-                        <li onClick={navOnClick} className="drop-link">Peeling</li>
+                      <Link href="/products">
+                        <li onClick={linkOnClick} className="drop-link">Peeling</li>
                       </Link>
-                      <Link href="/">
-                        <li className="drop-link">Lotion</li>
+                      <Link href="/products">
+                        <li onClick={linkOnClick} className="drop-link">Lotion</li>
                       </Link>
                     </div>
                     ) : "" }
                     {link.name === "BODY" ? (
                       <div className="c-dropdown">
-                      <Link href="/">
-                        <li className="drop-link">Register</li>
+                      <Link href="/products">
+                        <li onClick={linkOnClick} className="drop-link">Register</li>
                       </Link>
-                      <Link href="/">
-                        <li className="drop-link">Sign In</li>
+                      <Link href="/products">
+                        <li onClick={linkOnClick} className="drop-link">Sign In</li>
                       </Link>
                     </div>
                     ) : "" }

@@ -25,7 +25,7 @@ const Home = ({ _products }) => {
   console.log(f_categories);
   return (
     <header className="container">
-      <section style={{padding: "20px 60px"}}>
+      <section className="banner">
       <section className="header-img">
       <img
         className="header_img"

@@ -92,6 +92,8 @@
   background-color: cover #f0f1ee;
 }
 
+.activenav:after .dropdown{display: none;}
+.activenav:after .c-dropdown{display: none;}
 .active_ {
   transform: translateX(200%);
   transition: transform 0.5s ease-in;

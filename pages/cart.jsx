@@ -5,7 +5,7 @@ import Axios from 'axios';
 const Cart = ({ _checkout, _products }) => {
 
   const [products, setProduct] = useState(_products)
-
+  console.log(products);
   return (
     <div className="cart">
       <h1>This is your cart</h1>

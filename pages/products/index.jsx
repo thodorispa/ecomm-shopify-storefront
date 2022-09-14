@@ -9,8 +9,10 @@ import { useEffect, useState } from "react";
 const AllProducts = ({ _products }) => {
   const [products, setProducts] = useState(_products)
 
+  console.log(products);
   return (
     <>
+
       <Head>
         <title>Welcome to Katoi</title>
       </Head>
