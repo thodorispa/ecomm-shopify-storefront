@@ -23,6 +23,7 @@ const createAndAdd = async (productId, quantity) => {
             id
             createdAt
             updatedAt
+            checkoutUrl
             lines(first: 10) {
               edges {
                 node {
@@ -31,6 +32,10 @@ const createAndAdd = async (productId, quantity) => {
                   merchandise {
                     ... on ProductVariant {
                       id
+                      priceV2 {
+                        amount
+                        currencyCode
+                      }
                       image {
                         url
                         altText
@@ -42,6 +47,7 @@ const createAndAdd = async (productId, quantity) => {
                       }
                     }
                   }
+                  
                 }
               }
             }
@@ -94,6 +100,7 @@ const add = async (cartId, prodcutId, quantity) => {
             id
             createdAt
             updatedAt
+            checkoutUrl
             lines(first: 10) {
               edges {
                 node {
@@ -102,6 +109,10 @@ const add = async (cartId, prodcutId, quantity) => {
                   merchandise {
                     ... on ProductVariant {
                       id
+                      priceV2 {
+                        amount
+                        currencyCode
+                      }
                       image {
                         url
                         altText
@@ -113,6 +124,7 @@ const add = async (cartId, prodcutId, quantity) => {
                       }
                     }
                   }
+                  
                 }
               }
             }
@@ -165,6 +177,7 @@ const updateQuantity = async (cartId, lineId, quantity) => {
             id
             createdAt
             updatedAt
+            checkoutUrl
             lines(first: 10) {
               edges {
                 node {
@@ -173,8 +186,22 @@ const updateQuantity = async (cartId, lineId, quantity) => {
                   merchandise {
                     ... on ProductVariant {
                       id
+                      priceV2 {
+                        amount
+                        currencyCode
+                      }
+                      image {
+                        url
+                        altText
+                      }
+                      product {
+                        ... on Product {
+                          title
+                        }
+                      }
                     }
                   }
+                  
                 }
               }
             }
@@ -224,6 +251,7 @@ const remove = async (cartId, lineId) => {
             id
             createdAt
             updatedAt
+            checkoutUrl
             lines(first: 10) {
               edges {
                 node {
@@ -283,6 +311,7 @@ const fetch = async (id) => {
           id
           createdAt
           updatedAt
+          checkoutUrl
           lines(first: 10) {
             edges {
               node {
@@ -291,6 +320,10 @@ const fetch = async (id) => {
                 merchandise {
                   ... on ProductVariant {
                     id
+                    priceV2 {
+                      amount
+                      currencyCode
+                    }
                     image {
                       url
                       altText
