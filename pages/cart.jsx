@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import Card from '../components/Card'
 import Axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const Cart = ({ _checkout, _products }) => {
 
   const [products, setProduct] = useState(_products)
-  console.log(products);
+  const { cart } = useSelector(x => x)
+  console.log(cart);
+
   return (
     <div className="cart">
       <h1>This is your cart</h1>
 
       <div className="feed">
 
-        {products?.map((product, i) => (
+        {products.map((product, i) => (
           <Card product={product} />
         ))}
 
@@ -23,17 +26,6 @@ const Cart = ({ _checkout, _products }) => {
 
 export async function getServerSideProps(ctx) {
   try {
-    const cookies = ctx.req.headers.cookie;
-    const checkout = cookies.split(';').find(c => c.trim().startsWith('checkout=')).split('=')[1];
-
-    if (checkout) {
-      var { data } = await Axios.get(`http://localhost:3000/api/cart`, {
-        headers: {
-          cookie: checkout
-        }
-      })
-    }
-
     const _checkout = data.checkout || []
     const _products = data.products || []
 
