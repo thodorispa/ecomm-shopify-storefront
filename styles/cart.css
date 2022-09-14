@@ -71,6 +71,11 @@
     padding: 20px 15px;
   }
 }
+@media screen and (max-width: 920px){
+  .cart {
+    padding: 100px 30px;
+  }
+}
 @media screen and (max-width: 420px){
   .cart {
     padding: 150px 10px !important;
