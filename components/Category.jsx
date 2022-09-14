@@ -1,25 +1,21 @@
 import React from 'react';
 import Axios from "axios";
 
-const Card = ({product}) => {
+const Category = ({category}) => {
 
   return ( 
     <article className="card">
       <article className="card-image-container">
-      {product.images[0]?.src && (
           <img 
-            src={product.images[0].src} 
-            alt={product.images[0].altText}
+            src="https://www.merionpartners.com/wp-content/uploads/2015/10/400x4005.png"
           />
-        )}
       </article>
       <section style={{alignSelf: "flex-start"}}>
-        <h2>{product.title}</h2>  
-        <p>{product.variants[0].priceV2.amount}</p>
+        <h2>{category.title}</h2>  
         </section>
     </article>
    );
 }
 
  
-export default Card;
+export default Category;
