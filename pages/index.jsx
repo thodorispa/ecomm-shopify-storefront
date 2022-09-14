@@ -47,11 +47,10 @@ const Home = ({ _products }) => {
       </section>
       <section className="showcase-feed">
       {f_categories?.map((category, i) => (
-          <Link href="/">
+          <Link key={i} href="/">
             <a>
               <Category category={category} />
             </a>
-
           </Link>
         ))}
       </section>
