@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { navLinks } from "../utils/data";
 import Link from "next/link";
 
 const Navbar = () => {
   const [isLogged, setIsLogged] = useState(false);
+  const ref = useRef();
   const [nav, setNav] = useState(false);
+
+  useEffect(() => {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+      ref.current.style.padding = "30px 10px";
+    } else {
+    }
+  },[])
+    
+  
   const navOnClick = () => {
     setNav(!nav);
   };
@@ -25,7 +35,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <header className="navbar">
+      <header ref={ref} className="navbar">
         <Link href="/">
           <a>
             <div className="logo">
