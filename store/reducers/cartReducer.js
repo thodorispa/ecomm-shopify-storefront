@@ -1,11 +1,9 @@
 /* eslint-disable no-case-declarations */
 
-const cartReducer = (state = { cart: [] }, action = {}) => {
+const cartReducer = (state = null, action = {}) => {
   switch (action.type) {
     case "SET_CART":
-      return {
-        cart : action.payload
-      }
+      return action.payload
     // case "ADD_TO_CART":
     //   const item = state.cart?.find(item => item.id === action.payload.id)
     //   if (!item) {

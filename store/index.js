@@ -10,7 +10,7 @@ export const store = createStore(
     cart: cartReducer,
   }),
   {
-    cart: { cart: [] },
+    cart: null,
   },
   // typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   composeWithDevTools(applyMiddleware(thunk))

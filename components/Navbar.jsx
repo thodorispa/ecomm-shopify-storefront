@@ -43,10 +43,10 @@ const Navbar = () => {
             </div>
           </section>
           <nav className={renderCssClasses()}>
-            {navLinks.map((link, index) => {
+            {navLinks.map((link, i) => {
               return (
-                <ul className="link">
-                    <li key={index}>
+                <ul className="link" key={i}>
+                    <li >
                       {link.name}
                     </li>
                     {link.name === "FACE" ? (

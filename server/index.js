@@ -55,8 +55,14 @@ app.prepare().then(() => {
     }
 
     if (!req.cart && req.cookies.cart) {
+      try {
       const existingCart = decodeURIComponent(req.cookies.cart) || null;
-      req.cart = await Cart.fetch(existingCart);
+
+        const cartRes = await Cart.fetch(existingCart) || null;
+        req.cart = cartRes.cart
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     next()

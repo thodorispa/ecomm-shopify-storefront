@@ -31,6 +31,15 @@ const createAndAdd = async (productId, quantity) => {
                   merchandise {
                     ... on ProductVariant {
                       id
+                      image {
+                        url
+                        altText
+                      }
+                      product {
+                        ... on Product {
+                          title
+                        }
+                      }
                     }
                   }
                 }
@@ -93,6 +102,15 @@ const add = async (cartId, prodcutId, quantity) => {
                   merchandise {
                     ... on ProductVariant {
                       id
+                      image {
+                        url
+                        altText
+                      }
+                      product {
+                        ... on Product {
+                          title
+                        }
+                      }
                     }
                   }
                 }
@@ -132,6 +150,131 @@ const add = async (cartId, prodcutId, quantity) => {
   return { cart };
 }
 
+const updateQuantity = async (cartId, lineId, quantity) => {
+  try {
+    var query = await client.query({
+      data: `mutation {
+        cartLinesUpdate(
+          cartId: "${cartId}"
+          lines: {
+            id: "${lineId}"
+            quantity: ${quantity}
+          }
+        ) {
+          cart {
+            id
+            createdAt
+            updatedAt
+            lines(first: 10) {
+              edges {
+                node {
+                  id
+                  quantity
+                  merchandise {
+                    ... on ProductVariant {
+                      id
+                    }
+                  }
+                }
+              }
+            }
+            cost {
+              totalAmount {
+                amount
+                currencyCode
+              }
+              subtotalAmount {
+                amount
+                currencyCode
+              }
+              totalTaxAmount {
+                amount
+                currencyCode
+              }
+              totalDutyAmount {
+                amount
+                currencyCode
+              }
+            }
+          }
+        }
+      }      
+      `,
+    });
+  } catch (e) {
+    console.log(e.response.errors);
+    return { Errors: { message: e.response.errors } };
+  }
+
+  const { cart } = query.body.data.cartLinesAdd;
+  cart.lines = cart.lines.edges.map(n => n.node);
+
+  return { cart };
+}
+
+const remove = async (cartId, lineId) => {
+  try {
+    var query = await client.query({
+      data: `mutation {
+        cartLinesRemove(
+          cartId: "${cartId}"
+          lineIds: ["${lineId}","${lineId}"]
+        ) {
+          cart {
+            id
+            createdAt
+            updatedAt
+            lines(first: 10) {
+              edges {
+                node {
+                  id
+                  quantity
+                  merchandise {
+                    ... on ProductVariant {
+                      id
+                    }
+                  }
+                }
+              }
+            }
+            cost {
+              totalAmount {
+                amount
+                currencyCode
+              }
+              subtotalAmount {
+                amount
+                currencyCode
+              }
+              totalTaxAmount {
+                amount
+                currencyCode
+              }
+              totalDutyAmount {
+                amount
+                currencyCode
+              }
+            }
+          }
+          userErrors {
+            field
+            message
+          }
+        }
+      }      
+      `,
+    });
+  } catch (e) {
+    console.log(e.response.errors);
+    return { Errors: { message: e.response.errors } };
+  }
+
+  const { cart } = query.body.data.cartLinesAdd;
+  cart.lines = cart.lines.edges.map(n => n.node);
+
+  return { cart };
+}
+
 const fetch = async (id) => {
   try {
     var query = await client.query({
@@ -148,8 +291,18 @@ const fetch = async (id) => {
                 merchandise {
                   ... on ProductVariant {
                     id
+                    image {
+                      url
+                      altText
+                    }
+                    product {
+                      ... on Product {
+                        title
+                      }
+                    }
                   }
                 }
+                
               }
             }
           }
@@ -187,7 +340,9 @@ const fetch = async (id) => {
 
 
 export {
+  fetch,
   createAndAdd,
   add,
-  fetch,
+  updateQuantity,
+  remove
 }

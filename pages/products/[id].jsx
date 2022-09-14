@@ -1,9 +1,10 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Head from "next/head";
 import Axios from "axios"
 import Card from "../../components/Card";
 import { cart } from "../../store/reducers/cartReducer.js"
 import { useSelector, useDispatch } from "react-redux"
+import Cookies from 'js-cookie';
 
 
 
@@ -11,25 +12,22 @@ const SingleProduct = ({ _product }) => {
   const dispatch = useDispatch()
 
   const [product, setProduct] = useState(_product)
-  const { cart } = useSelector(x => x)
-  console.log(cart);
+  const [quantity, setQuantity] = useState(1)
+  const quantityAvailable = product.variants[0].quantityAvailable
 
-
-  const addToCart = (e) => {
-    e.preventDefault()
-
+  const addToCart = async () => {
     const productId = product.variants[0].id;
-    // get the line id by productVariantId in cart
-    // const lineItem = cart.lineItems.find(x => x.variantId === productId)
 
-    Axios.post(`http://localhost:3000/api/cart/add`, { productId })
-      .then(res => {
-        dispatch({ type: "SET_CART", payload: res.data})
+    if (quantityAvailable > 0) {
+      try {
+        const { data } = await Axios.post(`/api/cart/add`, { productId, quantity })
+        const { cart } = data
 
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        dispatch({ type: "SET_CART", payload: cart })
+      } catch (error) {
+        console.log(error)
+      }
+    }
   };
 
   return (
@@ -50,19 +48,30 @@ const SingleProduct = ({ _product }) => {
         <p>{product.description}</p>
         <p>{product.variants[0].priceV2.amount + product.variants[0].priceV2.currencyCode}</p>
 
-        <div className="add_btn">
-          <i className="fas fa-shopping-cart"></i>
-          <p onClick={(e) => {
-            addToCart(e);
-          }}>
-            ADD TO CART
-          </p>
-        </div>
+        <section>
+          <input
+            type="number"
+            min="1"
+            max={quantityAvailable}
+            value={quantity}
+            onChange={e => setQuantity(e.target.value)}
+          />
+          <i 
+            style={{ cursor: 'pointer' }} 
+            className="fas fa-shopping-cart"
+            onClick={addToCart}/>
+        </section>
+
+        {quantityAvailable > 0 ? 
+          <small>Available quantity {quantityAvailable}</small>
+        : <small style={{ color: "red" }}>Out of stock</small>
+        }
+
       </section>
     </div>
   );
 }
-// This gets called on every request
+
 export async function getServerSideProps(ctx) {
   const productId = ctx.query?.id
   let _product = null

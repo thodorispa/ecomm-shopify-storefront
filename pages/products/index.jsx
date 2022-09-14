@@ -18,11 +18,8 @@ const AllProducts = ({ _products }) => {
       <section className="container feed">
 
         {products?.map((product, i) => (
-          <Link href={`/products/${product.id}`}>
-            <a>
-              <Card product={product} />
-            </a>
-
+          <Link key={i} href={`/products/${product.id}`}>
+            <a><Card product={product} /></a>
           </Link>
         ))}
 

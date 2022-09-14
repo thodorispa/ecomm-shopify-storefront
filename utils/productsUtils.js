@@ -83,6 +83,7 @@ const fetchById = async (id) => {
             edges {
               node {
                 id
+                quantityAvailable
                 priceV2 {
                   amount
                   currencyCode
