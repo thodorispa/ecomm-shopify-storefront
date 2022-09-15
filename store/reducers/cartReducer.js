@@ -33,7 +33,8 @@ const cartReducer = (state = null, action = {}) => {
         ...state,
         focused: action.payload
       }
-
+    case "INCREASE_QUANTITY":
+      
     default: return state
   }
 }
