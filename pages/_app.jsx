@@ -16,6 +16,7 @@ import '../styles/product_details.css'
 import '../styles/cart.css'
 import '../styles/register.css'
 import '../styles/main.css'
+import '../styles/loader.css'
 
 
 const MyApp = ({ Component, pageProps }) => {

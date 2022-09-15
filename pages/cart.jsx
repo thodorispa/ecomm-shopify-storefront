@@ -4,8 +4,9 @@ import Axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Cart = ({ _checkout, _products }) => {
-  const dispatch = useDispatch()
 
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const { cart } = useSelector(x => x)
 
   // const checkout = async () => {
@@ -27,10 +28,12 @@ const Cart = ({ _checkout, _products }) => {
     const quantity = status === "update" ?  product.quantity-1 : 1
 
     try {
+      setIsLoading(true);
       const { data } = await Axios.post(`/api/cart/${status}`, { productId, quantity , lineId })
       const { cart } = data
 
       dispatch({ type: "SET_CART", payload: cart })
+      setIsLoading(false);
     } catch (error) {
       console.log(error)
     }
@@ -40,8 +43,19 @@ const Cart = ({ _checkout, _products }) => {
     <header className="container cart">
       <h1>This is your cart</h1>
       <table className="cart-table">
-        <thead>
-          <tr>
+        {cart.lines.length === 0 ? (
+          <thead>
+            <tr>
+              <th>Your shopping cart is empty</th>
+              <th>
+                <a href="/products">Shop Here</a>
+              </th>
+            </tr>
+          </thead>
+          ) : (
+            <>
+            <thead>
+            <tr>
             <th>&nbsp;</th>
             <th className="th-prod">Product</th>
             <th className="th-price">Price</th>
@@ -92,16 +106,27 @@ const Cart = ({ _checkout, _products }) => {
                   onClick={() => handleProductQuantity(product, "add")}
                 />
               </td>
+              
             </tr>
           ))}
         </tbody>
-        <thead style={{ alignSelf: "flex-end" }}>
+        
+        <thead className="subtotal">
           <tr>
             <th>Subtotal</th>
-            <th>{cart.cost.subtotalAmount.amount}&nbsp;{cart.cost.subtotalAmount.currencyCode}</th>
+            {isLoading ? (
+              <th className="spinner">
+              <div class="loadingio-spinner-ripple-hb4ksrtc1us"><div class="ldio-uua8zfoilp">
+              <div></div><div></div>
+              </div></div>
+              </th>
+            ) : <th>{cart.cost.subtotalAmount.amount}&nbsp;{cart.cost.subtotalAmount.currencyCode}</th>}
           </tr>
         </thead>
+        </>
+          )}
       </table>
+      
     </header>
   );
 }

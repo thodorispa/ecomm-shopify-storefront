@@ -120,6 +120,54 @@ body {
   }
   }
 
+  @media screen and (max-width: 920px) {
+    .banner {
+      padding: 10px 10px;
+    }
+    .desc {
+      padding: 0px 10px 10px 10px;
+      width: 100%;
+    }
+    .featured {
+      padding-left: 0;
+    }
+  }
+@media screen and (max-width: 890px) {
+  .header_img {
+    object-position: 20% 80%;
+    height: auto;
+    min-width: 100%;
+  }
+
+  .header-img {
+    width: 100%;
+  }
+
+  .banner {
+    flex-direction: column;
+    padding: 5px 10px;
+  }
+  .showcase {
+    padding: 5px;
+    width: 100%;
+
+  }
+  .desc {
+    padding: 0px 10px 10px 10px;
+    width: 100%;
+  }
+  .featured {
+    padding-left: 0;
+  }
+
+  .featured-c {
+    padding-left: 10px;
+  }
+  .featured-link:after {
+    padding: 0px 5px 0px 20px;
+  }
+  }
+
 
 .img_container {
   background-color:#FFF;

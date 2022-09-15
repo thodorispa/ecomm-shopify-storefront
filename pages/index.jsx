@@ -29,8 +29,8 @@ const Home = ({ _products }) => {
       <section className="header-img">
       <img
         className="header_img"
-        src="https://images.pexels.com/photos/4202926/pexels-photo-4202926.jpeg"
-        alt=""
+        src="../styles/BACKCOVER.png"
+        alt="pra"
       />
       </section>
 
