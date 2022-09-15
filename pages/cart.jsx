@@ -1,56 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../components/Card'
 import Axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Cart = ({ _checkout, _products }) => {
+  const dispatch = useDispatch()
 
   const { cart } = useSelector(x => x)
-  const dispatch = useDispatch();
-  const [quantity,setQuantity] = useState(1);
 
-  const handleProductQuantity = (e, product) => {
-
-    let productId = product.merchandise.id;
-    let quantity = e.target.value;
-
-    if (quantity > product.quantity) {
-
-    } else if (quantity < product.quantity) {
-
-    }
-
-    console.log(productId, quantity);
-   
-  }
-
-  const increaseProductQuantity = async (e,product) => {
-
-    let productId = product.merchandise.id;
-    let quantity = 1;
-
-    console.log(quantity);
-
+  const checkout = async () => {
     try {
-      const { data } = await Axios.post(`/api/cart/add`, { productId, quantity })
+      const { data } = await Axios.post(`/api/checkout/create`, { lines: cart.lines })
       console.log(data);
-      const { cart } = data
-
-      dispatch({ type: "SET_CART", payload: cart })
     } catch (error) {
       console.log(error)
     }
   }
-  const decreaseProductQuantity = async (e,product) => {
+
+  useEffect(() => {
+    checkout()
+  }, [])
+
+  const increaseProductQuantity = async (e,product) => {
 
     let productId = product.merchandise.id;
-    let quantity = - 1;
+    console.log(productId);
+    console.log(product);
 
-    console.log(quantity);
+    // find the product in the cart
 
     try {
-      const { data } = await Axios.post(`/api/cart/add`, { productId, quantity })
-      console.log(data);
+      const { data } = await Axios.post(`/api/cart/add`, { productId, quantity: 1 })
       const { cart } = data
 
       dispatch({ type: "SET_CART", payload: cart })

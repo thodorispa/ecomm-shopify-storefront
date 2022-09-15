@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser'
 
 import user from './api/user'
 import customer from './api/customer'
+import checkout from './api/checkout'
 import address from './api/address'
 import product from './api/product'
 import collections from './api/collections'
@@ -77,6 +78,7 @@ app.prepare().then(() => {
   server.use('/api/product', product)
   server.use('/api/collections', collections)
   server.use('/api/cart', cart)
+  server.use('/api/checkout', checkout)
   server.use('/api/shopify', shopify)
 
 

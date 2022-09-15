@@ -63,9 +63,9 @@ const SingleProduct = ({ _product }) => {
         <input
             type="number"
             style={{marginRight:"10px"}}
-            min="1"
+            min={quantityAvailable > 0 ? 1 : 0}
             max={quantityAvailable}
-            value={quantity}
+            value={quantityAvailable > 0 ? quantity : 0}
             onChange={e => setQuantity(e.target.value)}
           />
           <div className="cart-icon">
