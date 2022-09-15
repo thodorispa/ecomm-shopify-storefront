@@ -13,7 +13,18 @@ const SingleProduct = ({ _product }) => {
 
   const [product, setProduct] = useState(_product)
   const [quantity, setQuantity] = useState(1)
+  const [availability, setAvailability] = useState("");
   const quantityAvailable = product.variants[0].quantityAvailable
+
+  useEffect(() => {
+    if (quantityAvailable > 5) {
+      setAvailability("In stock")
+    } else if (quantityAvailable <=4 ) {
+      setAvailability("Low in stock")
+    } else if (quantityAvailable === 0 ) {
+      setAvailability("Out of stock")
+    }
+  },[])
 
   const addToCart = async () => {
     const productId = product.variants[0].id;
@@ -36,7 +47,7 @@ const SingleProduct = ({ _product }) => {
         <title>{product.title} || Amazing Soaps</title>
       </Head>
 
-      <section className="product">
+      <section className="container product">
         {product.images[0]?.src && (
           <img
             className="prod_img"
@@ -44,29 +55,31 @@ const SingleProduct = ({ _product }) => {
             alt={product.images[0].altText}
           />
         )}
+        <article className="product-details">
         <h1>{product.title}</h1>
-        <p>{product.description}</p>
-        <p>{product.variants[0].priceV2.amount + product.variants[0].priceV2.currencyCode}</p>
-
-        <section>
-          <input
+        <p style={{padding:"10px 0px"}}>{product.description}</p>
+        <p style={{fontWeight: "700"}}>{product.variants[0].priceV2.amount + product.variants[0].priceV2.currencyCode}</p>
+        <section className="buy-product">
+        <input
             type="number"
+            style={{marginRight:"10px"}}
             min="1"
             max={quantityAvailable}
             value={quantity}
             onChange={e => setQuantity(e.target.value)}
           />
+          <div className="cart-icon">
           <i 
-            style={{ cursor: 'pointer' }} 
+            style={{color: "black"}}
             className="fas fa-shopping-cart"
             onClick={addToCart}/>
+          </div>
         </section>
-
         {quantityAvailable > 0 ? 
-          <small>Available quantity {quantityAvailable}</small>
-        : <small style={{ color: "red" }}>Out of stock</small>
+          <small style={{fontSize: "14px"}}>{availability}</small>
+        : <small style={{ color: "red" }}>{availability}</small>
         }
-
+        </article>
       </section>
     </div>
   );

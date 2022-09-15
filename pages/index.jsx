@@ -57,7 +57,7 @@ const Home = ({ _products }) => {
       <section className="featured">
       <ul className="featured-c">
         {categories?.map((category, i) => (
-            <li className="featured-link">{category.name}</li>
+            <li key={i} className="featured-link">{category.name}</li>
         ))}
          </ul>
       </section>
