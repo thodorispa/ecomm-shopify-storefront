@@ -17,7 +17,7 @@
   cursor: pointer;
   align-items: center;
   flex-direction: row;
-  font-size: 17px;
+  font-size: 20px;
   border-radius: 5px;
   width: 50px;
   height: 25px;
@@ -34,14 +34,18 @@
 .cart-icon:hover::after {
   color: white;
   content: "ADD TO CART";
-  animation: 2.5s fadeIn;
+  animation: 1.5s fadeIn;
+  font-size: 17px;
   text-align: center;
 }
 
 .prod_img {
   align-self: center;
+  padding: 0px 15px;
   min-height: 400px;
-  max-width: 800px;
+  max-height: 420px;
+  min-width: 400px;
+  max-width: 420px;
 }
 
 @keyframes fadeIn {
@@ -50,13 +54,20 @@
 }
 
 @media screen and (max-width: 420px) {
+
   .product {
     flex-direction: column;
     padding: 120px 10px !important;
+    overflow-x: hidden;
   }
   .product-details {
     flex-direction: column;
-    padding: 20px 20px;
+    padding: 20px 10px;
     width: 100%;
+  }
+
+  .prod_img {
+    max-width: 380px;
+    max-height: 400px;
   }
 }

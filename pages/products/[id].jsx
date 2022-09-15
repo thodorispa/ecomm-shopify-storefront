@@ -62,7 +62,9 @@ const SingleProduct = ({ _product }) => {
         <section className="buy-product">
         <input
             type="number"
-            style={{marginRight:"10px"}}
+            style={{marginRight:"10px",
+            padding:"5px 5px",
+            border: "1px solid black"}}
             min="1"
             max={quantityAvailable}
             value={quantity}
