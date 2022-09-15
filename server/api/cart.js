@@ -32,11 +32,12 @@ router.post('/add', async (req, res) => {
 
 // Create cart
 router.post('/update', async (req, res) => {
-  const productId = req.body.productId;
+  const lineId = req.body.lineId;
+  const newQuantity = req.body.quantity;
   const existingCart = decodeURIComponent(req.cookies.cart) || null;
 
   try {
-    var { cart, Errors } = await Cart.add(existingCart, productId, 1);
+    var { cart, Errors } = await Cart.update(existingCart, lineId, newQuantity);
 
     if (Errors) {
       return res.status(400).send(Errors.message);
@@ -54,6 +55,7 @@ router.post('/update', async (req, res) => {
 // Create cart
 router.post('/remove', async (req, res) => {
   const lineId = req.body.lineId;
+  console.log(lineId);
   const existingCart = decodeURIComponent(req.cookies.cart) || null;
 
   try {

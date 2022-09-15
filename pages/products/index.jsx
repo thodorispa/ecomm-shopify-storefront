@@ -8,8 +8,6 @@ import { useEffect, useState } from "react";
 
 const AllProducts = ({ _products }) => {
   const [products, setProducts] = useState(_products)
-
-  console.log(products);
   return (
     <>
 

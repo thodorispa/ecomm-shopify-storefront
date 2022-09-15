@@ -9,26 +9,26 @@ const create = async (lines) => {
 
   try {
     var query = await client.query({
-      // data: `mutation {
-      //   checkoutCreate(input: {lineItems: "${lines}"  }) {
-      //             checkout {
-      //               webUrl
-      //             }
-      //           }
-      //         }
-              
-      //         `,
       data: `mutation {
-checkoutCreate(input: {lineItems: "{ variantId: "gid:/\///\//shopify/ProductVariant/41964670583025", 
-quantity: 1 }", { variantId: "gid://shopify/ProductVariant/41964670583025", 
-quantity: 1 }" }) {
-          checkout {
-            webUrl
-          }
-        }
-      }
+        checkoutCreate(input: {lineItems: "${lines}"  }) {
+                  checkout {
+                    webUrl
+                  }
+                }
+              }
+              
+              `,
+//       data: `mutation {
+// checkoutCreate(input: {lineItems:[{ variantId: "gid://shopify/ProductVariant/41964670583025", 
+// quantity: 1 }, { variantId: "gid://shopify/ProductVariant/41964670583025", 
+// quantity: 1 }] }) {
+//           checkout {
+//             webUrl
+//           }
+//         }
+//       }
       
-      `,
+//       `,
     });
   } catch (e) {
     console.log(e.response.errors);

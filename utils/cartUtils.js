@@ -157,21 +157,21 @@ const add = async (cartId, prodcutId, quantity) => {
   }
 
   const { cart } = query.body.data.cartLinesAdd;
+  console.log(cart);
   cart.lines = cart.lines.edges.map(n => n.node);
 
   return { cart };
 }
 
-const updateQuantity = async (cartId, lineId, quantity) => {
+const update = async (cartId, lineId, quantity) => {
+  console.log(lineId);
+  console.log(quantity);
   try {
     var query = await client.query({
       data: `mutation {
         cartLinesUpdate(
           cartId: "${cartId}"
-          lines: {
-            id: "${lineId}"
-            quantity: ${quantity}
-          }
+          lines: [{ id: "${lineId}" quantity: ${quantity}}]
         ) {
           cart {
             id
@@ -233,7 +233,7 @@ const updateQuantity = async (cartId, lineId, quantity) => {
     return { Errors: { message: e.response.errors } };
   }
 
-  const { cart } = query.body.data.cartLinesAdd;
+  const { cart } = query.body.data.cartLinesUpdate;
   cart.lines = cart.lines.edges.map(n => n.node);
 
   return { cart };
@@ -245,7 +245,7 @@ const remove = async (cartId, lineId) => {
       data: `mutation {
         cartLinesRemove(
           cartId: "${cartId}"
-          lineIds: ["${lineId}","${lineId}"]
+          lineIds: ["${lineId}"]
         ) {
           cart {
             id
@@ -260,8 +260,22 @@ const remove = async (cartId, lineId) => {
                   merchandise {
                     ... on ProductVariant {
                       id
+                      priceV2 {
+                        amount
+                        currencyCode
+                      }
+                      image {
+                        url
+                        altText
+                      }
+                      product {
+                        ... on Product {
+                          title
+                        }
+                      }
                     }
                   }
+                  
                 }
               }
             }
@@ -297,7 +311,7 @@ const remove = async (cartId, lineId) => {
     return { Errors: { message: e.response.errors } };
   }
 
-  const { cart } = query.body.data.cartLinesAdd;
+  const { cart } = query.body.data.cartLinesRemove;
   cart.lines = cart.lines.edges.map(n => n.node);
 
   return { cart };
@@ -376,6 +390,6 @@ export {
   fetch,
   createAndAdd,
   add,
-  updateQuantity,
+  update,
   remove
 }
