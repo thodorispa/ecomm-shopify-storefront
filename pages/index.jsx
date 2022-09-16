@@ -1,65 +1,51 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import Category from '../components/Category'
+import Collection from '../components/Collection'
 import { useEffect } from "react";
 import Link from "next/link";
-import { categories } from "../utils/categoriesData";
+
 import Axios from "axios";
+import { collections } from "../utils/data"
+
 
 const Home = ({ _products }) => {
 
   const [products, setProducts] = useState(_products);
 
-
-  const f_categories = [
-    {
-      title: 'Soap Bars'
-    },
-    {
-      title: 'Face'
-    },
-    {
-      title: 'Body'
-    }
-  ]
-  console.log(f_categories);
   return (
     <header className="container">
       <section className="banner">
-      <section className="header-img">
-      <img
-        className="header_img"
-        src="../styles/BACKCOVER.png"
-        alt="pra"
-      />
-      </section>
+        <section className="header-img">
+          <img
+            className="header_img"
+            src="../styles/BACKCOVER.png"
+            alt="pra"
+          />
+        </section>
 
-      <article className="showcase">
-      <h1 style={{ fontSize: "40px" }}>Welcome to Katoi Soap</h1>
-      <p>Katoi is a small business based in Amorgos</p>
-      <p className="desc">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, ipsum
-        veritatis iure, modi, neque delectus id fuga praesentium commodi
-        accusamus rem atque magni! Similique ex possimus eius sapiente enim
-        eaque.
-      </p>
-      </article>
+        <article className="showcase">
+          <h1 style={{ fontSize: "40px" }}>Welcome to Katoi Soap</h1>
+          <p>Katoi is a small business based in Amorgos</p>
+          <p className="desc">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, ipsum
+            veritatis iure, modi, neque delectus id fuga praesentium commodi
+            accusamus rem atque magni! Similique ex possimus eius sapiente enim
+            eaque.
+          </p>
+        </article>
       </section>
       <section className="showcase-feed">
-      {f_categories?.map((category, i) => (
-          <Link key={i} href="/">
-            <a>
-              <Category category={category} />
-            </a>
-          </Link>
+        {collections?.map((collection, i) => (
+              <Collection collection={collection} />
+
         ))}
       </section>
       <section className="featured">
-      <ul className="featured-c">
-        {categories?.map((category, i) => (
-            <li key={i} className="featured-link">{category.name}</li>
-        ))}
-         </ul>
+        <ul className="featured-c">
+          {collections?.map((collection, i) => (
+            <li key={i} className="featured-link">{collection.name}</li>
+          ))}
+        </ul>
       </section>
     </header>
   );

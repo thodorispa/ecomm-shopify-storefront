@@ -9,6 +9,8 @@ const Cart = ({ _checkout, _products }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { cart } = useSelector(x => x)
 
+  console.log(cart);
+
   // const checkout = async () => {
   //   try {
   //     const { data } = await Axios.post(`/api/checkout/create`, { lines: cart.lines })
@@ -43,7 +45,7 @@ const Cart = ({ _checkout, _products }) => {
     <header className="container cart">
       <h1>This is your cart</h1>
       <table className="cart-table">
-        {cart.lines.length === 0 ? (
+        {!cart || cart.lines ? (
           <thead>
             <tr>
               <th>Your shopping cart is empty</th>

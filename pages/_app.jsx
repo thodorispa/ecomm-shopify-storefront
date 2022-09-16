@@ -3,8 +3,6 @@ import App from 'next/app'
 import { Provider } from 'react-redux';
 import { store } from "../store/index";
 
-import Card from "../components/Card";
-import Category from "../components/Category";
 import Navbar from "../components/Navbar";
 import Init from "../components/Init";
 
