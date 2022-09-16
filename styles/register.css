@@ -1,5 +1,4 @@
 .register {
-  padding-top: 120px;
   overflow-y: hidden;
   flex-direction: column;
 }
@@ -8,6 +7,10 @@
   align-self: flex-start;
   padding: 10px;
   align-items: flex-end;
+}
+
+.sign-in {
+  padding-top: 150px !important;
 }
 
 .validate {
@@ -41,19 +44,37 @@
 
   animation: 0.3s fadeIn;
 }
-.register-btn {
+.register-btn:disabled {
   padding: 7px;
   border: 1px solid #111b0d;
   background-color: transparent;
+  color: #111b0d53;
+  border-radius: 0;
   width: 100%;
   margin-top: 15px;
+  cursor: pointer;
   padding: 12px;
   font-size: 17px;
   transition: 0.2s ease-in;
 }
 
-.register-btn:hover {
+.register-btn:enabled {
+  padding: 7px;
+  border: 1px solid #111b0d;
+  background-color: transparent;
+  border-radius: 0;
+  width: 100%;
+  margin-top: 15px;
+  cursor: pointer;
+  padding: 12px;
+  font-size: 17px;
+  transition: 0.2s ease-in;
+  color: #111b0d;
+}
+
+.register-btn:hover:enabled {
   background-color: #111b0d;
+  border-radius: 0;
   color: rgb(255, 255, 255);
   transition: 0.2s ease-in;
 }
@@ -61,4 +82,9 @@
 @keyframes fadeIn {
   0% {opacity:0;}
   100% {opacity:1;}
+}
+@media screen and (max-width: 420px) {
+  .register {
+    padding-top: 160px !important;
+  }
 }

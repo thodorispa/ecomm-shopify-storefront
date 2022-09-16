@@ -3,17 +3,14 @@ import Head from "next/head";
 import Collection from '../components/Collection'
 import { useEffect } from "react";
 import Link from "next/link";
-
 import Axios from "axios";
 import { collections } from "../utils/data"
-import { useSelector } from "react-redux";
 
 
 
 const Home = ({ _products }) => {
 
   const [products, setProducts] = useState(_products);
-  const { user } = useSelector(x => x)
 
   return (
     <header className="container">

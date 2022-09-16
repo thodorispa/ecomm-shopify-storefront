@@ -87,7 +87,7 @@ const Register = () => {
   };
 
   return (
-    <header className="container">
+    <header className="container register">
       <article>
         <h1 style={{ margin: "0" }}>Register to Katoi</h1>
         <p style={{ padding: "20px 10px", fontSize: "larger" }}>

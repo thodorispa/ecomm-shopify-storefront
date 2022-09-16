@@ -49,6 +49,10 @@ p, li, input, textarea, select {
   font-size: 17px;
 }
 
+button {
+  cursor: pointer;
+}
+
 h1 { font-size: 32px; }
 @media (max-width: 1000px) { h1 { font-size: 26px; } }
 h2 { font-size: 26px; }

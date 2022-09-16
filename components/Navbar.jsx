@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { navLinks } from "../utils/data";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const [isLogged, setIsLogged] = useState(false);
+
+  const { user } = useSelector(x => x);
   const ref = useRef();
   const [nav, setNav] = useState(false);
 
@@ -84,22 +86,45 @@ const Navbar = () => {
               );
             })}
           </nav>
+         {!user ? (
+           <section className="usr-menu">
+           <section className="user_toggle">
+             <i style={{padding: "8px", cursor:"pointer"}} className="fa-solid fa-user"></i>
+             <div style={{marginTop: "30px"}}  className="dropdown">
+               <Link href="/register">
+                 <li className="drop-link">Register</li>
+               </Link>
+               <Link href="/signIn">
+                 <li className="drop-link">Sign In</li>
+               </Link>
+             </div>
+           </section>
+           <Link href="/cart">
+             <i style={{fontSize:"20px", padding: "8px",  cursor:"pointer"}} className="fa-solid fa-cart-shopping"></i>
+           </Link>
+         </section>
+         ) : (
           <section className="usr-menu">
-            <div className="user_toggle">
-              <i style={{padding: "8px", cursor:"pointer"}} className="fa-solid fa-user"></i>
-              <div className="dropdown">
-                <Link href="/register">
-                  <li className="drop-link">Register</li>
-                </Link>
-                <Link href="/signIn">
-                  <li className="drop-link">Sign In</li>
-                </Link>
-              </div>
-            </div>
+            <section className="user_toggle"> 
+              <pre>{user.customer.firstName}</pre>
+              <i style={{padding: "8px", cursor:"pointer", alignSelf:"center"}} className="fa-solid fa-user"></i>
+              <div style={{marginTop: "40px"}} className="dropdown">
+               <Link href="/">
+                 <li className="drop-link">Preferences</li>
+               </Link>
+               <Link href="/">
+                 <li className="drop-link">Order History</li>
+               </Link>
+               <Link href="/">
+                 <li className="drop-link">Sign Out</li>
+               </Link>
+             </div>
+            </section>
             <Link href="/cart">
-              <i style={{fontSize:"20px", padding: "8px",  cursor:"pointer"}} className="fa-solid fa-cart-shopping"></i>
-            </Link>
+             <i style={{fontSize:"20px", padding: "8px",  cursor:"pointer"}} className="fa-solid fa-cart-shopping"></i>
+           </Link>
           </section>
+         )}
         </section>
       </header>
     </>

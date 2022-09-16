@@ -9,21 +9,6 @@ const Cart = ({ _checkout, _products }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { cart } = useSelector(x => x)
 
-  console.log(cart);
-
-  // const checkout = async () => {
-  //   try {
-  //     const { data } = await Axios.post(`/api/checkout/create`, { lines: cart.lines })
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   checkout()
-  // }, [])
-
   const handleProductQuantity = async (product, status) => {
     const productId = product.merchandise.id;
     const lineId = product.id

@@ -31,6 +31,9 @@ const SignIn = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
+    if(!email || !password) {
+      setErrors("Please provide your credentials to sign in.")
+    }
 
     try {
       const { data } = await Axios.post("/api/customer/login", { email, password });
@@ -46,12 +49,12 @@ const SignIn = () => {
   }
 
   return (
-    <header className="container">
-      <article className="register">
+    <header className="container sign-in">
+      <article>
         <h1>Sign In</h1>
         <p 
         style={{
-          padding: "30px 10px",
+          padding: "10px 10px",
           fontSize: "larger"
         }}>Welcome back, enter your credentials to sign in.</p>
       </article>
