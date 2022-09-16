@@ -104,6 +104,7 @@ const Register = () => {
                 name="name"
                 className="forms-input"
                 value={formValues.name}
+                defaultValue="Initial value"
                 onChange={handleOnChange}
                 placeholder="First Name"
               />

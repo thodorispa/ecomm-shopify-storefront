@@ -39,8 +39,8 @@ const SignIn = () => {
       const { data } = await Axios.post("/api/customer/login", { email, password });
 
       if (data.customer) {
-        dispatch({ type: "SET_CUSTOMER", payload: data.customer })
-        router.push(router.query.redirect || '/products')
+        dispatch({ type: "SET_USER", payload: data.customer })
+        router.push(router.query.redirect || '/')
       }
 
     } catch (err) {
@@ -64,6 +64,7 @@ const SignIn = () => {
           <label style={{ textAlign: "start" }} className="forms-label">Email</label>
           <input type="text"
             name="email"
+            defaultValue=""
             className="forms-input"
             onChange={e => setEmail(e.target.value)} />
         </div>
@@ -74,6 +75,7 @@ const SignIn = () => {
           <input type="password"
             name="password"
             className="forms-input"
+            defaultValue=""
             onChange={e => setPassword(e.target.value)} />
           <small>{errors}</small>
 

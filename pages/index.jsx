@@ -9,6 +9,7 @@ import { collections } from "../utils/data"
 
 
 const Home = ({ _collections }) => {
+  console.log(_collections[0]);
 
   return (
     <header className="container">
@@ -41,7 +42,10 @@ const Home = ({ _collections }) => {
       <section className="featured">
         <ul className="featured-c">
           {_collections?.map((collection, i) => (
-            <li key={i} className="featured-link">{collection.name}</li>
+            <Link key={i} href={`/collections/${collection.id}`}>
+             <a className="featured-link">{collection.name}</a>
+          </Link>
+            
           ))}
         </ul>
       </section>

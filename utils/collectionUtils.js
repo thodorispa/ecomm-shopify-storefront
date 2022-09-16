@@ -33,7 +33,7 @@ const getAll = async () => {
 
   const collections = query.body.data.collections.edges.map(n => {
     return {
-      id: n.node.id,
+      id: n.node.id.replace('gid://shopify/Collection/', ''),
       title: n.node.title,
       description: n.node.description,
       images: {
