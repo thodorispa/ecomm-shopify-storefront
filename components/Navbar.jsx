@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { navLinks } from "../utils/data";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import Axios from "axios";
 
 const Navbar = () => {
 
-  const { user } = useSelector(x => x);
+  const dispatch = useDispatch();
+  const { customer }  = useSelector(x => x.customer);
   const ref = useRef();
   const [nav, setNav] = useState(false);
 
@@ -15,8 +17,18 @@ const Navbar = () => {
     } else {
     }
   },[])
-    
-  
+
+  const logout = async () => {
+    try{
+      const res = await Axios.get("/api/customer/logout");
+      dispatch({ type: "SET_CUSTOMER", payload: false })
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   const navOnClick = () => {
     setNav(!nav);
   };
@@ -86,7 +98,7 @@ const Navbar = () => {
               );
             })}
           </nav>
-         {!user ? (
+         {!customer  ? (
            <section className="usr-menu">
            <section className="user_toggle">
              <i style={{padding: "8px", cursor:"pointer"}} className="fa-solid fa-user"></i>
@@ -106,7 +118,7 @@ const Navbar = () => {
          ) : (
           <section className="usr-menu">
             <section className="user_toggle"> 
-              <pre>{user.customer.firstName}</pre>
+              <pre>{customer.firstName}</pre>
               <i style={{padding: "8px", cursor:"pointer", alignSelf:"center"}} className="fa-solid fa-user"></i>
               <div style={{marginTop: "40px"}} className="dropdown">
                <Link href="/">
@@ -116,7 +128,9 @@ const Navbar = () => {
                  <li className="drop-link">Order History</li>
                </Link>
                <Link href="/">
-                 <li className="drop-link">Sign Out</li>
+                 <a 
+                  className="drop-link"
+                  onClick={logout()}>Log Out</a>
                </Link>
              </div>
             </section>

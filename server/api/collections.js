@@ -4,7 +4,6 @@ import * as Collection from '../../utils/collectionUtils'
 
 var router = express.Router()
 
-// Get all products
 router.get('/', async (req, res) => {
 
   try {

@@ -40,7 +40,7 @@ const SignIn = () => {
 
       if (data.customer) {
         dispatch({ type: "SET_CUSTOMER", payload: data.customer })
-        router.push(router.query.redirect || '/')
+        router.push(router.query.redirect || '/products')
       }
 
     } catch (err) {

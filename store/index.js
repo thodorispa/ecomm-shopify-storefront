@@ -8,11 +8,11 @@ import authReducer from './reducers/userReducer.js'
 
 export const store = createStore(
   combineReducers({
-    user: authReducer,
+    customer: authReducer,
     cart: cartReducer,
   }),
   {
-    user: false,
+    customer: false,
     cart: null,
   },
   // typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),

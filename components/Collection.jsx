@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from "next/link";
 
-import Axios from "axios";
-
 const Collection = ({ collection }) => {
 
 

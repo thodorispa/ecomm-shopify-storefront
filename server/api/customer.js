@@ -75,6 +75,11 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/logout', async (req, res) => {
+  res.cookie('accessToken', '', { maxAge: 0 })
+  res.status(200).send()
+})
+
 
 
 export default router;

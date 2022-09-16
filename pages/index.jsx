@@ -8,9 +8,7 @@ import { collections } from "../utils/data"
 
 
 
-const Home = ({ _products }) => {
-
-  const [products, setProducts] = useState(_products);
+const Home = ({ _collections }) => {
 
   return (
     <header className="container">
@@ -42,7 +40,7 @@ const Home = ({ _products }) => {
       </section>
       <section className="featured">
         <ul className="featured-c">
-          {collections?.map((collection, i) => (
+          {_collections?.map((collection, i) => (
             <li key={i} className="featured-link">{collection.name}</li>
           ))}
         </ul>
@@ -50,5 +48,32 @@ const Home = ({ _products }) => {
     </header>
   );
 };
+
+
+export async function getServerSideProps(ctx) {
+  let _collections = null
+  try {
+    const { data } = await Axios.get(`http://localhost:3000/api/collections/`)
+
+    if (data.collections) {
+      _collections = data.collections
+    } else {
+      // Return 404
+      return {
+        notFound: true,
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    // Return 404
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: { _collections }
+  }
+}
 
 export default Home;
