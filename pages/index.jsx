@@ -6,11 +6,14 @@ import Link from "next/link";
 
 import Axios from "axios";
 import { collections } from "../utils/data"
+import { useSelector } from "react-redux";
+
 
 
 const Home = ({ _products }) => {
 
   const [products, setProducts] = useState(_products);
+  const { user } = useSelector(x => x)
 
   return (
     <header className="container">
@@ -18,7 +21,7 @@ const Home = ({ _products }) => {
         <section className="header-img">
           <img
             className="header_img"
-            src="../styles/BACKCOVER.png"
+            src="../styles/BACKCOVER"
             alt="pra"
           />
         </section>
@@ -36,7 +39,7 @@ const Home = ({ _products }) => {
       </section>
       <section className="showcase-feed">
         {collections?.map((collection, i) => (
-              <Collection collection={collection} />
+          <Collection key={i} collection={collection} />
 
         ))}
       </section>

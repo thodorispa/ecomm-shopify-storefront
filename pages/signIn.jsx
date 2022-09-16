@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Router, { useRouter } from 'next/router';
 import Axios from 'axios';
+import { useDispatch } from 'react-redux';
 
 const SignIn = () => {
 
+  const dispatch = useDispatch();
   const router = useRouter()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,6 +36,7 @@ const SignIn = () => {
       const { data } = await Axios.post("/api/customer/login", { email, password });
 
       if (data.customer) {
+        dispatch({ type: "SET_CUSTOMER", payload: data.customer })
         router.push(router.query.redirect || '/')
       }
 

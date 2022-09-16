@@ -25,21 +25,27 @@ const Register = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (Object.keys(errors).length === 0 && isSubmit) {
-      Axios.post(`http://localhost:3000/api/customer/sign-up`, {
-        email: formValues.email,
-        firstName: formValues.name,
-        lastName: formValues.surname,
-        password: formValues.password,
-        phone: formValues.phone,
-      })
-        .then((res) => {
-          console.log("Success", res.data);
+      try {
+
+        const { data } = await Axios.post(`http://localhost:3000/api/customer/sign-up`, {
+          email: formValues.email,
+          firstName: formValues.name,
+          lastName: formValues.surname,
+          password: formValues.password,
+          phone: formValues.phone,
         })
-        .catch((err) => {
-          console.log(err);
-        });
+
+        if (data.customer) {
+          dispatch({ type: "SET_USER", payload: data.customer })
+          router.push(router.query.redirect || '/')
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+
     }
   }, [errors]);
 
@@ -90,7 +96,7 @@ const Register = () => {
         </p>
       </article>
       <section>
-        <article style={{padding: "10px"}}>
+        <article style={{ padding: "10px" }}>
           <form onSubmit={registerUser} className="forms">
             <article>
               <input
@@ -102,8 +108,8 @@ const Register = () => {
                 placeholder="First Name"
               />
               <section className="validate">
-              <i className={errors.name ? "fa-solid fa-exclamation" : ""}></i>
-              <small style={{paddingLeft: "5px"}}>{errors.name}</small>
+                <i className={errors.name ? "fa-solid fa-exclamation" : ""}></i>
+                <small style={{ paddingLeft: "5px" }}>{errors.name}</small>
               </section>
             </article>
             <article>
@@ -116,8 +122,8 @@ const Register = () => {
                 placeholder="Last Name"
               />
               <section className="validate">
-              <i className={errors.surname ? "fa-solid fa-exclamation" : ""}></i>
-              <small style={{paddingLeft: "5px"}}>{errors.surname}</small>
+                <i className={errors.surname ? "fa-solid fa-exclamation" : ""}></i>
+                <small style={{ paddingLeft: "5px" }}>{errors.surname}</small>
               </section>
             </article>
             <article>
@@ -130,8 +136,8 @@ const Register = () => {
                 placeholder="Email"
               />
               <section className="validate">
-              <i className={errors.email ? "fa-solid fa-exclamation" : ""}></i>
-              <small style={{paddingLeft: "5px"}}>{errors.email}</small>
+                <i className={errors.email ? "fa-solid fa-exclamation" : ""}></i>
+                <small style={{ paddingLeft: "5px" }}>{errors.email}</small>
               </section>
             </article>
             <article>
@@ -144,8 +150,8 @@ const Register = () => {
                 placeholder="Mobile Phone"
               />
               <section className="validate">
-              <i className={errors.phone ? "fa-solid fa-exclamation" : ""}></i>
-              <small style={{paddingLeft: "5px"}}>{errors.phone}</small>
+                <i className={errors.phone ? "fa-solid fa-exclamation" : ""}></i>
+                <small style={{ paddingLeft: "5px" }}>{errors.phone}</small>
               </section>
             </article>
             <article>
@@ -158,10 +164,10 @@ const Register = () => {
                 placeholder="Password"
               />
               <section className="validate">
-              <i className={errors.password ? "fa-solid fa-exclamation" : ""}></i>
-              <small style={{paddingLeft: "5px"}}>{errors.password}</small>
+                <i className={errors.password ? "fa-solid fa-exclamation" : ""}></i>
+                <small style={{ paddingLeft: "5px" }}>{errors.password}</small>
               </section>
-              
+
             </article>
             <article>
               <input
@@ -173,8 +179,8 @@ const Register = () => {
                 placeholder="Confirm Password"
               />
               <section className="validate">
-              <i className={errors.password ? "fa-solid fa-exclamation" : ""}></i>
-              <small style={{paddingLeft: "5px"}}>{errors.password}</small>
+                <i className={errors.password ? "fa-solid fa-exclamation" : ""}></i>
+                <small style={{ paddingLeft: "5px" }}>{errors.password}</small>
               </section>
             </article>
             <input type="submit" className="register-btn" value="Register" />

@@ -19,14 +19,14 @@ import '../styles/loader.css'
 
 const MyApp = ({ Component, pageProps }) => {
   const { cart } = pageProps
+  const { customer } = pageProps
   
   return (
     <Provider store={store}>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
       <Navbar {...pageProps} />
-      <Init {...pageProps} cart={cart} />
+      <Init {...pageProps} cart={cart} customer={customer} />
       <Component {...pageProps} />
-
     </Provider>
   )
 }
@@ -34,7 +34,8 @@ const MyApp = ({ Component, pageProps }) => {
 MyApp.getInitialProps = async (ctx) => {
   const { pageProps } = await App.getInitialProps(ctx)
   const  cart = ctx?.ctx?.req?.cart 
-  return { pageProps: { ...pageProps, cart } }
+  const  customer = ctx?.ctx?.req?.customer 
+  return { pageProps: { ...pageProps, cart, customer} }
 }
 
 export default MyApp;

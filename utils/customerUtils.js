@@ -82,14 +82,13 @@ const getCustomer = async (accessToken) => {
   } catch (e) {
     console.log(e.response.errors);
     return { customerUserErrors: e.response.errors };
-  }
+  } 
 
   const { customer } = query.body.data;
 
   if (!customer) {
     return { customerUserErrors: [{ message: "No customer found" }] };
   }
-
 
   customer.addresses = customer.addresses.edges.map((n) => n.node);
 

@@ -15,13 +15,14 @@ import collections from './api/collections'
 import cart from './api/cart'
 import shopify from './api/shopify'
 import * as Cart from '../utils/cartUtils'
+import * as Customer from '../utils/customerUtils'
 
 const { PORT, MONGO_URI, NODE_ENV } = process.env;
 
 ////////////////////////////////////
 // MongoDB Connect
 //////////////////////////////////
-mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('open', () => console.log('DB Connected'));
 mongoose.connection.on('error', (err) => console.log('MongoDB connection error:', err));
 
@@ -35,7 +36,7 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express()
   server.enable('trust proxy')
-  server.use(cors({ 
+  server.use(cors({
     credentials: true,
     origin: ['http://localhost:3000']
   }))
@@ -57,13 +58,45 @@ app.prepare().then(() => {
 
     if (!req.cart && req.cookies.cart) {
       try {
-      const existingCart = decodeURIComponent(req.cookies.cart) || null;
+        const existingCart = decodeURIComponent(req.cookies.cart) || null;
 
         const cartRes = await Cart.fetch(existingCart) || null;
-        req.cart = cartRes.cart
+
+        if (cartRes) {
+          req.cart = cartRes.cart
+        } else {
+          res.cookie('cart', '', { maxAge: 0 })
+        }
       } catch (e) {
+        res.cookie('cart', '', { maxAge: 0 })
         console.log(e);
       }
+    }
+
+    next()
+  })
+
+  server.use(async (req, res, next) => {
+    req.env = NODE_ENV
+
+    const accessToken = req.cookies.accessToken
+
+    if (accessToken) {
+      try {
+        const customer = await Customer.getCustomer(accessToken)
+
+        if (customer) {
+          req.customer = customer;
+        } else {
+          res.cookie('accessToken', '', { maxAge: 0 })
+        }
+      } catch (e) {
+        res.cookie('', '', { maxAge: 0 })
+      }
+    }
+
+    if (NODE_ENV === 'production' && !req.secure) {
+      return res.redirect('https://' + req.headers.host + req.url)
     }
 
     next()
@@ -89,7 +122,7 @@ app.prepare().then(() => {
     return handle(req, res)
   })
 
-  server.listen(PORT || 3000, () => console.log(`Listening on port ${PORT || 3000}, mode: ${NODE_ENV}`));   
+  server.listen(PORT || 3000, () => console.log(`Listening on port ${PORT || 3000}, mode: ${NODE_ENV}`));
 })
 
 
