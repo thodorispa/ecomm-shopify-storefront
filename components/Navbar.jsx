@@ -107,6 +107,7 @@ const Navbar = () => {
               <Link href="/cart">
                 <i style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} className="fa-solid fa-cart-shopping"></i>
               </Link>
+              <span className='badge badge-warning' id='lblCartCount'>{cart?.lines.length}</span>
             </section>
           ) : (
             <section className="usr-menu">

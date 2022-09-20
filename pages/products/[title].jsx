@@ -105,7 +105,7 @@ const SingleProduct = ({ _product }) => {
             {isLoading 
             ? <h4>Added to cart</h4>
             : <div style={{transform: "scale(1.2"}}
-            class="loadingio-spinner-ripple-hb4ksrtc1us"><div class="ldio-uua8zfoilp">
+            className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
             <div></div><div></div>
             </div></div> 
             } 
