@@ -4,6 +4,7 @@
   width: 100%;
   align-items: center;
   justify-content: space-around;
+  animation: intro 0.8s ease-in-out;
 }
 .card {
   /* Add shadows to create the "card" effect */
@@ -15,13 +16,18 @@
   margin: 20px;
   width: 350px;
   min-height: 440px;
-  animation: fadeIn 0.3s;
+  animation: fadeIn 1.8s;
   transition: 0.4s;
 }
 
 .card-image-container {
   height: 100%;
   z-index: -1;
+}
+
+.collection-header {
+  padding: 10px 10px;
+  animation: fadeIn 0.5s ease-in;
 }
 
 .card-image-container img {
@@ -46,3 +52,20 @@
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   cursor: pointer;
 } 
+
+@media screen and (max-width: 920px) {
+
+}
+@media screen and (max-width: 420px) {
+
+}
+
+@keyframes intro {
+  from { transform: translateY(5%); }
+  to { transform: translateY(0%); }
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}

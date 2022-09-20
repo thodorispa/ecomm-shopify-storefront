@@ -1,11 +1,14 @@
 .product {
   padding: 0px 50px;
+  animation: fadeIn 0.8s ease-in-out;
 }
 
 .product-details {
   width: 60%;
   align-items: flex-start;
   padding: 0px 20px;
+  animation: intro 0.8s ease-in-out;
+  
 }
 
 .buy-product {
@@ -46,6 +49,11 @@
   max-height: 420px;
   min-width: 400px;
   max-width: 420px;
+  animation: intro 0.8s ease-in-out;
+}
+
+.add-to-cart-loader {
+  padding: 20px 0px;
 }
 
 @keyframes fadeIn {
@@ -70,4 +78,14 @@
     max-width: 380px;
     max-height: 400px;
   }
+}
+
+@keyframes intro {
+  from { transform: translateY(20%); }
+  to { transform: translateY(0%); }
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }

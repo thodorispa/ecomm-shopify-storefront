@@ -17,19 +17,18 @@ const Collection = ({ _collection }) => {
         <title>{ _collection.title } || Welcome to Katoi</title>
       </Head>
 
-      <section className="container feed">
-
-        {_collection.products?.map((product, i) => (
-          <Link key={i} href={`/products/${product.title}`}>
-            <a><Card product={product} /></a>
-          </Link>
-        ))}
-
-        <section id="contact">
-
-
-        </section>
+      <header className="container">
+        <article className="collection-header">
+          <h1>Explore&nbsp;{_collection.title}&nbsp;Products</h1>
+        </article>
+        <section className="feed">
+          {_collection.products?.map((product, i) => (
+            <Link key={i} href={`/products/${product.title}`}>
+              <a><Card product={product} /></a>
+            </Link>
+          ))}
       </section>
+      </header>
     </>
   );
 }

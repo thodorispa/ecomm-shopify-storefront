@@ -14,32 +14,45 @@ const SingleProduct = ({ _product }) => {
   const [product, setProduct] = useState(_product)
   const [quantity, setQuantity] = useState(1)
   const [availability, setAvailability] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const [flag, setFlag] = useState(false);
   const quantityAvailable = product.variants[0].quantityAvailable
 
   useEffect(() => {
-    if (quantityAvailable > 5) {
-      setAvailability("In stock")
+    if (quantityAvailable == 0) {
+      setAvailability("Out of stock")
     } else if (quantityAvailable <= 4) {
       setAvailability("Low in stock")
-    } else if (quantityAvailable === 0) {
-      setAvailability("Out of stock")
+    } else  {
+      setAvailability("In stock")
     }
   }, [])
 
   const addToCart = async () => {
     const productId = product.variants[0].id;
-
+    setFlag(true);
     if (quantityAvailable > 0) {
       try {
         const { data } = await Axios.post(`/api/cart/add`, { productId, quantity })
         const { cart } = data
+        setIsLoading(true);
 
         dispatch({ type: "SET_CART", payload: cart })
       } catch (error) {
         console.log(error)
+        setFlag(false);
       }
     }
   };
+
+  const handleOnChange = (e) => {
+    setQuantity(e.target.value);
+    if (quantity === quantityAvailable) {
+      setDisabled(true);
+    }
+    console.log(quantityAvailable, quantity);
+  }
 
   return (
     <div >
@@ -70,19 +83,42 @@ const SingleProduct = ({ _product }) => {
               min={quantityAvailable > 0 ? 1 : 0}
               max={quantityAvailable}
               value={quantityAvailable > 0 ? quantity : 0}
-              onChange={e => setQuantity(e.target.value)}
+              onChange={handleOnChange}
+              disabled={disabled}
             />
-            <div className="cart-icon">
+            <div className="cart-icon" 
+            onClick={addToCart}>
               <i
                 style={{ color: "black" }}
                 className="fas fa-shopping-cart"
-                onClick={() => addToCart()} />
+                />
             </div>
           </section>
           {quantityAvailable > 0 ?
             <small style={{ fontSize: "14px" }}>{availability}</small>
             : <small style={{ color: "red" }}>{availability}</small>
           }
+          <article className="add-to-cart-loader">
+          {!flag 
+          ? ""
+          : <>
+            {isLoading 
+            ? <h4>Added to cart</h4>
+            : <div style={{transform: "scale(1.2"}}
+            class="loadingio-spinner-ripple-hb4ksrtc1us"><div class="ldio-uua8zfoilp">
+            <div></div><div></div>
+            </div></div> 
+            } 
+          </>
+          }
+           {quantity == quantityAvailable ? 
+           <> {!flag ?  <h4>You've reached the available quantity of this product.</h4>  : ""}
+           </>
+           : ""}
+          <article>
+           
+          </article>
+          </article>
         </article>
       </section>
     </div>

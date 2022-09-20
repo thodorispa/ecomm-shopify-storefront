@@ -157,3 +157,26 @@
   padding: 10px;
   font-size: 16px;
 }
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+
+#lblCartCount {
+    font-size: 13px;
+    background: #5c7550;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -12px;
+    margin-bottom: 10px;
+    z-index: 999;
+}

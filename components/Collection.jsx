@@ -14,9 +14,9 @@ const Collection = ({ collection }) => {
 
       <section style={{ alignSelf: "flex-start" }}>
         <Link href={`/collections/${collection.title}`}>
-          <a/>
-        </Link>
         <h2>{collection.title}</h2>
+        </Link>
+        
       </section>
 
     </article>

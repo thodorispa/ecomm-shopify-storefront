@@ -9,6 +9,7 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const { customer } = useSelector(x => x.customer);
+  const { cart } = useSelector(x => x);
 
   const ref = useRef();
   const [nav, setNav] = useState(false);
@@ -130,8 +131,10 @@ const Navbar = () => {
                 </div>
               </section>
               <Link href="/cart">
-                <i style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} className="fa-solid fa-cart-shopping"></i>
+                <i style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} className="fa-solid fa-cart-shopping">
+                </i>
               </Link>
+              <span className='badge badge-warning' id='lblCartCount'>{cart?.lines.length}</span>
             </section>
           )}
         </section>
