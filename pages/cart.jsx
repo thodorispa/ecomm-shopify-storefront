@@ -30,7 +30,7 @@ const Cart = ({ _checkout, _products }) => {
     <header className="container cart">
       <h1>This is your cart</h1>
       <table className="cart-table">
-        {!cart || cart.lines ? (
+        {cart.lines == 0 ? (
           <thead>
             <tr>
               <th>Your shopping cart is empty</th>

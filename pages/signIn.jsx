@@ -69,7 +69,7 @@ const SignIn = () => {
             onChange={e => setEmail(e.target.value)} />
         </div>
 
-        <form onSubmit={loginHandler} className="forms">
+        <form onSubmit={e => loginHandler(e)} className="forms">
 
           <label className="forms-label">Password</label>
           <input type="password"

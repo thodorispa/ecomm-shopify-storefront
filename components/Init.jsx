@@ -1,21 +1,20 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux"
 
 
 const Init = ({ cart, customer }) => {
   const dispatch = useDispatch()
 
-  if (cart) {
-    dispatch({ type: "SET_CART", payload: cart})
-  }
 
-  if (customer) {
-    dispatch({ type: "SET_USER", payload: customer})
-  }
 
-  return (  
+  cart ? dispatch({ type: "SET_CART", payload: cart }) : null
+      
+
+  customer ? dispatch({ type: "SET_USER", payload: customer }) : false
+  return (
     null
-   );
+  );
 }
 
- 
+
 export default Init;

@@ -21,11 +21,13 @@ const MyApp = ({ Component, pageProps }) => {
   const { cart } = pageProps
   const { customer } = pageProps
   
+
   return (
     <Provider store={store}>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-      <Navbar {...pageProps} />
-      <Init {...pageProps} cart={cart} customer={customer} />
+
+      <Init {...pageProps} cart={cart}/>
+      <Navbar {...pageProps} customer={customer} />
       <Component {...pageProps} />
     </Provider>
   )

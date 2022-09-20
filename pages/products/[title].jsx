@@ -19,12 +19,12 @@ const SingleProduct = ({ _product }) => {
   useEffect(() => {
     if (quantityAvailable > 5) {
       setAvailability("In stock")
-    } else if (quantityAvailable <=4 ) {
+    } else if (quantityAvailable <= 4) {
       setAvailability("Low in stock")
-    } else if (quantityAvailable === 0 ) {
+    } else if (quantityAvailable === 0) {
       setAvailability("Out of stock")
     }
-  },[])
+  }, [])
 
   const addToCart = async () => {
     const productId = product.variants[0].id;
@@ -56,31 +56,33 @@ const SingleProduct = ({ _product }) => {
           />
         )}
         <article className="product-details">
-        <h1>{product.title}</h1>
-        <p style={{padding:"10px 0px"}}>{product.description}</p>
-        <p style={{fontWeight: "700"}}>{product.variants[0].priceV2.amount + product.variants[0].priceV2.currencyCode}</p>
-        <section className="buy-product">
-        <input
-            type="number"
-            style={{marginRight:"10px",
-            padding:"5px 5px",
-            border: "1px solid black"}}
-            min={quantityAvailable > 0 ? 1 : 0}
-            max={quantityAvailable}
-            value={quantityAvailable > 0 ? quantity : 0}
-            onChange={e => setQuantity(e.target.value)}
-          />
-          <div className="cart-icon">
-          <i 
-            style={{color: "black"}}
-            className="fas fa-shopping-cart"
-            onClick={addToCart}/>
-          </div>
-        </section>
-        {quantityAvailable > 0 ? 
-          <small style={{fontSize: "14px"}}>{availability}</small>
-        : <small style={{ color: "red" }}>{availability}</small>
-        }
+          <h1>{product.title}</h1>
+          <p style={{ padding: "10px 0px" }}>{product.description}</p>
+          <p style={{ fontWeight: "700" }}>{product.variants[0].priceV2.amount + product.variants[0].priceV2.currencyCode}</p>
+          <section className="buy-product">
+            <input
+              type="number"
+              style={{
+                marginRight: "10px",
+                padding: "5px 5px",
+                border: "1px solid black"
+              }}
+              min={quantityAvailable > 0 ? 1 : 0}
+              max={quantityAvailable}
+              value={quantityAvailable > 0 ? quantity : 0}
+              onChange={e => setQuantity(e.target.value)}
+            />
+            <div className="cart-icon">
+              <i
+                style={{ color: "black" }}
+                className="fas fa-shopping-cart"
+                onClick={addToCart} />
+            </div>
+          </section>
+          {quantityAvailable > 0 ?
+            <small style={{ fontSize: "14px" }}>{availability}</small>
+            : <small style={{ color: "red" }}>{availability}</small>
+          }
         </article>
       </section>
     </div>
@@ -88,12 +90,14 @@ const SingleProduct = ({ _product }) => {
 }
 
 export async function getServerSideProps(ctx) {
-  const productId = ctx.query?.id
+  let productTitle = ctx.query?.title
+  productTitle = encodeURIComponent(productTitle)
+
   let _product = null
 
   try {
-    const { data } = await Axios.get(`http://localhost:3000/api/product/${productId}`)
-
+    const { data } = await Axios.get(`http://localhost:3000/api/product/${productTitle}`)
+    
     if (data.product) {
       _product = data.product
     } else {

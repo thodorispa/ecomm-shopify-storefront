@@ -13,10 +13,10 @@ const Collection = ({ collection }) => {
       </article>
 
       <section style={{ alignSelf: "flex-start" }}>
-        <Link href={`/collections/${collection.name}`}>
+        <Link href={`/collections/${collection.title}`}>
           <a/>
         </Link>
-        <h2>{collection.name}</h2>
+        <h2>{collection.title}</h2>
       </section>
 
     </article>

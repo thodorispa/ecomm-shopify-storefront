@@ -3,11 +3,13 @@ import { navLinks } from "../utils/data";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
+import router from "next/router";
 
 const Navbar = () => {
 
   const dispatch = useDispatch();
-  const { customer }  = useSelector(x => x.customer);
+  const { customer } = useSelector(x => x.customer);
+
   const ref = useRef();
   const [nav, setNav] = useState(false);
 
@@ -16,17 +18,7 @@ const Navbar = () => {
       ref.current.style.padding = "30px 10px";
     } else {
     }
-  },[])
-
-  const logout = async () => {
-    try{
-      const res = await Axios.get("/api/customer/logout");
-      dispatch({ type: "SET_CUSTOMER", payload: false })
-
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  }, [])
 
 
   const navOnClick = () => {
@@ -71,11 +63,11 @@ const Navbar = () => {
             {navLinks.map((link, i) => {
               return (
                 <ul className="link" key={i}>
-                    <li >
-                      {link.name}
-                    </li>
-                    {link.name === "FACE" ? (
-                      <div className="c-dropdown">
+                  <li >
+                    {link.name}
+                  </li>
+                  {link.name === "FACE" ? (
+                    <div className="c-dropdown">
                       <Link href="/products">
                         <li onClick={linkOnClick} className="drop-link">Peeling</li>
                       </Link>
@@ -83,9 +75,9 @@ const Navbar = () => {
                         <li onClick={linkOnClick} className="drop-link">Lotion</li>
                       </Link>
                     </div>
-                    ) : "" }
-                    {link.name === "BODY" ? (
-                      <div className="c-dropdown">
+                  ) : ""}
+                  {link.name === "BODY" ? (
+                    <div className="c-dropdown">
                       <Link href="/products">
                         <li onClick={linkOnClick} className="drop-link">Register</li>
                       </Link>
@@ -93,52 +85,55 @@ const Navbar = () => {
                         <li onClick={linkOnClick} className="drop-link">Sign In</li>
                       </Link>
                     </div>
-                    ) : "" }
+                  ) : ""}
                 </ul>
               );
             })}
           </nav>
-         {!customer  ? (
-           <section className="usr-menu">
-           <section className="user_toggle">
-             <i style={{padding: "8px", cursor:"pointer"}} className="fa-solid fa-user"></i>
-             <div style={{marginTop: "30px"}}  className="dropdown">
-               <Link href="/register">
-                 <li className="drop-link">Register</li>
-               </Link>
-               <Link href="/signIn">
-                 <li className="drop-link">Sign In</li>
-               </Link>
-             </div>
-           </section>
-           <Link href="/cart">
-             <i style={{fontSize:"20px", padding: "8px",  cursor:"pointer"}} className="fa-solid fa-cart-shopping"></i>
-           </Link>
-         </section>
-         ) : (
-          <section className="usr-menu">
-            <section className="user_toggle"> 
-              <pre>{customer.firstName}</pre>
-              <i style={{padding: "8px", cursor:"pointer", alignSelf:"center"}} className="fa-solid fa-user"></i>
-              <div style={{marginTop: "40px"}} className="dropdown">
-               <Link href="/">
-                 <li className="drop-link">Preferences</li>
-               </Link>
-               <Link href="/">
-                 <li className="drop-link">Order History</li>
-               </Link>
-               <Link href="/">
-                 <a 
-                  className="drop-link"
-                  onClick={logout()}>Log Out</a>
-               </Link>
-             </div>
+          {!customer ? (
+            <section className="usr-menu">
+              <section className="user_toggle">
+                <i style={{ padding: "8px", cursor: "pointer" }} className="fa-solid fa-user"></i>
+                <div style={{ marginTop: "30px" }} className="dropdown">
+                  <Link href="/register">
+                    <li className="drop-link">Register</li>
+                  </Link>
+                  <Link href="/signIn">
+                    <li className="drop-link">Sign In</li>
+                  </Link>
+                </div>
+              </section>
+              <Link href="/cart">
+                <i style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} className="fa-solid fa-cart-shopping"></i>
+              </Link>
             </section>
-            <Link href="/cart">
-             <i style={{fontSize:"20px", padding: "8px",  cursor:"pointer"}} className="fa-solid fa-cart-shopping"></i>
-           </Link>
-          </section>
-         )}
+          ) : (
+            <section className="usr-menu">
+              <section className="user_toggle">
+                <pre>{customer.firstName}</pre>
+                <i style={{ padding: "8px", cursor: "pointer", alignSelf: "center" }} className="fa-solid fa-user"></i>
+                <div style={{ marginTop: "40px" }} className="dropdown">
+                  <Link href="/">
+                    <li className="drop-link">Preferences</li>
+                  </Link>
+                  <Link href="/">
+                    <li className="drop-link">Order History</li>
+                  </Link>
+                  <Link href="/">
+                    <a
+                      className="drop-link"
+                      onClick={async () => {
+                        await Axios.get(`/api/customer/logout`)
+                        router.push('/')
+                      }}> Log Out</a>
+                  </Link> 
+                </div>
+              </section>
+              <Link href="/cart">
+                <i style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} className="fa-solid fa-cart-shopping"></i>
+              </Link>
+            </section>
+          )}
         </section>
       </header>
     </>

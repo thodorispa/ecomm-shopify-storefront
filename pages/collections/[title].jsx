@@ -5,31 +5,46 @@ import Card from "../../components/Card";
 import { cart } from "../../store/reducers/cartReducer.js"
 import { useSelector, useDispatch } from "react-redux"
 import Cookies from 'js-cookie';
+import Link from "next/link";
 
 
 
 const Collection = ({ _collection }) => {
-  console.log("hererere");
-  
+
   return (
-    <section className="container feed">
+    <>
+      <Head>
+        <title>{ _collection.title } || Welcome to Katoi</title>
+      </Head>
 
-    <section id="contact">
+      <section className="container feed">
+
+        {_collection.products?.map((product, i) => (
+          <Link key={i} href={`/products/${product.title}`}>
+            <a><Card product={product} /></a>
+          </Link>
+        ))}
+
+        <section id="contact">
 
 
-    </section>
-  </section>
+        </section>
+      </section>
+    </>
   );
 }
 
 export async function getServerSideProps(ctx) {
-  const collectionId = ctx.query?.id
+  let collectionTitle = encodeURIComponent(ctx.query?.title)
+
   let _collection = null
 
   try {
-    const { data } = await Axios.get(`http://localhost:3000/api/collections/${collectionId}`)
+    const { data } = await Axios.get(`http://localhost:3000/api/collections/${collectionTitle}`)
 
-    if (data.product) {
+    console.log(data);
+
+    if (data.collection) {
       _collection = data.collection
     } else {
       // Return 404

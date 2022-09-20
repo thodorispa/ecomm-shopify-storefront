@@ -22,7 +22,7 @@ router.get('/all', async (req, res) => {
 });
 
 // Get product with media by id 
-router.get('/:id', async (req, res) => {
+router.get('/id/:id', async (req, res) => {
  
   try {
     const product = await Product.fetchById(req.params.id);
@@ -34,6 +34,18 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Get product with media by title
+router.get('/:title', async (req, res) => {
+
+  try {
+    const product = await Product.fetchByTitle(req.params.title);
+
+    res.send({ product });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send({})
+  }
+});
 // Get product by id
 // router.get('/data/:id', async (req, res) => {
 //   const productId = req.params.id;

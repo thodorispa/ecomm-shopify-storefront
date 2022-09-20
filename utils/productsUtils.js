@@ -49,8 +49,8 @@ const fetchAll = async () => {
 
   const products  = query.body.data.products.edges.map(n => {
     return {
-      id: n.node.id.replace(GID, ''),
-      title: n.node.title,
+      id: n.node.id,
+      title: n.node.title.replace(/\s+/g, '-'),
       publishedAt: n.node.publishedAt,
       images: n.node.images.edges.map(n => n.node),
       variants: n.node.variants.edges.map(n => n.node)
@@ -108,7 +108,106 @@ const fetchById = async (id) => {
 }
 
 
+const fetchByTitle = async (title) => {
+  const titleActual = decodeURIComponent(title).replace(/-/g, ' ');
+  try {
+    var query = await client.query({
+      data: `query {
+        products(query:"title:${titleActual}" first: 1) {
+          edges {
+            node {
+              id
+          title
+          description
+          productType
+          publishedAt
+          tags
+          images(first: 1) {
+            edges {
+              node {
+                src
+                altText
+              }
+            }
+          }
+          variants(first: 1) {
+            edges {
+              node {
+                id
+                quantityAvailable
+                priceV2 {
+                  amount
+                  currencyCode
+                }
+              }
+            }
+          }
+            }
+            
+          }
+        }
+      }`
+
+
+      // data: `query {
+      //   product(query:"title:${title}") {
+      //     id
+      //     title
+      //     description
+      //     productType
+      //     publishedAt
+      //     tags
+      //     images(first: 1) {
+      //       edges {
+      //         node {
+      //           src
+      //           altText
+      //         }
+      //       }
+      //     }
+      //     variants(first: 1) {
+      //       edges {
+      //         node {
+      //           id
+      //           quantityAvailable
+      //           priceV2 {
+      //             amount
+      //             currencyCode
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+      // }`
+      ,
+    });
+  } catch (e) {
+    console.log(e.response.errors);
+  }
+
+  const res  = query.body.data.products.edges.map(n => {
+    return {
+      id: n.node.id,
+      title: n.node.title,
+      publishedAt: n.node.publishedAt,
+      images: n.node.images.edges.map(n => n.node),
+      variants: n.node.variants.edges.map(n => n.node)
+    } || [];
+  });
+
+  // const { products } = query.body.data;
+  // product.images = product.images.edges.map(n => n.node);
+  // product.variants = product.variants.edges.map(n => n.node);
+
+  const product = res[0];
+
+  return product;
+}
+
+
+
 export {
   fetchAll,
   fetchById,
+  fetchByTitle,
 }

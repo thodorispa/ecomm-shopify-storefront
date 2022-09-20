@@ -2,6 +2,7 @@ import React from 'react';
 import Axios from "axios";
 
 const Card = ({product}) => {
+  console.log(product);
 
   return ( 
     <article className="card">

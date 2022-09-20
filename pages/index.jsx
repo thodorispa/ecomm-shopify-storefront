@@ -4,20 +4,16 @@ import Collection from '../components/Collection'
 import { useEffect } from "react";
 import Link from "next/link";
 import Axios from "axios";
-import { collections } from "../utils/data"
-
 
 
 const Home = ({ _collections }) => {
-  console.log(_collections[0]);
-
   return (
     <header className="container">
       <section className="banner">
         <section className="header-img">
           <img
             className="header_img"
-            src="../styles/BACKCOVER"
+            src="/BACKCOVER.png"
             alt="pra"
           />
         </section>
@@ -34,7 +30,7 @@ const Home = ({ _collections }) => {
         </article>
       </section>
       <section className="showcase-feed">
-        {collections?.map((collection, i) => (
+        {_collections?.map((collection, i) => (
           <Collection key={i} collection={collection} />
 
         ))}
@@ -42,8 +38,8 @@ const Home = ({ _collections }) => {
       <section className="featured">
         <ul className="featured-c">
           {_collections?.map((collection, i) => (
-            <Link key={i} href={`/collections/${collection.id}`}>
-             <a className="featured-link">{collection.name}</a>
+            <Link key={i} href={`/collections/${collection.title}`}>
+             <a className="featured-link">{collection.title}</a>
           </Link>
             
           ))}
