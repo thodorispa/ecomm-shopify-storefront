@@ -27,6 +27,7 @@ const SingleProduct = ({ _product }) => {
     } else  {
       setAvailability("In stock")
     }
+    
   }, [])
 
   const addToCart = async () => {
@@ -34,9 +35,9 @@ const SingleProduct = ({ _product }) => {
     setFlag(true);
     if (quantityAvailable > 0) {
       try {
+        setIsLoading(true);
         const { data } = await Axios.post(`/api/cart/add`, { productId, quantity })
         const { cart } = data
-        setIsLoading(true);
 
         dispatch({ type: "SET_CART", payload: cart })
       } catch (error) {
@@ -44,8 +45,9 @@ const SingleProduct = ({ _product }) => {
         setFlag(false);
       }
     }
+    setIsLoading(false);
   };
-
+  console.log(flag, isLoading);
   const handleOnChange = (e) => {
     setQuantity(e.target.value);
     if (quantity === quantityAvailable) {
@@ -99,24 +101,23 @@ const SingleProduct = ({ _product }) => {
             : <small style={{ color: "red" }}>{availability}</small>
           }
           <article className="add-to-cart-loader">
-          {!flag 
-          ? ""
-          : <>
-            {isLoading 
-            ? <h4>Added to cart</h4>
-            : <div style={{transform: "scale(1.2"}}
-            className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
-            <div></div><div></div>
-            </div></div> 
-            } 
-          </>
+          {flag 
+          ? <>
+          {isLoading 
+          ? <div style={{transform: "scale(1.2"}}
+          className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
+          <div></div><div></div>
+          </div></div> 
+          : <h4>Added to cart</h4>
+          } 
+        </>
+          : ""
           }
            {quantity == quantityAvailable ? 
            <> {!flag ?  <h4>You've reached the available quantity of this product.</h4>  : ""}
            </>
            : ""}
           <article>
-           
           </article>
           </article>
         </article>
