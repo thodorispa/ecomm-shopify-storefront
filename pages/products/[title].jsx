@@ -76,7 +76,7 @@ const SingleProduct = ({ _product }) => {
               <i
                 style={{ color: "black" }}
                 className="fas fa-shopping-cart"
-                onClick={addToCart} />
+                onClick={() => addToCart()} />
             </div>
           </section>
           {quantityAvailable > 0 ?

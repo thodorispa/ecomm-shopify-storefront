@@ -124,7 +124,7 @@ const Navbar = () => {
                       className="drop-link"
                       onClick={async () => {
                         await Axios.get(`/api/customer/logout`)
-                        router.push('/')
+                        router.reload(router.query)
                       }}> Log Out</a>
                   </Link> 
                 </div>
