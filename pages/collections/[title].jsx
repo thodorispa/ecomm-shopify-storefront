@@ -19,7 +19,7 @@ const Collection = ({ _collection }) => {
 
       <header className="container">
         <article className="collection-header">
-          <h1>Explore&nbsp;{_collection.title}&nbsp;Products</h1>
+          <h1 style={{fontWeight: "100"}}>Εξερευνήστε προϊόντα&nbsp;{_collection.title}</h1>
         </article>
         <section className="feed">
           {_collection.products?.map((product, i) => (

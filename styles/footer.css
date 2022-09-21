@@ -1,0 +1,31 @@
+.footer {
+  margin-top: 160px;
+  height: 100%;
+  align-items: center;
+  background-color: rgba(206, 196, 175, 0.579);
+}
+
+.info {
+  padding: 20px 80px;
+  align-items: flex-start;
+}
+
+.footer-title {
+  width: 100%;
+  padding: 20px;
+  align-self: center;
+  border-bottom: 1.2px solid rgba(150, 143, 127, 0.784);
+}
+
+.info h4 {
+  padding: 20px;
+}
+
+.social {
+  padding: 20px 80px;
+}
+
+.social i {
+  padding: 10px;
+  font-size: 22px;
+}

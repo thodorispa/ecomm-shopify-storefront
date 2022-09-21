@@ -25,6 +25,14 @@ const Cart = ({ _checkout, _products }) => {
       console.log(error)
     }
   }
+  const checkoutOnClick = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await Axios.post(`api/checkout/create`, {cart})
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <header className="container cart">
@@ -113,7 +121,12 @@ const Cart = ({ _checkout, _products }) => {
         </>
           )}
       </table>
-      
+      <button 
+      style={{width: "20%", alignSelf: "flex-end"}}
+      className="register-btn"
+      onClick={checkoutOnClick}>
+        CHECKOUT
+      </button>
     </header>
   );
 }
