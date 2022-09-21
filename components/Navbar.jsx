@@ -4,15 +4,18 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
 import router from "next/router";
+import SideCart from "./SideCart"
 
 const Navbar = () => {
 
   const dispatch = useDispatch();
   const { customer } = useSelector(x => x.customer);
   const { cart } = useSelector(x => x);
-
+  const {cartClasses} = useSelector(x => x);
+  
   const ref = useRef();
   const [nav, setNav] = useState(false);
+  const [sideCart, setSideCart] = useState(false);
 
   useEffect(() => {
     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
@@ -30,6 +33,7 @@ const Navbar = () => {
     setNav(false);
   };
 
+
   //Render classes in order to change the menu bar when burger menu clicked, activate the menu
   const renderCssClasses = () => {
     let classes = "navlinks";
@@ -40,6 +44,15 @@ const Navbar = () => {
     }
     return classes;
   };
+  useEffect(() => {
+    dispatch({ type: "TOGGLE_CART", payload: "side-cart" })
+    
+    if (sideCart) {
+      dispatch({ type: "TOGGLE_CART", payload: "side-cart active-cart" })
+    }
+
+  },[sideCart]);
+
   return (
     <>
       <header ref={ref} className="navbar">
@@ -131,10 +144,12 @@ const Navbar = () => {
                   </Link> 
                 </div>
               </section>
-              <Link href="/cart">
-                <i style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} className="fa-solid fa-cart-shopping">
+                <i 
+                style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} 
+                className="fa-solid fa-cart-shopping"
+                onClick={(e) => setSideCart(!sideCart)}>
                 </i>
-              </Link>
+                <SideCart classes={cartClasses}/>
               <span className='badge badge-warning' id='lblCartCount'>{cart?.lines.length}</span>
             </section>
           )}

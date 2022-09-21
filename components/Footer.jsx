@@ -15,8 +15,8 @@ const Footer = () => {
         <article className="social">
           <h1>Connect with us</h1>
           <section>
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-facebook"></i>
+            <i className="fa-brands fa-instagram"></i>
+            <i className="fa-brands fa-facebook"></i>
           </section>
         </article>
       </section>
