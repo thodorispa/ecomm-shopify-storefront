@@ -4,7 +4,7 @@ const Footer = () => {
   return ( 
     <footer className="footer">
       <header className="footer-title">
-      <h1 >KATOI AMORGOS</h1>
+      <h1 >Κατώι Αμοργός</h1>
       </header>
       <section>
         <article className="info">

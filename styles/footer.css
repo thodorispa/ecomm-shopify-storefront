@@ -3,6 +3,7 @@
   height: 100%;
   align-items: center;
   background-color: rgba(206, 196, 175, 0.579);
+  box-shadow: 0 1px 1px 0 rgba(208, 208, 208, 0.319), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
 }
 
 .info {
