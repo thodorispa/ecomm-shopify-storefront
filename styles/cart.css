@@ -20,9 +20,10 @@
   justify-content: flex-start;
   overflow-y: scroll;
   position: fixed;
-  top: 101px;
+  top: 97px;
   right: 0;
   bottom: 0;
+  min-width: 355px;
   border:1px solid #111b0d;
   background-color: rgb(254, 255, 251);
   transform: translateX(150%);
@@ -158,6 +159,10 @@
   .cart-prod-img img{
     max-width: 70px;
     max-height: 50px;
+  }
+  .side-cart {
+    top: 83px;
+    width: 100%;
   }
   
 }

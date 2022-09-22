@@ -9,12 +9,12 @@ const SideCart = () => {
   const { cart } = useSelector(x => x)
   const { cartClasses } = useSelector(x => x)
 
-  console.log(cartClasses);
-
   const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(false)
 
   const handleProductQuantity = async (product, status) => {
+
     const productId = product.merchandise.id;
     const lineId = product.id
 
@@ -87,25 +87,6 @@ const SideCart = () => {
       </article>
     </header>
    );
-}
-export async function getServerSideProps(ctx) {
-  try {
-    const _checkout = data.checkout || []
-    const _products = data.products || []
-
-    return {
-      props: {
-        _checkout,
-        _products
-      }
-    }
-  } catch (err) {
-    return {
-      props: {
-        _products: [],
-      }
-    }
-  }
 }
  
 export default SideCart;

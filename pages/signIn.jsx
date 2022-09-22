@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Router, { useRouter } from 'next/router';
 import Axios from 'axios';
+import Head from 'next/head';
 import { useDispatch } from 'react-redux';
 
 const SignIn = () => {
@@ -50,6 +51,9 @@ const SignIn = () => {
 
   return (
     <header className="container sign-in">
+      <Head>
+        <title>Log In || Katoi</title>
+      </Head>
       <article>
         <h1>Sign In</h1>
         <p 

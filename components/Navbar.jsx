@@ -9,6 +9,7 @@ import SideCart from "./SideCart"
 const Navbar = () => {
 
   const dispatch = useDispatch();
+
   const { customer } = useSelector(x => x.customer);
   const { cart } = useSelector(x => x);
   const {cartClasses} = useSelector(x => x);
@@ -24,16 +25,6 @@ const Navbar = () => {
     }
   }, [])
 
-
-  const navOnClick = () => {
-    setNav(!nav);
-  };
-
-  const linkOnClick = () => {
-    setNav(false);
-  };
-
-
   //Render classes in order to change the menu bar when burger menu clicked, activate the menu
   const renderCssClasses = () => {
     let classes = "navlinks";
@@ -44,14 +35,13 @@ const Navbar = () => {
     }
     return classes;
   };
-  useEffect(() => {
 
+  useEffect(() => {
     dispatch({ type: "TOGGLE_CART", payload: "side-cart" })
     
     if (sideCart) {
       dispatch({ type: "TOGGLE_CART", payload: "side-cart active-cart" })
     }
-
   },[sideCart]);
 
   return (
@@ -70,7 +60,7 @@ const Navbar = () => {
               <i
                 id="icon"
                 className="fas fa-bars fa-lg"
-                onClick={navOnClick}
+                onClick={() => setNav(!nav)}
               ></i>
             </div>
           </section>
@@ -84,20 +74,20 @@ const Navbar = () => {
                   {link.name === "FACE" ? (
                     <div className="c-dropdown">
                       <Link href="/products">
-                        <li onClick={linkOnClick} className="drop-link">Peeling</li>
+                        <li onClick={() => setNav(false)} className="drop-link">Peeling</li>
                       </Link>
                       <Link href="/products">
-                        <li onClick={linkOnClick} className="drop-link">Lotion</li>
+                        <li onClick={() => setNav(false)} className="drop-link">Lotion</li>
                       </Link>
                     </div>
                   ) : ""}
                   {link.name === "BODY" ? (
                     <div className="c-dropdown">
                       <Link href="/products">
-                        <li onClick={linkOnClick} className="drop-link">Register</li>
+                        <li onClick={() => setNav(false)} className="drop-link">Register</li>
                       </Link>
                       <Link href="/products">
-                        <li onClick={linkOnClick} className="drop-link">Sign In</li>
+                        <li onClick={() => setNav(false)} className="drop-link">Sign In</li>
                       </Link>
                     </div>
                   ) : ""}
@@ -108,7 +98,9 @@ const Navbar = () => {
           {!customer ? (
             <section className="usr-menu">
               <section className="user_toggle">
-                <i style={{ padding: "8px", cursor: "pointer" }} className="fa-solid fa-user"></i>
+                <i style={{ padding: "8px", cursor: "pointer" }}
+                 className="fa-solid fa-user"
+                 id="nav-icons"></i>
                 <div style={{ marginTop: "30px" }} className="dropdown">
                   <Link href="/register">
                     <li className="drop-link">Register</li>
@@ -120,6 +112,7 @@ const Navbar = () => {
               </section>
                 <i style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} 
                 className="fa-solid fa-cart-shopping"
+                id="nav-icons"
                 onClick={(e) => setSideCart(!sideCart)}>
                 </i>
                 <SideCart />
@@ -128,9 +121,9 @@ const Navbar = () => {
           ) : (
             <section className="usr-menu">
               <section className="user_toggle">
-                <pre>{customer.firstName}</pre>
+                <span>{customer.firstName}</span>
                 <i style={{ padding: "8px", cursor: "pointer", alignSelf: "center" }} className="fa-solid fa-user"></i>
-                <div style={{ marginTop: "40px" }} className="dropdown">
+                <div style={{ marginTop: "30px" }} className="dropdown">
                   <Link href="/">
                     <li className="drop-link">Preferences</li>
                   </Link>

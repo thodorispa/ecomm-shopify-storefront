@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../components/Card'
 import Axios from 'axios';
+import Head from 'next/head';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Cart = ({ _checkout, _products }) => {
@@ -36,6 +37,10 @@ const Cart = ({ _checkout, _products }) => {
 
   return (
     <header className="container cart">
+       <Head>
+        <title>Cart || Katoi</title>
+      </Head>
+      
       <h1>This is your cart</h1>
       <table className="cart-table">
         {!cart || cart.lines == 0 ? (

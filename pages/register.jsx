@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import validator from "validator";
 import Axios from "axios";
+import Head from 'next/head';
 
 const Register = () => {
   const [matchPass, setMatchPass] = useState("");
@@ -88,6 +89,10 @@ const Register = () => {
 
   return (
     <header className="container register">
+       <Head>
+        <title>Register || Katoi</title>
+      </Head>
+      
       <article>
         <h1 style={{ margin: "0" }}>Register to Katoi</h1>
         <p style={{ padding: "20px 10px", fontSize: "larger" }}>

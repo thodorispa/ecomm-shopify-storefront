@@ -9,6 +9,9 @@ import Axios from "axios";
 const Home = ({ _collections }) => {
   return (
     <header className="container">
+      <Head>
+        <title>Home || Katoi</title>
+      </Head>
       <section className="banner">
         <section className="header-img">
           <img
