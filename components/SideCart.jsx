@@ -9,6 +9,8 @@ const SideCart = () => {
   const { cart } = useSelector(x => x)
   const { cartClasses } = useSelector(x => x)
 
+  console.log(cartClasses);
+
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false)
 

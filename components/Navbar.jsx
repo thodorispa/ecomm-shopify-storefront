@@ -45,6 +45,7 @@ const Navbar = () => {
     return classes;
   };
   useEffect(() => {
+
     dispatch({ type: "TOGGLE_CART", payload: "side-cart" })
     
     if (sideCart) {
@@ -117,9 +118,11 @@ const Navbar = () => {
                   </Link>
                 </div>
               </section>
-              <Link href="/cart">
-                <i style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} className="fa-solid fa-cart-shopping"></i>
-              </Link>
+                <i style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} 
+                className="fa-solid fa-cart-shopping"
+                onClick={(e) => setSideCart(!sideCart)}>
+                </i>
+                <SideCart />
               <span className='badge badge-warning' id='lblCartCount'>{cart?.lines.length}</span>
             </section>
           ) : (
@@ -149,7 +152,7 @@ const Navbar = () => {
                 className="fa-solid fa-cart-shopping"
                 onClick={(e) => setSideCart(!sideCart)}>
                 </i>
-                <SideCart classes={cartClasses}/>
+                <SideCart />
               <span className='badge badge-warning' id='lblCartCount'>{cart?.lines.length}</span>
             </section>
           )}
