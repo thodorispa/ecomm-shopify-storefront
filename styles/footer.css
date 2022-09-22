@@ -1,5 +1,7 @@
 .footer {
+  position: relative;
   margin-top: 160px;
+  bottom: 0;
   height: 100%;
   width: 100%;
   align-items: center;
@@ -35,4 +37,15 @@
 .social i {
   padding: 10px;
   font-size: 22px;
+}
+
+@media screen and (max-width: 420px) {
+  .footer section {
+    flex-direction: column;
+    justify-content: center;
+   
+  }
+  .info {
+    align-items: center;
+  }
 }

@@ -74,8 +74,8 @@ const Cart = ({ _checkout, _products }) => {
               </td>
               <td className="cart-prod-img">
                 <img
-                  src={product.merchandise.image.url}
-                  alt={product.merchandise.image.altText}
+                  src={product.merchandise.image?.url}
+                  alt={product.merchandise.image?.altText}
                 />
               </td>
               <td className="prod-title">{product.merchandise.product.title}</td>
@@ -116,7 +116,7 @@ const Cart = ({ _checkout, _products }) => {
             <th>Subtotal</th>
             {isLoading ? (
               <th className="spinner">
-              <div class="loadingio-spinner-ripple-hb4ksrtc1us"><div class="ldio-uua8zfoilp">
+              <div className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
               <div></div><div></div>
               </div></div>
               </th>
@@ -127,7 +127,7 @@ const Cart = ({ _checkout, _products }) => {
           )}
       </table>
       <button 
-      style={{width: "20%", alignSelf: "flex-end"}}
+      style={{width: "35%" ,alignSelf: "flex-end"}}
       className="register-btn"
       onClick={checkoutOnClick}>
         CHECKOUT

@@ -13,10 +13,10 @@ const Navbar = () => {
   const { customer } = useSelector(x => x.customer);
   const { cart } = useSelector(x => x);
   const {cartClasses} = useSelector(x => x);
+  const { sideNav } = useSelector(x => x);
   
   const ref = useRef();
   const [nav, setNav] = useState(false);
-  const [sideCart, setSideCart] = useState(false);
 
   useEffect(() => {
     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
@@ -39,10 +39,10 @@ const Navbar = () => {
   useEffect(() => {
     dispatch({ type: "TOGGLE_CART", payload: "side-cart" })
     
-    if (sideCart) {
+    if (sideNav) {
       dispatch({ type: "TOGGLE_CART", payload: "side-cart active-cart" })
     }
-  },[sideCart]);
+  },[sideNav]);
 
   return (
     <>
@@ -67,7 +67,7 @@ const Navbar = () => {
           <nav className={renderCssClasses()}>
             {navLinks.map((link, i) => {
               return (
-                <ul className="link" key={i}>
+              <div className="link" key={i}>
                   <li >
                     {link.name}
                   </li>
@@ -91,10 +91,10 @@ const Navbar = () => {
                       </Link>
                     </div>
                   ) : ""}
-                </ul>
+               </div>
               );
             })}
-          </nav>
+            </nav>
           {!customer ? (
             <section className="usr-menu">
               <section className="user_toggle">
@@ -113,7 +113,7 @@ const Navbar = () => {
                 <i style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} 
                 className="fa-solid fa-cart-shopping"
                 id="nav-icons"
-                onClick={(e) => setSideCart(!sideCart)}>
+                onClick={() => dispatch({ type: "TOGGLE_NAV", payload: !sideNav})}>
                 </i>
                 <SideCart />
               <span className='badge badge-warning' id='lblCartCount'>{cart?.lines.length}</span>
@@ -122,7 +122,9 @@ const Navbar = () => {
             <section className="usr-menu">
               <section className="user_toggle">
                 <span>{customer.firstName}</span>
-                <i style={{ padding: "8px", cursor: "pointer", alignSelf: "center" }} className="fa-solid fa-user"></i>
+                <i style={{ padding: "8px", cursor: "pointer", alignSelf: "center" }} 
+                className="fa-solid fa-user"
+                id="nav-icons"></i>
                 <div style={{ marginTop: "30px" }} className="dropdown">
                   <Link href="/">
                     <li className="drop-link">Preferences</li>
@@ -143,7 +145,8 @@ const Navbar = () => {
                 <i 
                 style={{ fontSize: "20px", padding: "8px", cursor: "pointer" }} 
                 className="fa-solid fa-cart-shopping"
-                onClick={(e) => setSideCart(!sideCart)}>
+                id="nav-icons"
+                onClick={() => dispatch({ type: "TOGGLE_NAV", payload: !sideNav})}>
                 </i>
                 <SideCart />
               <span className='badge badge-warning' id='lblCartCount'>{cart?.lines.length}</span>

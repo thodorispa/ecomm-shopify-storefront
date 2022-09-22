@@ -4,6 +4,7 @@ import Axios from "axios";
 import Head from 'next/head';
 
 const Register = () => {
+
   const [matchPass, setMatchPass] = useState("");
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -95,14 +96,15 @@ const Register = () => {
       
       <article>
         <h1 style={{ margin: "0" }}>Register to Katoi</h1>
-        <p style={{ padding: "20px 10px", fontSize: "larger" }}>
+        <p className="register-desc">
           Complete the fields below to create an account to katoi soap, in order
           to manage your orders more efficiently.
         </p>
       </article>
-      <section>
-        <article style={{ padding: "10px" }}>
+      <section className="form-container">
+        <article>
           <form onSubmit={registerUser} className="forms">
+          <h4 style={{opacity: "0.7", fontWeight: "100", textAlign: "center"}}>Personal Information</h4>
             <article>
               <input
                 type="text"
@@ -189,10 +191,42 @@ const Register = () => {
                 <small style={{ paddingLeft: "5px" }}>{errors.password}</small>
               </section>
             </article>
-            <input type="submit" className="register-btn" value="Register" />
+          </form>
+        </article>
+        <article style={{alignSelf: "flex-start"}}>
+          <form className="billing-form">
+          <h4 style={{opacity: "0.7", fontWeight: "100", alignSelf: "center"}}>Billing Information</h4>
+            <input className="forms-input" 
+            type="text" 
+            placeholder="Country/Region"/>
+            <input className="forms-input" 
+            type="text" 
+            placeholder="Street Address & Number"/>
+            <input 
+            className="forms-input" 
+            type="text" 
+            placeholder="Apartmanet, unit, suite etc. (optional)"/>
+            <input 
+            className="forms-input" 
+            type="text" 
+            placeholder="Town/City"
+            />
+            <input 
+            className="forms-input"
+             type="text" 
+             placeholder="State/County"/>
+            <input 
+            className="forms-input"
+             type="text" 
+             placeholder="Postcode/ZIP"/>
           </form>
         </article>
       </section>
+      <button 
+        className="register-btn"
+        onClick={registerUser}
+        style={{width: "30%"}}
+        >REGISTER</button>
     </header>
   );
 };

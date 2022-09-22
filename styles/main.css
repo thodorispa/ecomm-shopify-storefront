@@ -17,6 +17,7 @@ body.has-lightbox {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+  transition: 300ms;
 }
 
 :root {

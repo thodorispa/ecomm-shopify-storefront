@@ -24,6 +24,7 @@ const MyApp = ({ Component, pageProps }) => {
   const { cart } = pageProps
   const { customer } = pageProps
   const { cartClasses } = pageProps
+  const { sideNav } = pageProps
   
 
   return (

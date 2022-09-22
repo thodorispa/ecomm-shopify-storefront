@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux"
 
 
-const Init = ({ cart, customer, cartClasses }) => {
+const Init = ({ cart, customer, cartClasses, sideNav }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -15,6 +15,9 @@ const Init = ({ cart, customer, cartClasses }) => {
   useEffect(() => {
     cartClasses && dispatch({ type: "TOGGLE_CART", payload: cartClasses })
   }, [cartClasses])
+  useEffect(() => {
+    sideNav && dispatch({ type: "TOGGLE_NAV", payload: sideNav })
+  }, [sideNav])
 
   return (
     null

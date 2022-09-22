@@ -59,26 +59,23 @@ const SignIn = () => {
         <p 
         style={{
           padding: "10px 10px",
-          fontSize: "larger"
+          fontSize: "20px"
         }}>Welcome back, enter your credentials to sign in.</p>
       </article>
-      <article>
+      <article style={{marginTop: "20px"}}>
 
-        <div className="forms" style={{ alignItems: "flex-start", textAlign: "start" }}>
-          <label style={{ textAlign: "start" }} className="forms-label">Email</label>
+        <form onSubmit={e => loginHandler(e)} className="log-in-form">
+        <label style={{ textAlign: "start" }} className="forms-label">Email</label>
           <input type="text"
             name="email"
             defaultValue=""
-            className="forms-input"
+            className="login-input"
             onChange={e => setEmail(e.target.value)} />
-        </div>
 
-        <form onSubmit={e => loginHandler(e)} className="forms">
-
-          <label className="forms-label">Password</label>
+          <label style={{alignSelf: "flex-end"}}className="forms-label">Password</label>
           <input type="password"
             name="password"
-            className="forms-input"
+            className="login-input"
             defaultValue=""
             onChange={e => setPassword(e.target.value)} />
           <small>{errors}</small>

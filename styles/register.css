@@ -5,12 +5,36 @@
 .forms {
   justify-content: flex-start;
   align-self: flex-start;
-  padding: 10px;
+  padding: 0px 50px;
   align-items: flex-end;
+}
+
+.log-in-form {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.billing-form {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px 50px;
+}
+
+.form-container {
+  display: flex;
+  box-sizing: border-box;
 }
 
 .sign-in {
   padding-top: 150px !important;
+}
+
+.register-desc {
+  padding: 15px;
+  font-size: 17px;
 }
 
 .validate {
@@ -21,22 +45,31 @@
 }
 .forms-input {
   border: 1px solid #111b0d;
-  min-width: 200px;
+  min-width: 400px;
   padding: 12px;
   margin: 15px;
   font-size: 17px;
 }
 
+.login-input {
+  border: 1px solid #111b0d;
+  min-width: 350px;
+  padding: 12px;
+  font-size: 17px;
+  margin: 10px 0px;
+}
+
 .forms-label {
   padding: 10px;
   border: 1px solid #111b0d;
-  font-size: larger;
-  width: 100%;
+  font-size: 18px;
+  width: 50%;
   text-align: end;
 } 
 
 .forms-input::placeholder {
   font-family: monospace;
+  font-size: 14px;
 }
 .validation {
   justify-content: flex-start;
@@ -84,7 +117,69 @@
   100% {opacity:1;}
 }
 @media screen and (max-width: 420px) {
+  .form-container {
+    flex-direction: column;
+  }
+  .register-desc {
+    text-align: center;
+  }
+  .forms {
+    padding: 20px 0px 0px 0px;
+    max-width: 350px;
+  }
+  .billing-form {
+    padding: 20px 0px 0px 0px;
+    max-width: 350px;
+  }
+  .forms-input {
+    min-width: 300px !important;
+    border-radius: 0;
+  }
+  .login-input {
+    border-radius: 0;
+  }
   .register {
     padding-top: 160px !important;
+  }
+  .register-btn:enabled {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 920px) {
+  .form-container {
+    flex-direction: column;
+  }
+  .register-desc {
+    text-align: center;
+  }
+  .forms {
+    padding: 20px 0px 0px 0px;
+    max-width: 350px;
+  }
+  .billing-form {
+    padding: 20px 0px 0px 0px;
+    max-width: 350px;
+  }
+  .forms-input {
+    min-width: 300px !important;
+    border-radius: 0;
+  }
+  .login-input {
+    border-radius: 0;
+  }
+  .register {
+    padding-top: 160px !important;
+  }
+  .register-btn:enabled {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 920px) {
+  .forms-input {
+    min-width: 200px !important;
+    border-radius: 0;
+  }
+  .login-input {
+    border-radius: 0;
   }
 }

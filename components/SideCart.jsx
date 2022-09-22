@@ -8,6 +8,7 @@ const SideCart = () => {
 
   const { cart } = useSelector(x => x)
   const { cartClasses } = useSelector(x => x)
+  const { sideNav } = useSelector(x => x)
 
   const dispatch = useDispatch();
 
@@ -30,6 +31,11 @@ const SideCart = () => {
     }
   }
 
+  const viewCartOnClick = () => {
+    dispatch({ type: "TOGGLE_CART", payload: "side-cart" })
+    dispatch({ type: "TOGGLE_NAV", payload: !sideNav})
+  }
+
   return ( 
     <header>
       <article className={cartClasses}>
@@ -49,8 +55,8 @@ const SideCart = () => {
                 />
               <div style={{padding: "10px"}} className="cart-prod-img">
                 <img
-                  src={product.merchandise.image.url}
-                  alt={product.merchandise.image.altText}/>
+                  src={product.merchandise.image?.url}
+                  alt={product.merchandise.image?.altText}/>
               </div>
               <article style={{alignItems: "flex-start", padding: "10px"}}>
               <span>{product.quantity}&nbsp;x&nbsp;{product.merchandise.product.title}</span>
@@ -77,7 +83,7 @@ const SideCart = () => {
             <button 
             style={{width: "100%"}} 
             className="register-btn"
-            onClick={() => dispatch({ type: "TOGGLE_CART", payload: "side-cart" })}
+            onClick={viewCartOnClick}
             >VIEW CART</button>
           </Link>
         </section>
