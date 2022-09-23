@@ -62,15 +62,15 @@ const Final = ({ values, addressValues }) => {
           </article>
         </section>
         <section className="overview-buttons">
-          <button 
+        <button 
           style={{width: "50%", marginRight: "10px"}} 
-          className="register-btn">
-            REGISTER</button>
-          <button 
-          style={{width: "50%", marginLeft: "10px"}} 
-          className="register-btn"
+          className="start-over-btn"
           onClick={() =>  window.location.reload(false)}>
             START OVER</button>
+          <button 
+          style={{width: "50%", marginLeft: "10px"}} 
+          className="register-btn">
+            REGISTER</button>
         </section>
       </article>
     </>

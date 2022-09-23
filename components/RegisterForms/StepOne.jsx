@@ -58,7 +58,7 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
   };
 
   return (
-    <header style={{animation: "fadeIn 1s ease-in"}}>
+    <header>
        <Head>
         <title>Register || Katoi</title>
       </Head>

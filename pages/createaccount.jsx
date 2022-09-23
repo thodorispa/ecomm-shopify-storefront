@@ -51,21 +51,21 @@ const CreateAccount = () => {
     // case 1 to show stepOne form and passing nextStep, prevStep, and handleInputData as handleFormData method as prop and also formData as value to the fprm
     case 1:
       return (
-        <header className="container register">
+        <header className="register">
           <StepOne nextStep={nextStep} handleFormData={handleInputData} values={formData} />
         </header>
       );
     // case 2 to show stepTwo form passing nextStep, prevStep, and handleInputData as handleFormData method as prop and also formData as value to the fprm
     case 2:
       return (
-        <header className="container register">
+        <header className="register">
         <StepTwo nextStep={nextStep} prevStep={prevStep} handleFormData={handleBillingData} values={addressData} />
       </header>
       );
       // Only formData is passed as prop to show the final value at form submit
     case 3:
       return (
-        <header className="container register">
+        <header className="register">
            <Final values={formData} addressValues={addressData}  />
         </header>
       );

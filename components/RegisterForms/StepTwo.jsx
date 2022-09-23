@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 const StepTwo = ({ nextStep, handleFormData, prevStep, values }) => {
 
   window.scrollTo(0, 0)
-  
+
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
