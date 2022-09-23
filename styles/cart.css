@@ -2,6 +2,7 @@
   padding: 100px 150px;
   justify-content: flex-start;
   align-items: flex-start;
+  animation: intro 500ms ease-in-out;
 }
 
 .cart-table {
@@ -11,6 +12,7 @@
   width: 100%;
   margin: 0 0;
   transition: transform 250ms;
+  animation: fadeIn 1s ease-in;
 }
 
 .side-cart {
@@ -36,6 +38,16 @@
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
+}
+
+@keyframes intro {
+  from { transform: translateY(20%); }
+  to { transform: translateY(0%); }
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }
 
 .side-cart-list section {
@@ -155,6 +167,9 @@
   .cart-table td {
     padding: 10px 10px;
     font-size: 15px;
+  }
+  .cart-table i {
+    padding: 5px !important;
   }
   .cart-prod-img img{
     max-width: 70px;

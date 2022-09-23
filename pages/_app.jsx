@@ -18,6 +18,7 @@ import '../styles/register.css'
 import '../styles/main.css'
 import '../styles/loader.css'
 import '../styles/footer.css'
+import '../styles/checkout.css'
 
 
 const MyApp = ({ Component, pageProps }) => {

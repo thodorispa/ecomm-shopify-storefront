@@ -32,22 +32,31 @@ const Home = ({ _collections }) => {
           </p>
         </article>
       </section>
-      <section className="showcase-feed">
-        {_collections?.map((collection, i) => (
-          <Collection key={i} collection={collection} />
-
-        ))}
-      </section>
-      <section className="featured">
-        <ul className="featured-c">
+      {_collections ? (
+        <>
+          <section className="showcase-feed">
+      
           {_collections?.map((collection, i) => (
-            <Link key={i} href={`/collections/${collection.title}`}>
-             <a className="featured-link">{collection.title}</a>
-          </Link>
-            
+            <Collection key={i} collection={collection} />
+
           ))}
-        </ul>
-      </section>
+        </section>
+        <section className="featured">
+          <ul className="featured-c">
+            {_collections?.map((collection, i) => (
+              <Link key={i} href={`/collections/${collection.title}`}>
+                <a className="featured-link">{collection.title}</a>
+            </Link>
+              
+            ))}
+          </ul>
+        </section>
+      </>
+      ) : (
+        <section>
+          <h2>Looks like it's empty here...</h2>
+        </section>
+      )}
     </header>
   );
 };

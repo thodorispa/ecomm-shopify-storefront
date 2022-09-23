@@ -57,7 +57,9 @@
 
 }
 @media screen and (max-width: 420px) {
-
+  .collection-header {
+    padding-top: 50px;
+  }
 }
 
 @keyframes intro {

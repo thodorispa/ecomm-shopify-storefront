@@ -6,7 +6,7 @@ import Axios from "axios";
 import router from "next/router";
 import SideCart from "./SideCart"
 
-const Navbar = () => {
+const Navbar = (_collections) => {
 
   const dispatch = useDispatch();
 
@@ -14,6 +14,7 @@ const Navbar = () => {
   const { cart } = useSelector(x => x);
   const {cartClasses} = useSelector(x => x);
   const { sideNav } = useSelector(x => x);
+  const [collections, setCollections] = useState(_collections._collections);
   
   const ref = useRef();
   const [nav, setNav] = useState(false);
@@ -71,17 +72,16 @@ const Navbar = () => {
                   <li >
                     {link.name}
                   </li>
-                  {link.name === "FACE" ? (
-                    <div className="c-dropdown">
-                      <Link href="/products">
-                        <li onClick={() => setNav(false)} className="drop-link">Peeling</li>
-                      </Link>
-                      <Link href="/products">
-                        <li onClick={() => setNav(false)} className="drop-link">Lotion</li>
-                      </Link>
-                    </div>
+                  {link.name === "PRODUCTS" ? (
+                    <article className="c-dropdown">
+                      {collections?.map((collection, i) => (
+                        <Link key={i} href={`/collections/${collection.title}`}>
+                          <li onClick={() => setNav(false)} className="drop-link">{collection.title}</li>
+                        </Link>
+                      ))}
+                    </article>
                   ) : ""}
-                  {link.name === "BODY" ? (
+                  {link.name === "MORE" ? (
                     <div className="c-dropdown">
                       <Link href="/products">
                         <li onClick={() => setNav(false)} className="drop-link">Register</li>
@@ -101,12 +101,12 @@ const Navbar = () => {
                 <i style={{ padding: "8px", cursor: "pointer" }}
                  className="fa-solid fa-user"
                  id="nav-icons"></i>
-                <div style={{ marginTop: "30px" }} className="dropdown">
-                  <Link href="/register">
-                    <li className="drop-link">Register</li>
+                <div style={{ marginTop: "30px"}} className="dropdown">
+                  <Link href="/createaccount">
+                    <li className="drop-link-user">Register</li>
                   </Link>
                   <Link href="/signIn">
-                    <li className="drop-link">Sign In</li>
+                    <li className="drop-link-user">Sign In</li>
                   </Link>
                 </div>
               </section>
@@ -157,5 +157,31 @@ const Navbar = () => {
     </>
   );
 };
+
+export async function getServerSideProps(ctx) {
+  let _collections = null
+  try {
+    const { data } = await Axios.get(`http://localhost:3000/api/collections/`)
+
+    if (data.collections) {
+      _collections = data._collections
+    } else {
+      // Return 404
+      return {
+        notFound: true,
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    // Return 404
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: { _collections }
+  }
+}
 
 export default Navbar;

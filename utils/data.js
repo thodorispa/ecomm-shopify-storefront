@@ -3,11 +3,11 @@ export const navLinks = [
    path: "/products" 
   },
   {
-    name: "FACE",
+    name: "PRODUCTS",
     path: "/products",
   },
   {
-    name: "BODY",
+    name: "MORE",
     path: "/products",
   },
   {

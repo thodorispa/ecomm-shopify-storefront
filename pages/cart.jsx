@@ -87,13 +87,6 @@ const Cart = ({ _checkout, _products }) => {
                   onClick={() => handleProductQuantity(product, "update")}
                 />
               </td>
-              {/* <td>
-                <input
-                  type="number"
-                  value={product.quantity}
-                  onChange={(e) => handleProductQuantity(e,product)}
-                />
-                </td> */}
               <td
                 style={{ padding: "0px", textAlign: "center", width: "8%" }}
                 className="prod-quantity">

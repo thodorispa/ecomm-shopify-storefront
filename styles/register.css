@@ -1,12 +1,13 @@
 .register {
-  overflow-y: hidden;
   flex-direction: column;
+  animation: fadeIn 0.6s ease-in;
 }
 .forms {
   justify-content: flex-start;
   align-self: flex-start;
   padding: 0px 50px;
   align-items: flex-end;
+  animation: fadeIn 0.8s ease-in;
 }
 
 .log-in-form {
@@ -22,10 +23,84 @@
   align-items: flex-start;
   padding: 0px 50px;
 }
+.personal-info-overview {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 40px;
+  animation: fadeIn 0.8s ease-in;
+
+}
+.billing-info-overview {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 40px;
+  animation: fadeIn 1s ease-in;
+}
+
+.overview-container {
+  display: flex;
+  min-width: 400px;
+  justify-content: space-between;
+}
 
 .form-container {
   display: flex;
   box-sizing: border-box;
+}
+
+.overview-header {
+  padding: 50px 0px;
+}
+
+.overview-user-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  animation: fadeIn 1s ease-in;
+}
+
+.overview-strong {
+  padding: 15px;
+  font-size: 18px;
+  min-width: 150px;
+  max-width: 200px;
+  word-wrap: break-word;
+  margin: 15px 10px;
+  border: 1px solid#111b0d;
+}
+
+.overview-buttons {
+  min-width: 300px;
+  margin-top: 20px;
+  align-items: center;
+  align-self: center;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.input-container label {
+  position: absolute;
+  pointer-events: none;
+  transform: translate(7px, 32px) scale(1);
+  transform-origin: top left;
+  transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  color: rgb(87, 96, 78);
+  font-size: 16px;
+  line-height: 1;
+  left: 16px;
+}
+
+.filled {
+  transform: translate(5px, 18px) scale(0.8) !important;
+  color: rgb(53, 72, 35) !important;
+}
+
+.input-container:focus-within label {
+  transform: translate(5px, 18px) scale(0.8);
+  color: rgb(53, 72, 35);
 }
 
 .sign-in {
@@ -45,14 +120,16 @@
 }
 .forms-input {
   border: 1px solid #111b0d;
+  border-radius: 7px;
   min-width: 400px;
-  padding: 12px;
+  padding: 15px;
   margin: 15px;
   font-size: 17px;
 }
 
 .login-input {
   border: 1px solid #111b0d;
+  border-radius: 7px;
   min-width: 350px;
   padding: 12px;
   font-size: 17px;
@@ -60,11 +137,13 @@
 }
 
 .forms-label {
-  padding: 10px;
+  padding: 15px;
+  margin: 15px 10px;
   border: 1px solid #111b0d;
   font-size: 18px;
-  width: 50%;
+  min-width: 150px;
   text-align: end;
+  align-self: flex-start;
 } 
 
 .forms-input::placeholder {
@@ -123,6 +202,52 @@
   .register-desc {
     text-align: center;
   }
+  .overview-header {
+    padding: 10px;
+  }
+  .overview-container {
+    min-width: 0;
+  }
+  .overview-user-data {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .personal-info-overview {
+    margin: 0;
+    padding: 20px 10px;
+    width: 100%;
+  }
+
+  .personal-info-overview section {
+    flex-direction: column;
+    justify-content: center;
+    width:100%;
+    align-items: center;
+  }
+  .billing-info-overview section {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .billing-info-overview {
+    margin: 0;
+    padding: 20px 10px;
+  }
+  .forms-label {
+    min-width: 300px;
+    text-align: left;
+    margin: 10px 0px;
+    border: none;
+  }
+  .overview-strong {
+    min-width: 300px;
+    margin: 10px 0px;
+    border: none;
+    border-bottom: 1px solid#111b0d;
+  }
+  
   .forms {
     padding: 20px 0px 0px 0px;
     max-width: 350px;
@@ -133,11 +258,8 @@
   }
   .forms-input {
     min-width: 300px !important;
-    border-radius: 0;
   }
-  .login-input {
-    border-radius: 0;
-  }
+
   .register {
     padding-top: 160px !important;
   }
@@ -162,24 +284,26 @@
   }
   .forms-input {
     min-width: 300px !important;
-    border-radius: 0;
-  }
-  .login-input {
-    border-radius: 0;
   }
   .register {
-    padding-top: 160px !important;
+    padding-top: 140px !important;
   }
   .register-btn:enabled {
     font-size: 15px;
   }
 }
-@media screen and (max-width: 920px) {
-  .forms-input {
-    min-width: 200px !important;
-    border-radius: 0;
+
+@media screen and (max-width: 830px){
+  .overview-user-data {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
-  .login-input {
-    border-radius: 0;
+  .personal-info-overview {
+    margin: 0px 0px 40px 0px;
+  }
+  .billing-info-overview {
+    margin: 0;
   }
 }

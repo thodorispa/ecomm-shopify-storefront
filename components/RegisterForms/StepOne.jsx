@@ -3,64 +3,35 @@ import validator from "validator";
 import Axios from "axios";
 import Head from 'next/head';
 
-const Register = () => {
+const StepOne = ({ nextStep, handleFormData, values }) => {
 
   const [matchPass, setMatchPass] = useState("");
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const [formValues, setFormValues] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
-    phone: "",
-  });
 
-  const registerUser = (e) => {
+  const submitFormData = (e) => {
     e.preventDefault();
-    setErrors(validate(formValues));
+    setErrors(validate(values));
     setIsSubmit(true);
   };
 
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-  };
-
-
-  useEffect(async () => {
+  useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmit) {
-      try {
-
-        const { data } = await Axios.post(`http://localhost:3000/api/customer/sign-up`, {
-          email: formValues.email,
-          firstName: formValues.name,
-          lastName: formValues.surname,
-          password: formValues.password,
-          phone: formValues.phone,
-        })
-
-        if (data.customer) {
-          dispatch({ type: "SET_USER", payload: data.customer })
-          router.push(router.query.redirect || '/')
-        }
-
-      } catch (error) {
-        console.log(error);
-      }
-
+      nextStep();
     }
-  }, [errors]);
+  },[errors])
+
+  console.log(values);
 
   const validate = (values) => {
     const error = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
-    if (!values.name) {
+    if (!values.firstName) {
       error.name = "First Name is required";
     }
 
-    if (!values.surname) {
+    if (!values.lastName) {
       error.surname = "Last Name is required";
     }
 
@@ -87,12 +58,12 @@ const Register = () => {
   };
 
   return (
-    <header className="container register">
+    <header style={{animation: "fadeIn 1s ease-in"}}>
        <Head>
         <title>Register || Katoi</title>
       </Head>
       
-      <article>
+      <article >
         <h1 style={{ margin: "0" }}>Register to Katoi</h1>
         <p className="register-desc">
           Complete the fields below to create an account to katoi soap, in order
@@ -101,18 +72,18 @@ const Register = () => {
       </article>
       <section className="form-container">
         <article>
-          <form onSubmit={registerUser} className="forms">
-          <h4 style={{opacity: "0.7", fontWeight: "100", textAlign: "center"}}>Personal Information</h4>
+          <form onSubmit={submitFormData} className="forms">
+          <h3 style={{opacity: "0.7", fontWeight: "100", textAlign: "center"}}>Personal Information</h3>
             <article>
               <div className="input-container">
               <input
                 type="text"
-                name="name"
+                name="firstName"
+                defaultValue={values.firstName}
                 className="forms-input"
-                value={formValues.name}
-                onChange={handleOnChange}
+                onChange={handleFormData("firstName")}
               />
-              <label className={formValues.name ? "filled" : ""}>First Name</label>
+              <label className={values.firstName ? "filled" : ""}>First Name</label>
               </div>
               <section className="validate">
                 <i className={errors.name ? "fa-solid fa-exclamation" : ""}></i>
@@ -123,12 +94,12 @@ const Register = () => {
             <div className="input-container">
               <input
                 type="text"
-                name="surname"
+                name="lastName"
+                defaultValue={values.lastName}
                 className="forms-input"
-                value={formValues.surname}
-                onChange={handleOnChange}
+                onChange={handleFormData("lastName")}
               />
-              <label className={formValues.surname ? "filled" : ""}>Last Name</label>
+              <label className={values.lastName ? "filled" : ""}>Last Name</label>
               </div>
               <section className="validate">
                 <i className={errors.surname ? "fa-solid fa-exclamation" : ""}></i>
@@ -140,11 +111,11 @@ const Register = () => {
               <input
                 type="text"
                 name="email"
+                defaultValue={values.email}
                 className="forms-input"
-                value={formValues.email}
-                onChange={handleOnChange}
+                onChange={handleFormData("email")}
               />
-              <label className={formValues.email ? "filled" : ""}>Email</label>
+              <label className={values.email ? "filled" : ""}>Email</label>
               </div>
               <section className="validate">
                 <i className={errors.email ? "fa-solid fa-exclamation" : ""}></i>
@@ -156,11 +127,11 @@ const Register = () => {
               <input
                 type="phone"
                 name="phone"
+                defaultValue={values.phone}
                 className="forms-input"
-                value={formValues.phone}
-                onChange={handleOnChange}
+                onChange={handleFormData("phone")}
               />
-              <label className={formValues.phone ? "filled" : ""}>Mobile Phone</label>
+              <label className={values.phone ? "filled" : ""}>Mobile Phone</label>
               </div>
               <section className="validate">
                 <i className={errors.phone ? "fa-solid fa-exclamation" : ""}></i>
@@ -172,17 +143,16 @@ const Register = () => {
               <input
                 type="password"
                 name="password"
+                defaultValue={values.password}
                 className="forms-input"
-                value={formValues.password}
-                onChange={handleOnChange}
+                onChange={handleFormData("password")}
               />
-              <label className={formValues.password ? "filled" : ""}>Password</label>
+              <label className={values.password ? "filled" : ""}>Password</label>
               </div>
               <section className="validate">
                 <i className={errors.password ? "fa-solid fa-exclamation" : ""}></i>
                 <small style={{ paddingLeft: "5px" }}>{errors.password}</small>
               </section>
-
             </article>
             <article>
             <div className="input-container">
@@ -200,16 +170,17 @@ const Register = () => {
                 <small style={{ paddingLeft: "5px" }}>{errors.password}</small>
               </section>
             </article>
+            <button 
+              className="register-btn"
+              type="submit"
+              style={{width: "100%", alignSelf:"center "}}
+              >CONTINUE</button>
           </form>
         </article>
       </section>
-      <button 
-        className="register-btn"
-        onClick={registerUser}
-        style={{width: "100%"}}
-        >REGISTER</button>
+      
     </header>
-  );
-};
+  )
 
-export default Register;
+}
+export default StepOne;
