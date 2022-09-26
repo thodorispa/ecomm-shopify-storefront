@@ -97,7 +97,7 @@ const Navbar = () => {
                  className="fa-solid fa-user"
                  id="nav-icons"></i>
                 <div style={{ marginTop: "30px"}} className="dropdown">
-                  <Link href="/createaccount">
+                  <Link href="/register">
                     <li className="drop-link-user">Register</li>
                   </Link>
                   <Link href="/signIn">

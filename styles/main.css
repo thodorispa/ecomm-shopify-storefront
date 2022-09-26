@@ -10,7 +10,12 @@ body {
 body.has-lightbox {
   overflow: hidden;
 }
+body::after {
+  content: '';
+  display: block;
+  height: 100%;
 
+}
 * {
   flex: 0 0 auto;
   box-sizing: border-box;

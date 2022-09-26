@@ -36,10 +36,14 @@ const Cart = ({ _checkout, _products }) => {
   }
 
   return (
-    <header className="container cart">
+    <>
+    <header className="container">
        <Head>
         <title>Cart || Katoi</title>
       </Head>
+      </header>
+      <article className="cart">
+
       
       <h1>This is your cart</h1>
       <table className="cart-table">
@@ -120,12 +124,13 @@ const Cart = ({ _checkout, _products }) => {
           )}
       </table>
       <button 
-      style={{width: "20%", alignSelf: "flex-end"}}
+      style={{alignSelf: "flex-end"}}
       className="register-btn"
       onClick={checkoutOnClick}>
         CHECKOUT
       </button>
-    </header>
+      </article>  
+    </>
   );
 }
 

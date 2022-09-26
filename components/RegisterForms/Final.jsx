@@ -1,6 +1,7 @@
 import React from "react";
 
-const Final = ({ values, addressValues }) => {
+
+const Final = ({ values, addressValues, country }) => {
   
 
   return (
@@ -52,7 +53,7 @@ const Final = ({ values, addressValues }) => {
             <section className="overview-container">
               <label className="forms-label">Country:&nbsp;</label>
               <strong className="overview-strong">
-                {addressValues.country}
+                {country.label}
               </strong>
             </section>
             <section className="overview-container">
