@@ -130,6 +130,25 @@
   width: 15%;
 }
 
+.view-cart-btn {
+  padding: 7px;
+  border: 1px solid #111b0d;
+  background-color: transparent;
+  width: 50%;
+  margin-top: 15px;
+  cursor: pointer;
+  padding: 12px;
+  font-size: 15px;
+  transition: 250ms ease-in;
+  color: #111b0d;
+}
+
+.view-cart-btn:hover {
+  background-color: #111b0d;
+  color: rgb(254, 255, 251);
+  transition: 250ms ease-in;
+}
+
 @media screen and (max-width: 1300px){
   .cart-table th {
     padding: 20px 15px;

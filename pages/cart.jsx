@@ -120,7 +120,7 @@ const Cart = ({ _checkout, _products }) => {
           )}
       </table>
       <button 
-      style={{width: "35%" ,alignSelf: "flex-end"}}
+      style={{width: "20%", alignSelf: "flex-end"}}
       className="register-btn"
       onClick={checkoutOnClick}>
         CHECKOUT

@@ -8,7 +8,7 @@ const Final = ({ values, addressValues }) => {
       <header className="overview-header">
         <h1>Your Account Info</h1>
       </header>
-      <article>
+      <article style={{justifyContent: "center"}}>
         <section className="overview-user-data">
           <article className="personal-info-overview">
             <h3
@@ -62,7 +62,7 @@ const Final = ({ values, addressValues }) => {
           </article>
         </section>
         <section className="overview-buttons">
-        <button 
+          <button 
           style={{width: "50%", marginRight: "10px"}} 
           className="start-over-btn"
           onClick={() =>  window.location.reload(false)}>

@@ -82,7 +82,7 @@ const SideCart = () => {
           <Link href="/cart">
             <button 
             style={{width: "100%"}} 
-            className="register-btn"
+            className="view-cart-btn"
             onClick={viewCartOnClick}
             >VIEW CART</button>
           </Link>
