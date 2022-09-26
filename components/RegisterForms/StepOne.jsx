@@ -71,7 +71,7 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
         </p>
       </article>
       <section className="form-container">
-        <article>
+        <article style={{alignItems: "center"}}>
           <form onSubmit={submitFormData} className="forms">
           <h3 style={{opacity: "0.7", fontWeight: "100", textAlign: "center"}}>Personal Information</h3>
             <article>
@@ -170,11 +170,13 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
                 <small style={{ paddingLeft: "5px" }}>{errors.password}</small>
               </section>
             </article>
+            <article style={{alignItems: "center"}}>
             <button 
               className="register-btn"
               type="submit"
-              style={{width: "100%", alignSelf:"center "}}
               >CONTINUE</button>
+            </article>
+         
           </form>
         </article>
       </section>

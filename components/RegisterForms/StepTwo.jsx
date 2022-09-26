@@ -112,7 +112,7 @@ const StepTwo = ({ nextStep, handleFormData, prevStep, values }) => {
             </article>
             <section style={{alignItems: "center"}}>
             <button 
-              className="register-btn"
+              className="start-over-btn"
               type="submit"
               style={{width: "40%", margin: "10px"}}
               onClick={prevStep}
