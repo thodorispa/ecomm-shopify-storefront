@@ -24,15 +24,16 @@ import '../styles/checkout.css'
 const MyApp = ({ Component, pageProps }) => {
   const { cart } = pageProps
   const { customer } = pageProps
+  const { collections } = pageProps
   const { cartClasses } = pageProps
   const { sideNav } = pageProps
-  
+
 
   return (
     <Provider store={store}>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 
-      <Init {...pageProps} cart={cart} cartClasses={cartClasses}/>
+      <Init {...pageProps} cart={cart} collections={collections} cartClasses={cartClasses} />
       <Navbar {...pageProps} customer={customer} />
       <Component {...pageProps} />
       <Footer {...pageProps} />
@@ -42,9 +43,10 @@ const MyApp = ({ Component, pageProps }) => {
 
 MyApp.getInitialProps = async (ctx) => {
   const { pageProps } = await App.getInitialProps(ctx)
-  const  cart = ctx?.ctx?.req?.cart 
-  const  customer = ctx?.ctx?.req?.customer 
-  return { pageProps: { ...pageProps, cart, customer} }
+  const cart = ctx?.ctx?.req?.cart
+  const customer = ctx?.ctx?.req?.customer
+  const collections = ctx?.ctx?.req?.collections
+  return { pageProps: { ...pageProps, cart, customer, collections } }
 }
 
 export default MyApp;

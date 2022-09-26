@@ -9,13 +9,13 @@ router.post('/create', async (req, res) => {
   const cart = req.body.lines;
   
   const lines = [];
-  for (let i = 0; i < cart.length; i++) {
-    const line = cart[i];
-    lines.push({
-      variantId: "\""+(line.merchandise.id) + "\"",
-      quantity: line.quantity,
-    });
-  }
+  // for (let i = 0; i < cart.length; i++) {
+  //   const line = cart[i];
+  //   lines.push({
+  //     variantId: "\""+(line.merchandise.id) + "\"",
+  //     quantity: line.quantity,
+  //   });
+  // }
 
   try {
 

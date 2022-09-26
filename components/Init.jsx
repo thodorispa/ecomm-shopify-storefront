@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux"
 
 
-const Init = ({ cart, customer, cartClasses, sideNav }) => {
+const Init = ({ cart, customer, collections, cartClasses, sideNav }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -12,9 +12,15 @@ const Init = ({ cart, customer, cartClasses, sideNav }) => {
   useEffect(() => {
     customer && dispatch({ type: "SET_USER", payload: customer })
   }, [customer])
+
+  useEffect(() => {
+    collections && dispatch({ type: "SET_COLLECTIONS", payload: collections })
+  }, [collections])
+
   useEffect(() => {
     cartClasses && dispatch({ type: "TOGGLE_CART", payload: cartClasses })
   }, [cartClasses])
+
   useEffect(() => {
     sideNav && dispatch({ type: "TOGGLE_NAV", payload: sideNav })
   }, [sideNav])

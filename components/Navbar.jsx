@@ -6,16 +6,11 @@ import Axios from "axios";
 import router from "next/router";
 import SideCart from "./SideCart"
 
-const Navbar = (_collections) => {
+const Navbar = () => {
 
   const dispatch = useDispatch();
 
-  const { customer } = useSelector(x => x.customer);
-  const { cart } = useSelector(x => x);
-  const {cartClasses} = useSelector(x => x);
-  const { sideNav } = useSelector(x => x);
-  const [collections, setCollections] = useState(_collections._collections);
-  
+  const { customer, collections, cart, sideNav, cartClasses } = useSelector(x => x);
   const ref = useRef();
   const [nav, setNav] = useState(false);
 
@@ -157,31 +152,5 @@ const Navbar = (_collections) => {
     </>
   );
 };
-
-export async function getServerSideProps(ctx) {
-  let _collections = null
-  try {
-    const { data } = await Axios.get(`http://localhost:3000/api/collections/`)
-
-    if (data.collections) {
-      _collections = data._collections
-    } else {
-      // Return 404
-      return {
-        notFound: true,
-      }
-    }
-  } catch (err) {
-    console.log(err);
-    // Return 404
-    return {
-      notFound: true,
-    }
-  }
-
-  return {
-    props: { _collections }
-  }
-}
 
 export default Navbar;

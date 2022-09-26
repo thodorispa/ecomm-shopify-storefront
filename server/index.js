@@ -15,6 +15,7 @@ import collections from './api/collections'
 import cart from './api/cart'
 import shopify from './api/shopify'
 import * as Cart from '../utils/cartUtils'
+import { getAll } from '../utils/collectionUtils'
 import * as Customer from '../utils/customerUtils'
 
 const { PORT, MONGO_URI, NODE_ENV } = process.env;
@@ -56,6 +57,26 @@ app.prepare().then(() => {
       return res.redirect('https://' + req.headers.host + req.url)
     }
 
+
+    try {
+      const collectionsRes = await getAll();
+
+      const collections = collectionsRes.collections
+
+      if (collections) {
+        req.collections = collections;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
+    next()
+  })
+
+  server.use(async (req, res, next) => {
+    req.env = NODE_ENV
+
+
     if (!req.cart && req.cookies.cart) {
       try {
         const existingCart = decodeURIComponent(req.cookies.cart) || null;
@@ -93,10 +114,6 @@ app.prepare().then(() => {
       } catch (e) {
         res.cookie('', '', { maxAge: 0 })
       }
-    }
-
-    if (NODE_ENV === 'production' && !req.secure) {
-      return res.redirect('https://' + req.headers.host + req.url)
     }
 
     next()

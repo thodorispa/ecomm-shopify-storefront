@@ -6,9 +6,7 @@ import Axios from "axios";
 
 const SideCart = () => {
 
-  const { cart } = useSelector(x => x)
-  const { cartClasses } = useSelector(x => x)
-  const { sideNav } = useSelector(x => x)
+  const { cart, sideNav, cartClasses } = useSelector(x => x);
 
   const dispatch = useDispatch();
 

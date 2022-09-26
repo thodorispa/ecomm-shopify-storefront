@@ -4,6 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 
 import cartReducer from './reducers/cartReducer.js'
+import collectionsReducer from './reducers/collectionsReducer.js'
 import authReducer from './reducers/userReducer.js'
 import sideCartReducer from './reducers/sideCartReducer.js'
 import sideNavReducer from './reducers/sideNavReducer.js'
@@ -12,12 +13,14 @@ export const store = createStore(
   combineReducers({
     customer: authReducer,
     cart: cartReducer,
+    collections: collectionsReducer,
     cartClasses: sideCartReducer,
     sideNav: sideNavReducer,
   }),
   {
     customer: false,
     cart: null,
+    collections: null,
     cartClasses: "side-cart",
     sideNav: false,
   },

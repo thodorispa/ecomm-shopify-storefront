@@ -4,9 +4,11 @@ import Collection from '../components/Collection'
 import { useEffect } from "react";
 import Link from "next/link";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
+const Home = () => {
+  const { collections } = useSelector(x => x);
 
-const Home = ({ _collections }) => {
   return (
     <header className="container">
       <Head>
@@ -32,26 +34,26 @@ const Home = ({ _collections }) => {
           </p>
         </article>
       </section>
-      {_collections ? (
+      {collections ? (
         <>
           <section className="showcase-feed">
-      
-          {_collections?.map((collection, i) => (
-            <Collection key={i} collection={collection} />
 
-          ))}
-        </section>
-        <section className="featured">
-          <ul className="featured-c">
-            {_collections?.map((collection, i) => (
-              <Link key={i} href={`/collections/${collection.title}`}>
-                <a className="featured-link">{collection.title}</a>
-            </Link>
-              
+            {collections?.map((collection, i) => (
+              <Collection key={i} collection={collection} />
+
             ))}
-          </ul>
-        </section>
-      </>
+          </section>
+          <section className="featured">
+            <ul className="featured-c">
+              {collections?.map((collection, i) => (
+                <Link key={i} href={`/collections/${collection.title}`}>
+                  <a className="featured-link">{collection.title}</a>
+                </Link>
+
+              ))}
+            </ul>
+          </section>
+        </>
       ) : (
         <section>
           <h2>Looks like it's empty here...</h2>
@@ -60,32 +62,5 @@ const Home = ({ _collections }) => {
     </header>
   );
 };
-
-
-export async function getServerSideProps(ctx) {
-  let _collections = null
-  try {
-    const { data } = await Axios.get(`http://localhost:3000/api/collections/`)
-
-    if (data.collections) {
-      _collections = data.collections
-    } else {
-      // Return 404
-      return {
-        notFound: true,
-      }
-    }
-  } catch (err) {
-    console.log(err);
-    // Return 404
-    return {
-      notFound: true,
-    }
-  }
-
-  return {
-    props: { _collections }
-  }
-}
 
 export default Home;
