@@ -38,10 +38,10 @@ const SideCart = () => {
     <header>
       <article className={cartClasses}>
         {!cart || cart.lines == 0 ? (
-          <h2 style={{alignSelf: "center", padding: "20px"}}>Your shopping cart is empty</h2>
+          <h2 style={{alignSelf: "center", padding: "20px"}}>Το καλάθι αγορών σας είναι άδειο</h2>
         ) : (
           <>
-          <h2 style={{alignSelf: "center", padding: "20px"}}>Your shopping cart</h2>
+          <h2 style={{alignSelf: "center", padding: "20px"}}>Το καλάθι αγορών σας</h2>
         <article className="side-cart-list">
           {cart.lines.map((product,i) => (
             <div key={i} style={{marginBottom: "20px", width: "100%"}}>
@@ -71,7 +71,7 @@ const SideCart = () => {
               </div></div>
           ) : (
             <>
-            <h2>Subtotal&nbsp;&nbsp;</h2>
+            <h2>Σύνολο&nbsp;&nbsp;</h2>
             <h2>{cart.cost.subtotalAmount.amount}&nbsp;{cart.cost.subtotalAmount.currencyCode}</h2>
             </>
           )}
@@ -82,7 +82,7 @@ const SideCart = () => {
             style={{width: "100%"}} 
             className="view-cart-btn"
             onClick={viewCartOnClick}
-            >VIEW CART</button>
+            >ΠΡΟΒΟΛΗ ΚΑΛΑΘΙΟΥ</button>
           </Link>
         </section>
         </>

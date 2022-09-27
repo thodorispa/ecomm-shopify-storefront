@@ -39,20 +39,20 @@ const Cart = ({ _checkout, _products }) => {
     <>
     <header className="container">
        <Head>
-        <title>Cart || Katoi</title>
+        <title>Καλλάθι Αγορών || Κατώιο</title>
       </Head>
       </header>
       <article className="cart">
 
       
-      <h1>This is your cart</h1>
+      <h1>Καλάθι Αγορών</h1>
       <table className="cart-table">
         {!cart || cart.lines == 0 ? (
           <thead>
             <tr>
-              <th>Your shopping cart is empty</th>
+              <th>Το καλάθι αγορών σας είναι άδειο</th>
               <th>
-                <a href="/products">Shop Here</a>
+                <a href="/products">Ψωνίστε εδώ</a>
               </th>
             </tr>
           </thead>
@@ -61,9 +61,9 @@ const Cart = ({ _checkout, _products }) => {
             <thead>
             <tr>
             <th>&nbsp;</th>
-            <th className="th-prod">Product</th>
-            <th className="th-price">Price</th>
-            <th className="th-quantity">Quantity</th>
+            <th className="th-prod">Προϊόν</th>
+            <th className="th-price">Τιμή</th>
+            <th className="th-quantity">Ποσότητα</th>
           </tr>
         </thead>
         <tbody>
@@ -110,7 +110,7 @@ const Cart = ({ _checkout, _products }) => {
         
         <thead className="subtotal">
           <tr>
-            <th>Subtotal</th>
+            <th>Σύνολο</th>
             {isLoading ? (
               <th className="spinner">
               <div className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
@@ -127,7 +127,7 @@ const Cart = ({ _checkout, _products }) => {
       style={{alignSelf: "flex-end"}}
       className="register-btn"
       onClick={checkoutOnClick}>
-        CHECKOUT
+        ΠΛΗΡΩΜΗ
       </button>
       </article>  
     </>

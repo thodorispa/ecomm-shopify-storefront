@@ -95,7 +95,7 @@ const Navbar = () => {
                   <li >
                     {link.name}
                   </li>
-                  {link.name === "PRODUCTS" ? (
+                  {link.name === "ΠΡΟΪΟΝΤΑ" ? (
                     <article className="c-dropdown">
                       {collections?.map((collection, i) => (
                         <Link key={i} href={`/collections/${collection.title}`}>
@@ -104,7 +104,7 @@ const Navbar = () => {
                       ))}
                     </article>
                   ) : ""}
-                  {link.name === "MORE" ? (
+                  {link.name === "ΑΛΛΑ" ? (
                     <div className="c-dropdown">
                       <Link href="/products">
                         <li onClick={() => setNav(false)} className="drop-link">Register</li>
@@ -126,10 +126,10 @@ const Navbar = () => {
                  id="nav-icons"></i>
                 <div style={{ marginTop: "30px"}} className="dropdown">
                   <Link href="/register">
-                    <li className="drop-link-user">Register</li>
+                    <li className="drop-link-user">Εγγραφή</li>
                   </Link>
                   <Link href="/signIn">
-                    <li className="drop-link-user">Sign In</li>
+                    <li className="drop-link-user">Σύνδεση</li>
                   </Link>
                 </div>
               </section>
@@ -150,10 +150,10 @@ const Navbar = () => {
                 id="nav-icons"></i>
                 <div style={{ marginTop: "30px" }} className="dropdown">
                   <Link href="/">
-                    <li className="drop-link-user">Preferences</li>
+                    <li className="drop-link-user">Προτιμήσεις</li>
                   </Link>
                   <Link href="/">
-                    <li className="drop-link-user">Order History</li>
+                    <li className="drop-link-user">Ιστορικό Παραγγελιών</li>
                   </Link>
                   <Link href="/">
                     <li
@@ -161,7 +161,7 @@ const Navbar = () => {
                       onClick={async () => {
                         await Axios.get(`/api/customer/logout`)
                         router.reload(router.query)
-                      }}> Log Out</li>
+                      }}>Αποσύνδεση</li>
                   </Link> 
                 </div>
               </section>

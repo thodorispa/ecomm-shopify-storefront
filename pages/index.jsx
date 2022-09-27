@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <header className="container">
       <Head>
-        <title>Home || Katoi</title>
+        <title>Αρχική || Κατώι</title>
       </Head>
       <section className="banner">
         <section className="header-img">
@@ -24,7 +24,7 @@ const Home = () => {
         </section>
 
         <article className="showcase">
-          <h1 style={{ fontSize: "40px" }}>Welcome to Katoi Soap</h1>
+          <h1 style={{ fontSize: "40px" }}>Καλωσορίσατε</h1>
           <p>Katoi is a small business based in Amorgos</p>
           <p className="desc">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, ipsum
@@ -56,7 +56,7 @@ const Home = () => {
         </>
       ) : (
         <section>
-          <h2>Looks like it's empty here...</h2>
+          <h2>Φαίνεται να μην υπάρχει κάτι εδώ...</h2>
         </section>
       )}
     </header>
