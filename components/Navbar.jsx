@@ -10,9 +10,37 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
 
-  const { customer, collections, cart, sideNav, cartClasses } = useSelector(x => x);
+  const { collections, cart, sideNav, cartClasses } = useSelector(x => x);
+  const { customer } = useSelector(x => x.customer)
   const ref = useRef();
   const [nav, setNav] = useState(false);
+  const [show, setShow] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const controlNavbar = () => {
+    if (typeof window !== 'undefined') { 
+      if (window.scrollY > lastScrollY) { // if scroll down hide the navbar
+        if (sideNav || nav) {
+          setShow(true)
+        } else if (!sideNav && !nav){
+          setShow(false)
+        }
+      } else { // if scroll up show the navbar
+          setShow(true);  
+      }
+      setLastScrollY(window.scrollY); 
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+        window.addEventListener('scroll', controlNavbar);
+      // cleanup function
+      return () => {
+        window.removeEventListener('scroll', controlNavbar);
+      };
+    }
+  }, [lastScrollY]);
 
   useEffect(() => {
     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
@@ -35,16 +63,16 @@ const Navbar = () => {
   useEffect(() => {
     dispatch({ type: "TOGGLE_CART", payload: "side-cart" })
     
-    if (sideNav) {
+    if (sideNav && !nav) {
       dispatch({ type: "TOGGLE_CART", payload: "side-cart active-cart" })
     }
-  },[sideNav]);
+  },[sideNav, nav]);
 
   return (
     <>
-      <header ref={ref} className="navbar">
+      <header ref={ref} className={show? 'navbar active' : 'navbar hidden'}>
         <Link href="/">
-          <a>
+          <a onClick={() => dispatch({ type: "TOGGLE_NAV", payload: false})}>
             <div className="logo">
               <h3>Katoi Soaps</h3>
             </div>
@@ -67,7 +95,7 @@ const Navbar = () => {
                   <li >
                     {link.name}
                   </li>
-                  {link.name === "PRODUCTS" ? (
+                  {link.name === "ΠΡΟΪΟΝΤΑ" ? (
                     <article className="c-dropdown">
                       {collections?.map((collection, i) => (
                         <Link key={i} href={`/collections/${collection.title}`}>
@@ -76,7 +104,7 @@ const Navbar = () => {
                       ))}
                     </article>
                   ) : ""}
-                  {link.name === "MORE" ? (
+                  {link.name === "ΑΛΛΑ" ? (
                     <div className="c-dropdown">
                       <Link href="/products">
                         <li onClick={() => setNav(false)} className="drop-link">Register</li>
@@ -97,11 +125,11 @@ const Navbar = () => {
                  className="fa-solid fa-user"
                  id="nav-icons"></i>
                 <div style={{ marginTop: "30px"}} className="dropdown">
-                  <Link href="/createaccount">
-                    <li className="drop-link-user">Register</li>
+                  <Link href="/register">
+                    <li className="drop-link-user">Εγγραφή</li>
                   </Link>
                   <Link href="/signIn">
-                    <li className="drop-link-user">Sign In</li>
+                    <li className="drop-link-user">Σύνδεση</li>
                   </Link>
                 </div>
               </section>
@@ -110,8 +138,8 @@ const Navbar = () => {
                 id="nav-icons"
                 onClick={() => dispatch({ type: "TOGGLE_NAV", payload: !sideNav})}>
                 </i>
-                <SideCart />
-              <span className='badge badge-warning' id='lblCartCount'>{cart?.lines?.length}</span>
+                {show ? <SideCart /> : <></>}
+              <span className='badge badge-warning' id='lblCartCount'>{cart?.lines.length}</span>
             </section>
           ) : (
             <section className="usr-menu">
@@ -122,18 +150,18 @@ const Navbar = () => {
                 id="nav-icons"></i>
                 <div style={{ marginTop: "30px" }} className="dropdown">
                   <Link href="/">
-                    <li className="drop-link">Preferences</li>
+                    <li className="drop-link-user">Προτιμήσεις</li>
                   </Link>
                   <Link href="/">
-                    <li className="drop-link">Order History</li>
+                    <li className="drop-link-user">Ιστορικό Παραγγελιών</li>
                   </Link>
                   <Link href="/">
-                    <a
-                      className="drop-link"
+                    <li
+                      className="drop-link-user"
                       onClick={async () => {
                         await Axios.get(`/api/customer/logout`)
                         router.reload(router.query)
-                      }}> Log Out</a>
+                      }}>Αποσύνδεση</li>
                   </Link> 
                 </div>
               </section>

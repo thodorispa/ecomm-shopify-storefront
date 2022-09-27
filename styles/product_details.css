@@ -28,7 +28,7 @@
 }
 
 .cart-icon:hover {
-  width: 160px;
+  width: 230px;
   height: 25px;
   background-color: black;
   border-radius: 5px;
@@ -36,9 +36,9 @@
 }
 .cart-icon:hover::after {
   color: white;
-  content: "ADD TO CART";
+  content: "ΠΡΟΣΘΗΚΗ ΣΤΟ ΚΑΛΑΘΙ";
   animation: 1.5s fadeIn;
-  font-size: 17px;
+  font-size: 14px;
   text-align: center;
 }
 

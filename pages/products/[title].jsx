@@ -21,11 +21,11 @@ const SingleProduct = ({ _product }) => {
 
   useEffect(() => {
     if (quantityAvailable == 0) {
-      setAvailability("Out of stock")
+      setAvailability("Εκτός αποθέματος")
     } else if (quantityAvailable <= 4) {
-      setAvailability("Low in stock")
-    } else {
-      setAvailability("In stock")
+      setAvailability("Χαμηλό απόθεμα")
+    } else  {
+      setAvailability("Σε απόθεμα")
     }
 
   }, [])
@@ -58,7 +58,7 @@ const SingleProduct = ({ _product }) => {
   return (
     <div >
       <Head>
-        <title>{product.title} || Amazing Soaps</title>
+        <title>{product.title} || Κατώι</title>
       </Head>
 
       <section className="container product">
@@ -100,6 +100,7 @@ const SingleProduct = ({ _product }) => {
             : <small style={{ color: "red" }}>{availability}</small>
           }
           <article className="add-to-cart-loader">
+<<<<<<< HEAD
             {flag
               ? <>
                 {isLoading
@@ -118,6 +119,26 @@ const SingleProduct = ({ _product }) => {
               : ""}
             <article>
             </article>
+=======
+          {flag 
+          ? <>
+          {isLoading 
+          ? <div style={{transform: "scale(1.2"}}
+          className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
+          <div></div><div></div>
+          </div></div> 
+          : <h4>Προστέθηκε στο καλάθι αγορών</h4>
+          } 
+        </>
+          : ""
+          }
+           {quantity == quantityAvailable ? 
+           <> {!flag ?  <h4>Έχετε φτάσει τη διαθέσιμη ποσότητα αυτού του προϊόντος</h4>  : ""}
+           </>
+           : ""}
+          <article>
+          </article>
+>>>>>>> f4e975c5b735ba3f8eb19d068692b61cf7fd63d0
           </article>
         </article>
       </section>

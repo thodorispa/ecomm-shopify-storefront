@@ -1,5 +1,5 @@
 .cart {
-  padding: 100px 150px;
+  padding:0px 150px 50px 150px;
   justify-content: flex-start;
   align-items: flex-start;
   animation: intro 500ms ease-in-out;
@@ -17,11 +17,11 @@
 
 .side-cart {
   display: flex;
+  position: fixed;
   flex-wrap: nowrap;
   align-items: flex-start;
   justify-content: flex-start;
   overflow-y: scroll;
-  position: fixed;
   top: 100px;
   right: 0;
   bottom: 0;
@@ -59,6 +59,7 @@
 .active-cart {
   transition: 0.5s ease-in;
   transform: translateX(0%);
+  z-index: 999;
 }
 .spinner {
   padding: 0px 58px !important;
@@ -159,15 +160,15 @@
 }
 @media screen and (max-width: 920px){
   .cart {
-    padding: 100px 30px;
+    padding: 0px 30px;
   }
   .spinner {
     padding: 0px 38px;
   }
 }
-@media screen and (max-width: 420px){
+@media screen and (max-width: 740px){
   .cart {
-    padding: 150px 10px !important;
+    padding: 0px 10px !important;
     justify-content: flex-start;
     align-items: flex-start;
   }
@@ -199,4 +200,16 @@
     width: 100%;
   }
   
+}
+@media screen and (max-width: 440px) { 
+  .cart {padding: 70px 10px !important}
+  .cart-table td {
+    padding: 15px 0px;
+  }
+  .register-btn{ 
+    text-align: center;
+    max-width: 120px;
+    font-size: 12px;
+  } 
+ 
 }

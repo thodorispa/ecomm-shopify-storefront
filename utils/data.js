@@ -1,40 +1,40 @@
 export const navLinks = [
-  { name: "SOAPS", 
+  { name: "ΣΑΠΟΥΝΙΑ", 
    path: "/products" 
   },
   {
-    name: "PRODUCTS",
+    name: "ΠΡΟΪΟΝΤΑ",
     path: "/products",
   },
   {
-    name: "MORE",
+    name: "ΑΛΛΑ",
     path: "/products",
   },
   {
-    name: "ABOUT",
+    name: "ΣΧΕΤΙΚΑ",
     path: "/about",
   },
 ];
 
 export const collections = [
   {
-    name: "Soap Bars", 
+    name: "Σαπούνια", 
     id: "gid://shopify/ProductVariant/410825031921"
   },
   {
-    name: "Face", 
+    name: "Πρόσωπο", 
     id: "gid://shopify/ProductVariant/410825064689"
   },
   {
-    name: "Body", 
+    name: "Σώμα", 
     id: "gid://shopify/ProductVariant/410825097457"
   },
   {
-    name: "Shampoo - Showergel", 
+    name: "Σαμπουάν - Αφρόλουτρο", 
     id: "gid://shopify/ProductVariant/410825162993"
   },
   {
-    name: "Beeswax", 
+    name: "Κηραλοιφές", 
     id: "gid://shopify/ProductVariant/410825195761"
   },
   {
@@ -42,7 +42,7 @@ export const collections = [
     id: "gid://shopify/ProductVariant/410825228529"
   },
   {
-    name: "Body Oils", 
+    name: "Λάδια Μασάζ", 
     id: "gid://shopify/ProductVariant/410825261297"
   }
 ]

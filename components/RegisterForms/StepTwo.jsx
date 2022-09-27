@@ -1,11 +1,26 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
+import Select from 'react-select';
+import countryList from 'react-select-country-list';
 
-const StepTwo = ({ nextStep, handleFormData, prevStep, values }) => {
+const StepTwo = ({ nextStep, handleFormData, prevStep, values, handleCountry, country }) => {
 
   window.scrollTo(0, 0)
 
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const options = useMemo(() => countryList().getData(), [])
+
+  const customStyles = {
+    menu: (provided, state) => ({
+      ...provided,
+      padding: state.selectProps.padding,
+      color: '#111b0d',
+      maxWidth: "200px "
+    }),
+    indicatorsContainer: () => ({
+      padding: '7px',
+    }),
+  }
 
   const submitFormData = (e) => {
     e.preventDefault();
@@ -31,7 +46,7 @@ const StepTwo = ({ nextStep, handleFormData, prevStep, values }) => {
       error.city = "City or Town is required";
     }
 
-    if (!values.country) {
+    if (!country) {
       error.country = "Country is required";
     } 
     if (!values.zip) {
@@ -80,14 +95,37 @@ const StepTwo = ({ nextStep, handleFormData, prevStep, values }) => {
             </article>
             <article>
             <div className="input-container">
-              <input
+            <Select 
+            placeholder={'Country'} 
+            className="country-input" 
+            styles={customStyles} 
+            theme={(theme) => ({
+              ...theme,
+              borderRadius: "7px",
+              padding: "15px",
+              colors: {
+                ...theme.colors,
+                primary25: '#d3d0ae',
+                primary50: '#d3d0ae',
+                primary: '#111b0d',
+                neutral10: 'rgb(254, 255, 251)',
+                neutral20: '#111b0d',
+                neutral30: '#111b0d',
+                neutral70: 'rgb(254, 255, 251)',
+                neutral80: 'rgb(87, 96, 78)',
+                neutral90: '#A19E84'
+              },
+            })}
+            options={options} 
+            defaultValue={country} 
+            onChange={handleCountry} />
+              {/* <input
                 type="text"
                 name="country"
-                defaultValue={values.country}
+                options={options}
+                defaultValue={country} onChange={handleCountry}
                 className="forms-input"
-                onChange={handleFormData("country")}
-              />
-              <label className={values.country ? "filled" : ""}>Country</label>
+              /> */}
               </div>
               <section className="validate">
                 <i className={errors.country ? "fa-solid fa-exclamation" : ""}></i>

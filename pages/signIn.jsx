@@ -52,27 +52,27 @@ const SignIn = () => {
   return (
     <header className="container sign-in">
       <Head>
-        <title>Log In || Katoi</title>
+        <title>Σύνδεση || Κατώι</title>
       </Head>
       <article>
-        <h1>Sign In</h1>
+        <h1>Σύνδεση στο λογαριασμό σας</h1>
         <p 
         style={{
           padding: "10px 10px",
           fontSize: "20px"
-        }}>Welcome back, enter your credentials to sign in.</p>
+        }}>Καλώς ήρθατε πίσω, εισάγεται τα ζητούμενα στοιχεία για να συνδεθείτε στο λογαριασμό σας.</p>
       </article>
       <article style={{marginTop: "20px"}}>
 
         <form onSubmit={e => loginHandler(e)} className="log-in-form">
-        <label style={{ textAlign: "start" }} className="forms-label">Email</label>
+        <label style={{ textAlign: "start" }} className="login-label">Email</label>
           <input type="text"
             name="email"
             defaultValue=""
             className="login-input"
             onChange={e => setEmail(e.target.value)} />
 
-          <label style={{alignSelf: "flex-end"}}className="forms-label">Password</label>
+          <label style={{alignSelf: "flex-end"}}className="login-label">Κωδικός Πρόσβασης</label>
           <input type="password"
             name="password"
             className="login-input"
@@ -85,7 +85,7 @@ const SignIn = () => {
             type="submit"
             disabled={!validateForm()}
           >
-            Log in
+            Σύνδεση
           </button>
 
         </form>

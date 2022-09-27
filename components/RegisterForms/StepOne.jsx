@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import validator from "validator";
 import Axios from "axios";
 import Head from 'next/head';
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
-const StepOne = ({ nextStep, handleFormData, values }) => {
+const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
 
   const [matchPass, setMatchPass] = useState("");
   const [errors, setErrors] = useState({});
@@ -46,9 +48,9 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
     } else if (values.password.length < 4) {
       error.password = "Password must be at least 5 characters!";
     } 
-    if (!values.phone) {
+    if (!phone) {
       error.phone = "Mobile Phone is required";
-    } else if (!validator.isMobilePhone(values.phone)) {
+    } else if (!validator.isMobilePhone(phone)) {
       error.phone = "This is not a valid mobile phone format";
     }
 
@@ -122,14 +124,25 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
             </article>
             <article>
             <div className="input-container">
-              <input
+            <PhoneInput
+              placeholder="Mobile phone"
+              value={phone}
+              className="forms-input"
+              inputStyle={{
+                border: "none"
+              }}
+              PhoneInputInput={{
+                border: "none"
+              }}
+              onChange={setPhone}/>
+              {/* <input
                 type="phone"
                 name="phone"
                 defaultValue={values.phone}
                 className="forms-input"
                 onChange={handleFormData("phone")}
-              />
-              <label className={values.phone ? "filled" : ""}>Mobile Phone</label>
+              /> */}
+              {!phone ? <></> : <label styles={{border: "none"}}className="filled">Mobile Phone</label>}
               </div>
               <section className="validate">
                 <i className={errors.phone ? "fa-solid fa-exclamation" : ""}></i>

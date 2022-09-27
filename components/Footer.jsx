@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/Link';
 
 const Footer = () => {
   return ( 
@@ -8,12 +9,18 @@ const Footer = () => {
       </header>
       <section>
         <article className="info">
-          <h4>Contact</h4>
-          <h4>Terms of use</h4>
-          <h4>Faqs</h4>
+          <Link href="/contact">
+            <h4 style={{cursor: "pointer"}}>Επικοινωνία</h4>
+          </Link>
+          <Link href="/contact">
+            <h4 style={{cursor: "pointer"}}>Πολιτική χρήσης</h4>
+          </Link>
+          <Link href="/contact">
+            <h4 style={{cursor: "pointer"}}>Συζνές ερωτήσεις</h4>
+          </Link>
         </article>
         <article className="social">
-          <h1>Connect with us</h1>
+          <h1>Συνδεθείτε μαζί μας</h1>
           <section>
             <i className="fa-brands fa-instagram"></i>
             <i className="fa-brands fa-facebook"></i>
