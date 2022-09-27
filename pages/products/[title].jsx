@@ -12,6 +12,7 @@ const SingleProduct = ({ _product }) => {
   const dispatch = useDispatch()
 
   const [product, setProduct] = useState(_product)
+  const { cart } = useSelector(x => x)
   const [quantity, setQuantity] = useState(1)
   const [availability, setAvailability] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +25,7 @@ const SingleProduct = ({ _product }) => {
       setAvailability("Εκτός αποθέματος")
     } else if (quantityAvailable <= 4) {
       setAvailability("Χαμηλό απόθεμα")
-    } else  {
+    } else {
       setAvailability("Σε απόθεμα")
     }
 
@@ -33,7 +34,11 @@ const SingleProduct = ({ _product }) => {
   const addToCart = async () => {
     const productId = product.id;
     setFlag(true);
-    if (quantityAvailable > 0) {
+    // find quantity of product in cart from redux 
+    const productInCart = cart?.lines.find(x => x.id == productId)
+    const quantityInCart = productInCart ? productInCart.quantity : 0;
+
+    if ((parseInt(quantityInCart + quantity)) < quantityAvailable) {
       try {
         setIsLoading(true);
         const { data } = await Axios.post(`/api/cart/add`, { productId, quantity, product })
@@ -100,7 +105,6 @@ const SingleProduct = ({ _product }) => {
             : <small style={{ color: "red" }}>{availability}</small>
           }
           <article className="add-to-cart-loader">
-<<<<<<< HEAD
             {flag
               ? <>
                 {isLoading
@@ -108,37 +112,17 @@ const SingleProduct = ({ _product }) => {
                     className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
                       <div></div><div></div>
                     </div></div>
-                  : <h4>Added to cart</h4>
+                  : <h4>Προστέθηκε στο καλάθι αγορών</h4>
                 }
               </>
               : ""
             }
             {quantity == quantityAvailable ?
-              <> {!flag ? <h4>You've reached the available quantity of this product.</h4> : ""}
+              <> {!flag ? <h4>Έχετε φτάσει τη διαθέσιμη ποσότητα αυτού του προϊόντος</h4> : ""}
               </>
               : ""}
             <article>
             </article>
-=======
-          {flag 
-          ? <>
-          {isLoading 
-          ? <div style={{transform: "scale(1.2"}}
-          className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
-          <div></div><div></div>
-          </div></div> 
-          : <h4>Προστέθηκε στο καλάθι αγορών</h4>
-          } 
-        </>
-          : ""
-          }
-           {quantity == quantityAvailable ? 
-           <> {!flag ?  <h4>Έχετε φτάσει τη διαθέσιμη ποσότητα αυτού του προϊόντος</h4>  : ""}
-           </>
-           : ""}
-          <article>
-          </article>
->>>>>>> f4e975c5b735ba3f8eb19d068692b61cf7fd63d0
           </article>
         </article>
       </section>

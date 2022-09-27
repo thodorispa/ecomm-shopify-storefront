@@ -1,10 +1,5 @@
 import { } from 'dotenv/config'
-import { Shopify } from '@shopify/shopify-api'
 import Cart from '../server/models/cart'
-
-const { SHOP, STOREFRONT_TOKEN, GID } = process.env;
-
-const client = new Shopify.Clients.Storefront(SHOP, STOREFRONT_TOKEN);
 
 const createAndAdd = async (productId, quantity, product) => {
   const totalAmount = product.variants[0].priceV2.amount * quantity;

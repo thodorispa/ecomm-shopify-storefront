@@ -59,7 +59,6 @@ const Cart = () => {
         ) : (
           <>
             <thead>
-<<<<<<< HEAD
               <tr>
                 <th>&nbsp;</th>
                 <th className="th-prod">Product</th>
@@ -129,77 +128,6 @@ const Cart = () => {
         className="register-btn"
         onClick={checkoutOnClick}>
         CHECKOUT
-=======
-            <tr>
-            <th>&nbsp;</th>
-            <th className="th-prod">Προϊόν</th>
-            <th className="th-price">Τιμή</th>
-            <th className="th-quantity">Ποσότητα</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cart.lines.map((product, i) => (
-            <tr key={i}>
-              <td>
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ padding: "0px", cursor: "pointer" }}
-                  onClick={() => handleProductQuantity(product, "remove")}
-                />
-              </td>
-              <td className="cart-prod-img">
-                <img
-                  src={product.merchandise.image?.url}
-                  alt={product.merchandise.image?.altText}
-                />
-              </td>
-              <td className="prod-title">{product.merchandise.product.title}</td>
-              <td className="cart-price">{product.merchandise.priceV2.amount}&nbsp;{product.merchandise.priceV2.currencyCode}</td>
-              <td style={{ padding: "0px" }}>
-                <i
-                  className="fa-solid fa-minus"
-                  style={{ padding: "0px", cursor: "pointer" }}
-                  onClick={() => handleProductQuantity(product, "update")}
-                />
-              </td>
-              <td
-                style={{ padding: "0px", textAlign: "center", width: "8%" }}
-                className="prod-quantity">
-                {product.quantity}
-              </td>
-              <td style={{ padding: "0px" }}>
-                <i
-                  className="fa-solid fa-plus"
-                  style={{ padding: "0px", cursor: "pointer" }}
-                  onClick={() => handleProductQuantity(product, "add")}
-                />
-              </td>
-              
-            </tr>
-          ))}
-        </tbody>
-        
-        <thead className="subtotal">
-          <tr>
-            <th>Σύνολο</th>
-            {isLoading ? (
-              <th className="spinner">
-              <div className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
-              <div></div><div></div>
-              </div></div>
-              </th>
-            ) : <th>{cart.cost.subtotalAmount.amount}&nbsp;{cart.cost.subtotalAmount.currencyCode}</th>}
-          </tr>
-        </thead>
-        </>
-          )}
-      </table>
-      <button 
-      style={{alignSelf: "flex-end"}}
-      className="register-btn"
-      onClick={checkoutOnClick}>
-        ΠΛΗΡΩΜΗ
->>>>>>> f4e975c5b735ba3f8eb19d068692b61cf7fd63d0
       </button>
       </article>  
     </>
