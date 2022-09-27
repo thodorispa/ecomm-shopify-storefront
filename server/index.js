@@ -81,10 +81,10 @@ app.prepare().then(() => {
       try {
         const existingCart = decodeURIComponent(req.cookies.cart) || null;
 
-        const cartRes = await Cart.fetch(existingCart) || null;
+        const { cart } = await Cart.fetch(existingCart) || null;
 
-        if (cartRes) {
-          req.cart = cartRes.cart
+        if (cart) {
+          req.cart = cart
         } else {
           res.cookie('cart', '', { maxAge: 0 })
         }

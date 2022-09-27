@@ -24,19 +24,19 @@ const SingleProduct = ({ _product }) => {
       setAvailability("Out of stock")
     } else if (quantityAvailable <= 4) {
       setAvailability("Low in stock")
-    } else  {
+    } else {
       setAvailability("In stock")
     }
-    
+
   }, [])
 
   const addToCart = async () => {
-    const productId = product.variants[0].id;
+    const productId = product.id;
     setFlag(true);
     if (quantityAvailable > 0) {
       try {
         setIsLoading(true);
-        const { data } = await Axios.post(`/api/cart/add`, { productId, quantity })
+        const { data } = await Axios.post(`/api/cart/add`, { productId, quantity, product })
         const { cart } = data
 
         dispatch({ type: "SET_CART", payload: cart })
@@ -47,13 +47,12 @@ const SingleProduct = ({ _product }) => {
     }
     setIsLoading(false);
   };
-  console.log(flag, isLoading);
+
   const handleOnChange = (e) => {
     setQuantity(e.target.value);
     if (quantity === quantityAvailable) {
       setDisabled(true);
     }
-    console.log(quantityAvailable, quantity);
   }
 
   return (
@@ -88,12 +87,12 @@ const SingleProduct = ({ _product }) => {
               onChange={handleOnChange}
               disabled={disabled}
             />
-            <div className="cart-icon" 
-            onClick={addToCart}>
+            <div className="cart-icon"
+              onClick={addToCart}>
               <i
                 style={{ color: "black" }}
                 className="fas fa-shopping-cart"
-                />
+              />
             </div>
           </section>
           {quantityAvailable > 0 ?
@@ -101,24 +100,24 @@ const SingleProduct = ({ _product }) => {
             : <small style={{ color: "red" }}>{availability}</small>
           }
           <article className="add-to-cart-loader">
-          {flag 
-          ? <>
-          {isLoading 
-          ? <div style={{transform: "scale(1.2"}}
-          className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
-          <div></div><div></div>
-          </div></div> 
-          : <h4>Added to cart</h4>
-          } 
-        </>
-          : ""
-          }
-           {quantity == quantityAvailable ? 
-           <> {!flag ?  <h4>You've reached the available quantity of this product.</h4>  : ""}
-           </>
-           : ""}
-          <article>
-          </article>
+            {flag
+              ? <>
+                {isLoading
+                  ? <div style={{ transform: "scale(1.2" }}
+                    className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
+                      <div></div><div></div>
+                    </div></div>
+                  : <h4>Added to cart</h4>
+                }
+              </>
+              : ""
+            }
+            {quantity == quantityAvailable ?
+              <> {!flag ? <h4>You've reached the available quantity of this product.</h4> : ""}
+              </>
+              : ""}
+            <article>
+            </article>
           </article>
         </article>
       </section>
@@ -134,7 +133,7 @@ export async function getServerSideProps(ctx) {
 
   try {
     const { data } = await Axios.get(`http://localhost:3000/api/product/${productTitle}`)
-    
+
     if (data.product) {
       _product = data.product
     } else {

@@ -41,8 +41,6 @@ export async function getServerSideProps(ctx) {
   try {
     const { data } = await Axios.get(`http://localhost:3000/api/collections/${collectionTitle}`)
 
-    console.log(data);
-
     if (data.collection) {
       _collection = data.collection
     } else {

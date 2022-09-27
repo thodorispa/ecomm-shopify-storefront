@@ -27,8 +27,6 @@ const CreateAccount = () => {
   const prevStep = () => {
     setstep(step - 1);
   };
-
-  console.log(formData, addressData);
   
   const handleInputData = input => e => {
     const { value } = e.target;

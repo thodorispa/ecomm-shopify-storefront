@@ -111,7 +111,7 @@ const Navbar = () => {
                 onClick={() => dispatch({ type: "TOGGLE_NAV", payload: !sideNav})}>
                 </i>
                 <SideCart />
-              <span className='badge badge-warning' id='lblCartCount'>{cart?.lines.length}</span>
+              <span className='badge badge-warning' id='lblCartCount'>{cart?.lines?.length}</span>
             </section>
           ) : (
             <section className="usr-menu">

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux'
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import Router, { useRouter } from 'next/router';
 import Link from "next/link";
 import Axios from "axios";
@@ -31,66 +31,66 @@ const SideCart = () => {
 
   const viewCartOnClick = () => {
     dispatch({ type: "TOGGLE_CART", payload: "side-cart" })
-    dispatch({ type: "TOGGLE_NAV", payload: !sideNav})
+    dispatch({ type: "TOGGLE_NAV", payload: !sideNav })
   }
 
-  return ( 
+  return (
     <header>
       <article className={cartClasses}>
         {!cart || cart.lines == 0 ? (
-          <h2 style={{alignSelf: "center", padding: "20px"}}>Your shopping cart is empty</h2>
+          <h2 style={{ alignSelf: "center", padding: "20px" }}>Your shopping cart is empty</h2>
         ) : (
           <>
-          <h2 style={{alignSelf: "center", padding: "20px"}}>Your shopping cart</h2>
-        <article className="side-cart-list">
-          {cart.lines.map((product,i) => (
-            <div key={i} style={{marginBottom: "20px", width: "100%"}}>
-            <section style={{justifyContent: "flex-start"}}>
-            <i
-                  className="fa-solid fa-xmark"
-                  style={{ padding: "10px", cursor: "pointer" }}
-                  onClick={() => handleProductQuantity(product, "remove")}
-                />
-              <div style={{padding: "10px"}} className="cart-prod-img">
-                <img
-                  src={product.merchandise.image?.url}
-                  alt={product.merchandise.image?.altText}/>
-              </div>
-              <article style={{alignItems: "flex-start", padding: "10px"}}>
-              <span>{product.quantity}&nbsp;x&nbsp;{product.merchandise.product.title}</span>
-              <span>{product.merchandise.priceV2.amount}&nbsp;{product.merchandise.priceV2.currencyCode}</span>
-              </article>
+            <h2 style={{ alignSelf: "center", padding: "20px" }}>Your shopping cart</h2>
+            <article className="side-cart-list">
+              {cart.lines.map((line, i) => (
+                <div key={i} style={{ marginBottom: "20px", width: "100%" }}>
+                  <section style={{ justifyContent: "flex-start" }}>
+                    <i
+                      className="fa-solid fa-xmark"
+                      style={{ padding: "10px", cursor: "pointer" }}
+                      onClick={() => handleProductQuantity(line.product, "remove")}
+                    />
+                    <div style={{ padding: "10px" }} className="cart-prod-img">
+                      <img
+                        src={line.product.images[0]?.src}
+                        alt={line.product.images[0]?.altText} />
+                    </div>
+                    <article style={{ alignItems: "flex-start", padding: "10px" }}>
+                      <span>{line.quantity}&nbsp;x&nbsp;{line.product.title}</span>
+                      <span>{line.product.variants[0].priceV2.amount}&nbsp;{line.product.variants[0].priceV2.currencyCode}</span>
+                    </article>
+                  </section>
+                </div>
+              ))}
+            </article>
+            <section style={{ alignSelf: "center" }}>
+              {isLoading ? (
+                <div className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
+                  <div></div><div></div>
+                </div></div>
+              ) : (
+                <>
+                  <h2>Subtotal&nbsp;&nbsp;</h2>
+                  <h2>{cart.cost.totalAmount.amount}&nbsp;{cart.cost?.totalAmount.currencyCode}</h2>
+                </>
+              )}
             </section>
-            </div>
-          ))}
-        </article>
-        <section style={{alignSelf: "center"}}>
-          {isLoading ? (
-              <div className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
-              <div></div><div></div>
-              </div></div>
-          ) : (
-            <>
-            <h2>Subtotal&nbsp;&nbsp;</h2>
-            <h2>{cart.cost.subtotalAmount.amount}&nbsp;{cart.cost.subtotalAmount.currencyCode}</h2>
-            </>
-          )}
-        </section>
-        <section style={{width: "100%"}}>
-          <Link href="/cart">
-            <button 
-            style={{width: "100%"}} 
-            className="view-cart-btn"
-            onClick={viewCartOnClick}
-            >VIEW CART</button>
-          </Link>
-        </section>
-        </>
-        )}  
-        
+            <section style={{ width: "100%" }}>
+              <Link href="/cart">
+                <button
+                  style={{ width: "100%" }}
+                  className="view-cart-btn"
+                  onClick={viewCartOnClick}
+                >VIEW CART</button>
+              </Link>
+            </section>
+          </>
+        )}
+
       </article>
     </header>
-   );
+  );
 }
- 
+
 export default SideCart;

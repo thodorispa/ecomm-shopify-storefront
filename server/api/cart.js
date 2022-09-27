@@ -8,13 +8,14 @@ var router = express.Router()
 router.post('/add', async (req, res) => {
   const productId = req.body.productId;
   const quantity = req.body.quantity;
+  const product = req.body.product;
   const existingCart = decodeURIComponent(req.cookies.cart) || null;
 
   try {
     if (req.cookies.cart) {
-      var { cart, Errors } = await Cart.add(existingCart, productId, quantity);
+      var { cart, Errors } = await Cart.add(existingCart, productId, quantity, product);
     } else {
-      var { cart, Errors } = await Cart.createAndAdd(productId, quantity);
+      var { cart, Errors } = await Cart.createAndAdd(productId, quantity, product);
     }
 
     if (Errors) {
@@ -32,12 +33,13 @@ router.post('/add', async (req, res) => {
 
 // Create cart
 router.post('/update', async (req, res) => {
-  const lineId = req.body.lineId;
-  const newQuantity = req.body.quantity;
+  const productId = req.body.productId;
+  const quantity = req.body.quantity;
+  const product = req.body.product;
   const existingCart = decodeURIComponent(req.cookies.cart) || null;
 
   try {
-    var { cart, Errors } = await Cart.update(existingCart, lineId, newQuantity);
+    var { cart, Errors } = await Cart.update(existingCart, productId, quantity, product);
 
     if (Errors) {
       return res.status(400).send(Errors.message);
@@ -54,12 +56,12 @@ router.post('/update', async (req, res) => {
 
 // Create cart
 router.post('/remove', async (req, res) => {
-  const lineId = req.body.lineId;
-  console.log(lineId);
+  console.log(req.body);
+  const product = req.body.product;
   const existingCart = decodeURIComponent(req.cookies.cart) || null;
 
   try {
-    var { cart, Errors } = await Cart.remove(existingCart, lineId);
+    var { cart, Errors } = await Cart.remove(existingCart, product);
 
     if (Errors) {
       return res.status(400).send(Errors.message);

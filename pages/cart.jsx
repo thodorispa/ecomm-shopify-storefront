@@ -4,20 +4,19 @@ import Axios from 'axios';
 import Head from 'next/head';
 import { useSelector, useDispatch } from 'react-redux';
 
-const Cart = ({ _checkout, _products }) => {
+const Cart = () => {
 
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { cart } = useSelector(x => x)
 
   const handleProductQuantity = async (product, status) => {
-    const productId = product.merchandise.id;
-    const lineId = product.id
-    const quantity = status === "update" ?  product.quantity-1 : 1
+    const productId = product.id;
+    const quantity = status === "update" ? product.quantity - 1 : 1
 
     try {
       setIsLoading(true);
-      const { data } = await Axios.post(`/api/cart/${status}`, { productId, quantity , lineId })
+      const { data } = await Axios.post(`/api/cart/${status}`, { productId, quantity, product })
       const { cart } = data
 
       dispatch({ type: "SET_CART", payload: cart })
@@ -26,10 +25,11 @@ const Cart = ({ _checkout, _products }) => {
       console.log(error)
     }
   }
+
   const checkoutOnClick = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await Axios.post(`api/checkout/create`, {cart})
+      const { data } = await Axios.post(`api/checkout/create`, { cart })
     } catch (error) {
       console.log(error);
     }
@@ -37,10 +37,10 @@ const Cart = ({ _checkout, _products }) => {
 
   return (
     <header className="container cart">
-       <Head>
+      <Head>
         <title>Cart || Katoi</title>
       </Head>
-      
+
       <h1>This is your cart</h1>
       <table className="cart-table">
         {!cart || cart.lines == 0 ? (
@@ -52,77 +52,77 @@ const Cart = ({ _checkout, _products }) => {
               </th>
             </tr>
           </thead>
-          ) : (
-            <>
+        ) : (
+          <>
             <thead>
-            <tr>
-            <th>&nbsp;</th>
-            <th className="th-prod">Product</th>
-            <th className="th-price">Price</th>
-            <th className="th-quantity">Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cart.lines.map((product, i) => (
-            <tr key={i}>
-              <td>
-                <i
-                  className="fa-solid fa-xmark"
-                  style={{ padding: "0px", cursor: "pointer" }}
-                  onClick={() => handleProductQuantity(product, "remove")}
-                />
-              </td>
-              <td className="cart-prod-img">
-                <img
-                  src={product.merchandise.image?.url}
-                  alt={product.merchandise.image?.altText}
-                />
-              </td>
-              <td className="prod-title">{product.merchandise.product.title}</td>
-              <td className="cart-price">{product.merchandise.priceV2.amount}&nbsp;{product.merchandise.priceV2.currencyCode}</td>
-              <td style={{ padding: "0px" }}>
-                <i
-                  className="fa-solid fa-minus"
-                  style={{ padding: "0px", cursor: "pointer" }}
-                  onClick={() => handleProductQuantity(product, "update")}
-                />
-              </td>
-              <td
-                style={{ padding: "0px", textAlign: "center", width: "8%" }}
-                className="prod-quantity">
-                {product.quantity}
-              </td>
-              <td style={{ padding: "0px" }}>
-                <i
-                  className="fa-solid fa-plus"
-                  style={{ padding: "0px", cursor: "pointer" }}
-                  onClick={() => handleProductQuantity(product, "add")}
-                />
-              </td>
-              
-            </tr>
-          ))}
-        </tbody>
-        
-        <thead className="subtotal">
-          <tr>
-            <th>Subtotal</th>
-            {isLoading ? (
-              <th className="spinner">
-              <div className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
-              <div></div><div></div>
-              </div></div>
-              </th>
-            ) : <th>{cart.cost.subtotalAmount.amount}&nbsp;{cart.cost.subtotalAmount.currencyCode}</th>}
-          </tr>
-        </thead>
-        </>
-          )}
+              <tr>
+                <th>&nbsp;</th>
+                <th className="th-prod">Product</th>
+                <th className="th-price">Price</th>
+                <th className="th-quantity">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.lines.map((line, i) => (
+                <tr key={i}>
+                  <td>
+                    <i
+                      className="fa-solid fa-xmark"
+                      style={{ padding: "0px", cursor: "pointer" }}
+                      onClick={() => handleProductQuantity(line.product, "remove")}
+                    />
+                  </td>
+                  <td className="cart-prod-img">
+                    <img
+                      src={line.product.images[0]?.src}
+                      alt={line.product.images[0]?.altText}
+                    />
+                  </td>
+                  <td className="prod-title">{line.product.title}</td>
+                  <td className="cart-price">{line.product.variants[0].priceV2.amount}&nbsp;{line.product.variants[0].priceV2.currencyCode}</td>
+                  <td style={{ padding: "0px" }}>
+                    <i
+                      className="fa-solid fa-minus"
+                      style={{ padding: "0px", cursor: "pointer" }}
+                      onClick={() => handleProductQuantity(line.product, "update")}
+                    />
+                  </td>
+                  <td
+                    style={{ padding: "0px", textAlign: "center", width: "8%" }}
+                    className="prod-quantity">
+                    {line.quantity}
+                  </td>
+                  <td style={{ padding: "0px" }}>
+                    <i
+                      className="fa-solid fa-plus"
+                      style={{ padding: "0px", cursor: "pointer" }}
+                      onClick={() => handleProductQuantity(line.product, "add")}
+                    />
+                  </td>
+
+                </tr>
+              ))}
+            </tbody>
+
+            <thead className="subtotal">
+              <tr>
+                <th>Subtotal</th>
+                {isLoading ? (
+                  <th className="spinner">
+                    <div className="loadingio-spinner-ripple-hb4ksrtc1us"><div className="ldio-uua8zfoilp">
+                      <div></div><div></div>
+                    </div></div>
+                  </th>
+                ) : <th>{cart.cost.totalAmount.amount}&nbsp;{cart.cost.totalAmount.currencyCode}</th>}
+              </tr>
+            </thead>
+          </>
+        )}
       </table>
-      <button 
-      style={{width: "20%", alignSelf: "flex-end"}}
-      className="register-btn"
-      onClick={checkoutOnClick}>
+      <button
+        style={{ width: "20%", alignSelf: "flex-end" }}
+        className="register-btn"
+        onClick={checkoutOnClick}>
         CHECKOUT
       </button>
     </header>
