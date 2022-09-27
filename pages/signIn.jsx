@@ -65,14 +65,14 @@ const SignIn = () => {
       <article style={{marginTop: "20px"}}>
 
         <form onSubmit={e => loginHandler(e)} className="log-in-form">
-        <label style={{ textAlign: "start" }} className="forms-label">Email</label>
+        <label style={{ textAlign: "start" }} className="login-label">Email</label>
           <input type="text"
             name="email"
             defaultValue=""
             className="login-input"
             onChange={e => setEmail(e.target.value)} />
 
-          <label style={{alignSelf: "flex-end"}}className="forms-label">Password</label>
+          <label style={{alignSelf: "flex-end"}}className="login-label">Password</label>
           <input type="password"
             name="password"
             className="login-input"

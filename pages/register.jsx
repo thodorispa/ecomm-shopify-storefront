@@ -12,22 +12,20 @@ const CreateAccount = () => {
     lastName: "",
     email: "",
     password: "",
-    phone: "",
   })
 
   const [addressData, setAddressData] = useState({
     address1: "",
     city: "",
-    country: "",
     zip: "",
   })
 
   const [country, setCountry] = useState("");
+  const [phone, setPhone] = useState();
 
   const changeCountryHandler = country => {
     setCountry(country);
   }
-  console.log(country);
 
   const nextStep = () => {
     setstep(step + 1);
@@ -36,18 +34,15 @@ const CreateAccount = () => {
   const prevStep = () => {
     setstep(step - 1);
   };
-
-  console.log(formData, addressData);
   
   const handleInputData = input => e => {
-    const { value } = e.target;
+    const { value } = e?.target;
 
     setFormData(prevState => ({
       ...prevState,
       [input]: value
   }));
   }
-
   const handleBillingData = input => e => {
     const { value } = e.target;
 
@@ -61,7 +56,7 @@ const CreateAccount = () => {
     case 1:
       return (
         <header className="register">
-          <StepOne nextStep={nextStep} handleFormData={handleInputData} values={formData} />
+          <StepOne nextStep={nextStep} handleFormData={handleInputData} values={formData} phone={phone} setPhone={setPhone} />
         </header>
       );
     // case 2 to show stepTwo form passing nextStep, prevStep, and handleInputData as handleFormData method as prop and also formData as value to the fprm
@@ -75,7 +70,7 @@ const CreateAccount = () => {
     case 3:
       return (
         <header className="register">
-           <Final values={formData} addressValues={addressData} country={country}  />
+           <Final values={formData} addressValues={addressData} country={country} phone={phone} />
         </header>
       );
     // default case to show nothing

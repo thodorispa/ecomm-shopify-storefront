@@ -10,7 +10,8 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
 
-  const { customer, collections, cart, sideNav, cartClasses } = useSelector(x => x);
+  const { collections, cart, sideNav, cartClasses } = useSelector(x => x);
+  const { customer } = useSelector(x => x.customer)
   const ref = useRef();
   const [nav, setNav] = useState(false);
 
@@ -122,18 +123,18 @@ const Navbar = () => {
                 id="nav-icons"></i>
                 <div style={{ marginTop: "30px" }} className="dropdown">
                   <Link href="/">
-                    <li className="drop-link">Preferences</li>
+                    <li className="drop-link-user">Preferences</li>
                   </Link>
                   <Link href="/">
-                    <li className="drop-link">Order History</li>
+                    <li className="drop-link-user">Order History</li>
                   </Link>
                   <Link href="/">
-                    <a
-                      className="drop-link"
+                    <li
+                      className="drop-link-user"
                       onClick={async () => {
                         await Axios.get(`/api/customer/logout`)
                         router.reload(router.query)
-                      }}> Log Out</a>
+                      }}> Log Out</li>
                   </Link> 
                 </div>
               </section>

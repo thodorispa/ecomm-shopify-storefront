@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const Final = ({ values, addressValues, country }) => {
+const Final = ({ values, addressValues, country, phone }) => {
   
 
   return (
@@ -31,7 +31,7 @@ const Final = ({ values, addressValues, country }) => {
             </section>
             <section className="overview-container">
               <label className="forms-label">Phone:&nbsp;</label>
-              <strong className="overview-strong">{values.phone}</strong>
+              <strong className="overview-strong">{phone}</strong>
             </section>
           </article>
           <article className="billing-info-overview">

@@ -133,11 +133,21 @@
   padding: 15px;
   margin: 15px;
   font-size: 17px;
+  background-color: rgb(254, 255, 251);;
 }
 .country-input {
   min-width: 440px;
   padding: 20px;
   font-size: 17px;
+  background-color: rgb(254, 255, 251);;
+}
+.PhoneInputInput {
+  border: none;
+  font-size: 17px;
+  background-color: rgb(254, 255, 251);
+  font-family: 'FS Elliot Web Greek';
+  font-weight: 500;
+  color: rgb(53, 72, 35);
 }
 
 .login-input {
@@ -153,6 +163,15 @@
   padding: 15px;
   margin: 10px 0px;
   font-size: 18px;
+  min-width: 150px;
+  text-align: left;
+  align-self: flex-start;
+} 
+.login-label {
+  padding: 15px;
+  margin: 10px 0px;
+  font-size: 18px;
+  border:1px solid #111b0d;
   min-width: 150px;
   text-align: left;
   align-self: flex-start;
