@@ -10,6 +10,14 @@
   z-index: 999;
 }
 
+.active {
+  transform: translateY(0%) 250ms ease-in;
+}
+.hidden {
+  transform: translateY(-100%);
+  transition: 250ms ease-in-out;
+}
+
 .bar-toggle {
   display: block;
   visibility: hidden;
@@ -23,11 +31,12 @@
   display: flex;
   list-style: none;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-around;
   height: 50%;
   margin-top: 10px;
   width: 50%;
   font-size: 22px;
+  z-index: 9999;
 }
 
 .usr-menu {
@@ -52,15 +61,16 @@
     margin-right: 5px;
   }
   .navlinks {
+    display: flex;
     position: fixed;
+    top: 0;
     right: 0;
     bottom: 0;
     overflow: hidden;
-    display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: rgb(254, 255, 251);
     transform: translateX(-100%);
     transition: transform 0.5s ease-in;
@@ -68,7 +78,6 @@
   }
   .link {
     overflow: hidden;
-    border-bottom: 1px solid #111b0d;
     width: 100%;
     text-align: center;
     padding: 60px 10px 72px 10px;

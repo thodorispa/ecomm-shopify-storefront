@@ -14,6 +14,33 @@ const Navbar = () => {
   const { customer } = useSelector(x => x.customer)
   const ref = useRef();
   const [nav, setNav] = useState(false);
+  const [show, setShow] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const controlNavbar = () => {
+    if (typeof window !== 'undefined') { 
+      if (window.scrollY > lastScrollY) { // if scroll down hide the navbar
+        if (sideNav || nav) {
+          setShow(true)
+        } else if (!sideNav && !nav){
+          setShow(false)
+        }
+      } else { // if scroll up show the navbar
+          setShow(true);  
+      }
+      setLastScrollY(window.scrollY); 
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+        window.addEventListener('scroll', controlNavbar);
+      // cleanup function
+      return () => {
+        window.removeEventListener('scroll', controlNavbar);
+      };
+    }
+  }, [lastScrollY]);
 
   useEffect(() => {
     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
@@ -36,16 +63,16 @@ const Navbar = () => {
   useEffect(() => {
     dispatch({ type: "TOGGLE_CART", payload: "side-cart" })
     
-    if (sideNav) {
+    if (sideNav && !nav) {
       dispatch({ type: "TOGGLE_CART", payload: "side-cart active-cart" })
     }
-  },[sideNav]);
+  },[sideNav, nav]);
 
   return (
     <>
-      <header ref={ref} className="navbar">
+      <header ref={ref} className={show? 'navbar active' : 'navbar hidden'}>
         <Link href="/">
-          <a>
+          <a onClick={() => dispatch({ type: "TOGGLE_NAV", payload: false})}>
             <div className="logo">
               <h3>Katoi Soaps</h3>
             </div>
@@ -111,7 +138,7 @@ const Navbar = () => {
                 id="nav-icons"
                 onClick={() => dispatch({ type: "TOGGLE_NAV", payload: !sideNav})}>
                 </i>
-                <SideCart />
+                {show ? <SideCart /> : <></>}
               <span className='badge badge-warning' id='lblCartCount'>{cart?.lines.length}</span>
             </section>
           ) : (

@@ -17,11 +17,11 @@
 
 .side-cart {
   display: flex;
+  position: fixed;
   flex-wrap: nowrap;
   align-items: flex-start;
   justify-content: flex-start;
   overflow-y: scroll;
-  position: fixed;
   top: 100px;
   right: 0;
   bottom: 0;
@@ -59,6 +59,7 @@
 .active-cart {
   transition: 0.5s ease-in;
   transform: translateX(0%);
+  z-index: 999;
 }
 .spinner {
   padding: 0px 58px !important;
