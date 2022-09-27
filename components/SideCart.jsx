@@ -12,14 +12,13 @@ const SideCart = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleProductQuantity = async (product, status) => {
-
+  const handleProductQuantity = async (product, status) => {  
     const productId = product.id;
-    const lineId = product.id
+
 
     try {
       setIsLoading(true);
-      const { data } = await Axios.post(`/api/cart/${status}`, { productId, lineId })
+      const { data } = await Axios.post(`/api/cart/${status}`, { productId, quantity: 1, product })
       const { cart } = data
 
       dispatch({ type: "SET_CART", payload: cart })
@@ -49,7 +48,7 @@ const SideCart = () => {
             <i
                   className="fa-solid fa-xmark"
                   style={{ padding: "10px", cursor: "pointer" }}
-                  onClick={() => handleProductQuantity(line, "remove")}
+                  onClick={() => handleProductQuantity(line.product, "remove")}
                 />
               <div style={{padding: "10px"}} className="cart-prod-img">
                 <img
