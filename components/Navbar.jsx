@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { navLinks } from "../utils/data";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
 import router from "next/router";
 import SideCart from "./SideCart"
+import UseOutsideAlerter from './UseOutsideAlerter'
 
 const Navbar = () => {
 
@@ -18,6 +19,7 @@ const Navbar = () => {
   const [isHovered, setIsHovered] = useState({
     first: false,
     second: false,
+    third: false,
   });
 
   const controlNavbar = () => {
@@ -51,6 +53,30 @@ const Navbar = () => {
     } else {
     }
   }, [])
+
+  function UseOutsideAlerter(ref) {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setIsHovered(prevState => ({
+            ...prevState,
+            third: false,
+          }))
+        }
+      }
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
+  const wrapperRef = useRef(null);
+  UseOutsideAlerter(wrapperRef);
 
   //Render classes in order to change the menu bar when burger menu clicked, activate the menu
   const renderCssClasses = () => {
@@ -204,16 +230,35 @@ const Navbar = () => {
             </nav>
           {!customer ? (
             <section className="usr-menu">
-              <section className="user_toggle">
+              <section className="user_toggle"
+              ref={wrapperRef}>
                 <i style={{ padding: "8px", cursor: "pointer" }}
                  className="fa-solid fa-user"
-                 id="nav-icons"></i>
-                <div style={{ marginTop: "30px"}} className="dropdown">
+                 id="nav-icons"
+                 onClick={() => setIsHovered(prevState => ({
+                  ...prevState,
+                  third: !isHovered.third,
+                }))}></i>
+                <div 
+                style={{ marginTop: "30px"}} 
+                className={`dropdown ${isHovered.third ? 'hover-active' : ''}`}
+                ref={wrapperRef}>
                   <Link href="/register">
-                    <li className="drop-link-user">Εγγραφή</li>
+                    <li 
+                    className="drop-link-user"
+                    onClick={() => setIsHovered(prevState => ({
+                      ...prevState,
+                      third: false,
+                    }))}>Εγγραφή</li>
                   </Link>
                   <Link href="/signIn">
-                    <li className="drop-link-user">Σύνδεση</li>
+                    <li 
+                    className="drop-link-user"
+                    className="drop-link-user"
+                    onClick={() => setIsHovered(prevState => ({
+                      ...prevState,
+                      third: false,
+                    }))}>Σύνδεση</li>
                   </Link>
                 </div>
               </section>
@@ -227,22 +272,45 @@ const Navbar = () => {
             </section>
           ) : (
             <section className="usr-menu">
-              <section className="user_toggle">
-                <span>{customer.firstName}</span>
-                <i style={{ padding: "8px", cursor: "pointer", alignSelf: "center" }} 
-                className="fa-solid fa-user"
-                id="nav-icons"></i>
-                <div style={{ marginTop: "30px" }} className="dropdown">
+              <section className="user_toggle"
+              ref={wrapperRef}>
+                <section onClick={() => setIsHovered(prevState => ({
+                    ...prevState,
+                    third: !isHovered.third,
+                  }))}>
+                  <span style={{cursor: "pointer"}}>{customer.firstName}</span>
+                  <i style={{ padding: "8px", cursor: "pointer", alignSelf: "center" }} 
+                  className="fa-solid fa-user"
+                  id="nav-icons"></i>
+                </section>
+                <div style={{ marginTop: "30px" }} 
+                className={`dropdown ${isHovered.third ? 'hover-active' : ''}`}
+                ref={wrapperRef}>
                   <Link href="/">
-                    <li className="drop-link-user">Προτιμήσεις</li>
+                    <li 
+                    className="drop-link-user"
+                    className="drop-link-user"
+                    onClick={() => setIsHovered(prevState => ({
+                      ...prevState,
+                      third: false,
+                    }))}>Προτιμήσεις</li>
                   </Link>
                   <Link href="/">
-                    <li className="drop-link-user">Ιστορικό Παραγγελιών</li>
+                    <li className="drop-link-user"
+                    className="drop-link-user"
+                    onClick={() => setIsHovered(prevState => ({
+                      ...prevState,
+                      third: false,
+                    }))}>Ιστορικό Παραγγελιών</li>
                   </Link>
                   <Link href="/">
                     <li
                       className="drop-link-user"
                       onClick={async () => {
+                        setIsHovered(prevState => ({
+                          ...prevState,
+                          third: false,
+                        }))
                         await Axios.get(`/api/customer/logout`)
                         router.reload(router.query)
                       }}>Αποσύνδεση</li>

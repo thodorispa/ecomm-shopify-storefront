@@ -133,8 +133,6 @@
   transition: 300ms ease-in;
 }
 
-.user_toggle:hover .dropdown {display: block;}
-
 .dropdown {
   display: none;
   position: absolute;
