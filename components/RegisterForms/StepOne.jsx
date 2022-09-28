@@ -128,20 +128,7 @@ const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
               placeholder="Mobile phone"
               value={phone}
               className="forms-input"
-              inputStyle={{
-                border: "none"
-              }}
-              PhoneInputInput={{
-                border: "none"
-              }}
               onChange={setPhone}/>
-              {/* <input
-                type="phone"
-                name="phone"
-                defaultValue={values.phone}
-                className="forms-input"
-                onChange={handleFormData("phone")}
-              /> */}
               {!phone ? <></> : <label styles={{border: "none"}}className="filled">Mobile Phone</label>}
               </div>
               <section className="validate">

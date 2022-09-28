@@ -4,8 +4,7 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
 import router from "next/router";
-import SideCart from "./SideCart"
-import UseOutsideAlerter from './UseOutsideAlerter'
+import SideCart from "./SideCart";
 
 const Navbar = () => {
 
