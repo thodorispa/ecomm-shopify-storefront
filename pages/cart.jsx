@@ -10,6 +10,8 @@ const Cart = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { cart } = useSelector(x => x)
 
+  console.log(cart);
+
   const handleProductQuantity = async (product, status) => {
     const productId = product.id;
     const quantity = status === "update" ? product.quantity - 1 : 1

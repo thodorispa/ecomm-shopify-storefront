@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { navLinks } from "../utils/data";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,10 +12,13 @@ const Navbar = () => {
 
   const { collections, cart, sideNav, cartClasses } = useSelector(x => x);
   const { customer } = useSelector(x => x.customer)
-  const ref = useRef();
   const [nav, setNav] = useState(false);
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isHovered, setIsHovered] = useState({
+    first: false,
+    second: false,
+  });
 
   const controlNavbar = () => {
     if (typeof window !== 'undefined') { 
@@ -59,6 +62,47 @@ const Navbar = () => {
     }
     return classes;
   };
+  const handleFirstHoverClick = () => {
+    setIsHovered(prevState => ({
+      ...prevState,
+      first: false,
+    }));
+    setNav(false);
+  }
+  const handleSecondHoverClick = () => {
+    setIsHovered(prevState => ({
+      ...prevState,
+      second: false,
+    }));
+    setNav(false);
+  }
+
+  const hoverActions = (e, link) => {
+    if (link.name === "ΠΡΟΪΟΝΤΑ") {
+      setIsHovered(prevState => ({
+          ...prevState,
+          first: true,
+        }))
+    } else if (link.name === "ΑΛΛΑ") {
+      setIsHovered(prevState => ({
+          ...prevState,
+          second: true,
+        }))
+    }
+  }
+  const disableHoverActions = (e, link) => {
+    if (link.name === "ΠΡΟΪΟΝΤΑ") {
+      setIsHovered(prevState => ({
+          ...prevState,
+          first: false,
+        }))
+    } else if (link.name === "ΑΛΛΑ") {
+      setIsHovered(prevState => ({
+          ...prevState,
+          second: false,
+        }))
+    }
+  }
 
   useEffect(() => {
     dispatch({ type: "TOGGLE_CART", payload: "side-cart" })
@@ -70,7 +114,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header ref={ref} className={show? 'navbar active' : 'navbar hidden'}>
+      <header className={show? 'navbar active' : 'navbar hidden'}>
         <Link href="/">
           <a onClick={() => dispatch({ type: "TOGGLE_NAV", payload: false})}>
             <div className="logo">
@@ -92,25 +136,65 @@ const Navbar = () => {
             {navLinks.map((link, i) => {
               return (
               <div className="link" key={i}>
-                  <li >
-                    {link.name}
-                  </li>
-                  {link.name === "ΠΡΟΪΟΝΤΑ" ? (
-                    <article className="c-dropdown">
-                      {collections?.map((collection, i) => (
-                        <Link key={i} href={`/collections/${collection.title}`}>
-                          <li onClick={() => setNav(false)} className="drop-link">{collection.title}</li>
-                        </Link>
-                      ))}
-                    </article>
-                  ) : ""}
+                <li 
+                onMouseEnter={(e) => hoverActions(e, link)}
+                onMouseLeave={(e) => disableHoverActions(e, link)} >
+                  {link.name}
+                </li>
+                {link.name === "ΠΡΟΪΟΝΤΑ" ? (
+                   <>
+                   <article className={`c-dropdown ${isHovered.first ? 'hover-active' : ' '}`}
+                     >
+                       {collections?.map((collection, i) => (
+                         <Link key={i} href={`/collections/${collection.title}`}>
+                           <li 
+                           onMouseEnter={() => setIsHovered(prevState => ({
+                             ...prevState,
+                             first: true,
+                           }))}
+                           onMouseLeave={() => setIsHovered(prevState => ({
+                             ...prevState,
+                             first: false,
+                           }))}
+                           onClick={handleFirstHoverClick}
+                           className="drop-link"
+                           >{collection.title}</li>
+                         </Link>
+                       ))}
+                     </article>
+                     </>
+                ) : "" }
                   {link.name === "ΑΛΛΑ" ? (
-                    <div className="c-dropdown">
+                    <div className={`c-dropdown ${isHovered.second ? 'hover-active' : ''}`}>
                       <Link href="/products">
-                        <li onClick={() => setNav(false)} className="drop-link">Register</li>
+                        <li 
+                        className="drop-link"
+                        onMouseEnter={() => setIsHovered(prevState => ({
+                          ...prevState,
+                          second: true,
+                        }))}
+                        onMouseLeave={() => setIsHovered(prevState => ({
+                          ...prevState,
+                          second: false,
+                        }))}
+                        onClick={handleSecondHoverClick}>
+                          Register
+                        </li>
                       </Link>
                       <Link href="/products">
-                        <li onClick={() => setNav(false)} className="drop-link">Sign In</li>
+                        <li 
+                        className="drop-link"
+                        onMouseEnter={() => setIsHovered(prevState => ({
+                          ...prevState,
+                          second: true,
+                        }))}
+                        onMouseLeave={() => setIsHovered(prevState => ({
+                          ...prevState,
+                          second: false,
+                        }))}
+                        onClick={handleSecondHoverClick}>
+                          Sign In
+                        </li>
                       </Link>
                     </div>
                   ) : ""}
