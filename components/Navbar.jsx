@@ -285,7 +285,7 @@ const Navbar = () => {
                 <div style={{ marginTop: "30px" }} 
                 className={`dropdown ${isHovered.third ? 'hover-active' : ''}`}
                 ref={wrapperRef}>
-                  <Link href="/">
+                  <Link href="/preferences">
                     <li 
                     className="drop-link-user"
                     className="drop-link-user"

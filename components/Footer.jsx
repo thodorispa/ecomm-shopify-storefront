@@ -22,8 +22,12 @@ const Footer = () => {
         <article className="social">
           <h1>Συνδεθείτε μαζί μας</h1>
           <section>
-            <i className="fa-brands fa-instagram"></i>
-            <i className="fa-brands fa-facebook"></i>
+          <a target="_blank" href="https://www.instagram.com/katoiamorgos/?hl=el" rel="noopener noreferrer">
+              <i className="fa-brands fa-instagram"></i>
+            </a>
+            <a target="_blank" href="https://www.facebook.com/pages/category/Health-beauty/KATOI-SOAP-802558436565881/" rel="noopener noreferrer">
+              <i className="fa-brands fa-facebook"></i>
+            </a>
           </section>
         </article>
       </section>

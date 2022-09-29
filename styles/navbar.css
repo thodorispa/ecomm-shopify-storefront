@@ -44,7 +44,7 @@
   transition: 300ms ease-in;
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 540px) {
   body {
     overflow-x: hidden;
     height: 100%;
