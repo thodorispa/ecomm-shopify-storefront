@@ -21,6 +21,7 @@ import '../styles/footer.css'
 import '../styles/checkout.css'
 import '../styles/contact.css'
 import '../styles/sidemenu.css'
+import '../styles/preferences.css'
 
 
 const MyApp = ({ Component, pageProps }) => {

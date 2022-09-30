@@ -189,15 +189,16 @@
 }
 .register-btn:disabled {
   padding: 7px;
-  border: 1px solid #111b0d;
-  background-color: transparent;
-  color: #111b0d53;
-  border-radius: 0;
-  width: 100%;
+  border: 0;
+  background-color: #d0ceb8;
+  border-radius: 4px;
+  max-width: 400px;
   margin-top: 15px;
   cursor: pointer;
   padding: 12px;
-  font-size: 17px;
+  font-size: 15px;
+  transition: 0.2s ease-in;
+  color: #a2a7a0d5;
   transition: 0.2s ease-in;
 }
 

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import TabMenu from '../components/TabMenu'
 import Security from '../components/Preferences/Security'
+import Shipping from '../components/Preferences/Shipping'
 
 const Preferences = () => {
 
@@ -32,9 +33,7 @@ const Preferences = () => {
       return (
         <>
         <TabMenu option={option} security={showSecurityOption} orderHistory={showOrderHistory} shipping={showShippingOption}/>
-        <header>
-          <h1>aaaasas</h1>
-        </header>
+        <Shipping/>
         </>
       )
     } case 3: {

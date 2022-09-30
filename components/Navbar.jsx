@@ -46,13 +46,6 @@ const Navbar = () => {
     }
   }, [lastScrollY]);
 
-  useEffect(() => {
-    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-      ref.current.style.padding = "30px 10px";
-    } else {
-    }
-  }, [])
-
   function UseOutsideAlerter(ref) {
     useEffect(() => {
       /**
@@ -286,7 +279,7 @@ const Navbar = () => {
                 className={`dropdown ${isHovered.third ? 'hover-active' : ''}`}
                 ref={wrapperRef}>
                   <Link href="/preferences">
-                    <li 
+                    <li  
                     className="drop-link-user"
                     className="drop-link-user"
                     onClick={() => setIsHovered(prevState => ({
