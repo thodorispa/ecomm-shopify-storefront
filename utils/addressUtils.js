@@ -51,7 +51,7 @@ const findAll = async (accessToken) => {
   const addresses = {}
   addresses.default = customer.defaultAddress;
   addresses.all = customer.addresses.edges.map((n) => n.node);
-  
+
   return { addresses };
 }
 
@@ -129,7 +129,8 @@ const update = async (address, accessToken) => {
     return { customerUserErrors: e.response.errors };
   }
 
-  const { customerAddress, customerUserErrors } = query.body.data || null;
+  const { customerAddressUpdate, customerUserErrors } = query.body.data || null;
+  const { customerAddress } = customerAddressUpdate || null;
 
   return { customerAddress, customerUserErrors };
 }
