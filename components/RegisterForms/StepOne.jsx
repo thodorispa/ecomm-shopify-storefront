@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import validator from "validator";
-import Axios from "axios";
 import Head from 'next/head';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 
-const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
+const StepOne = ({ nextStep, handleFormData, values }) => {
 
   const [matchPass, setMatchPass] = useState("");
   const [errors, setErrors] = useState({});
@@ -21,7 +20,7 @@ const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
     if (Object.keys(errors).length === 0 && isSubmit) {
       nextStep();
     }
-  },[errors])
+  }, [errors])
 
   const validate = (values) => {
     const error = {};
@@ -47,10 +46,10 @@ const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
       error.password = "Passwords do not match";
     } else if (values.password.length < 4) {
       error.password = "Password must be at least 5 characters!";
-    } 
-    if (!phone) {
+    }
+    if (!values.phone) {
       error.phone = "Mobile Phone is required";
-    } else if (!validator.isMobilePhone(phone)) {
+    } else if (!validator.isMobilePhone(values.phone)) {
       error.phone = "This is not a valid mobile phone format";
     }
 
@@ -59,10 +58,10 @@ const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
 
   return (
     <header>
-       <Head>
+      <Head>
         <title>Register || Katoi</title>
       </Head>
-      
+
       <article >
         <h1 style={{ margin: "0" }}>Register to Katoi</h1>
         <p className="register-desc">
@@ -71,19 +70,19 @@ const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
         </p>
       </article>
       <section className="form-container">
-        <article style={{alignItems: "center"}}>
+        <article style={{ alignItems: "center" }}>
           <form onSubmit={submitFormData} className="forms">
-          <h3 style={{opacity: "0.7", fontWeight: "100", textAlign: "center"}}>Personal Information</h3>
+            <h3 style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}>Personal Information</h3>
             <article>
               <div className="input-container">
-              <input
-                type="text"
-                name="firstName"
-                defaultValue={values.firstName}
-                className="forms-input"
-                onChange={handleFormData("firstName")}
-              />
-              <label className={values.firstName ? "filled" : ""}>First Name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={values.firstName}
+                  className="forms-input"
+                  onChange={handleFormData("firstName")}
+                />
+                <label className={values.firstName ? "filled" : ""}>First Name</label>
               </div>
               <section className="validate">
                 <i className={errors.name ? "fa-solid fa-exclamation" : ""}></i>
@@ -91,15 +90,15 @@ const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
               </section>
             </article>
             <article>
-            <div className="input-container">
-              <input
-                type="text"
-                name="lastName"
-                defaultValue={values.lastName}
-                className="forms-input"
-                onChange={handleFormData("lastName")}
-              />
-              <label className={values.lastName ? "filled" : ""}>Last Name</label>
+              <div className="input-container">
+                <input
+                  type="text"
+                  name="lastName"
+                  value={values.lastName}
+                  className="forms-input"
+                  onChange={handleFormData("lastName")}
+                />
+                <label className={values.lastName ? "filled" : ""}>Last Name</label>
               </div>
               <section className="validate">
                 <i className={errors.surname ? "fa-solid fa-exclamation" : ""}></i>
@@ -107,15 +106,15 @@ const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
               </section>
             </article>
             <article>
-            <div className="input-container">
-              <input
-                type="text"
-                name="email"
-                defaultValue={values.email}
-                className="forms-input"
-                onChange={handleFormData("email")}
-              />
-              <label className={values.email ? "filled" : ""}>Email</label>
+              <div className="input-container">
+                <input
+                  type="text"
+                  name="email"
+                  value={values.email}
+                  className="forms-input"
+                  onChange={handleFormData("email")}
+                />
+                <label className={values.email ? "filled" : ""}>Email</label>
               </div>
               <section className="validate">
                 <i className={errors.email ? "fa-solid fa-exclamation" : ""}></i>
@@ -123,13 +122,14 @@ const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
               </section>
             </article>
             <article>
-            <div className="input-container">
-            <PhoneInput
-              placeholder="Mobile phone"
-              value={phone}
-              className="forms-input"
-              onChange={setPhone}/>
-              {!phone ? <></> : <label styles={{border: "none"}}className="filled">Mobile Phone</label>}
+              <div className="input-container">
+                <PhoneInput
+                  placeholder="Mobile phone"
+                  value={values.phone}
+                  className="forms-input"
+                  onChange={(value) => handleFormData("phone")(value)}
+                />
+                {!values.phone ? <></> : <label styles={{ border: "none" }} className="filled">Mobile Phone</label>}
               </div>
               <section className="validate">
                 <i className={errors.phone ? "fa-solid fa-exclamation" : ""}></i>
@@ -137,15 +137,15 @@ const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
               </section>
             </article>
             <article>
-            <div className="input-container">
-              <input
-                type="password"
-                name="password"
-                defaultValue={values.password}
-                className="forms-input"
-                onChange={handleFormData("password")}
-              />
-              <label className={values.password ? "filled" : ""}>Password</label>
+              <div className="input-container">
+                <input
+                  type="password"
+                  name="password"
+                  value={values.password}
+                  className="forms-input"
+                  onChange={handleFormData("password")}
+                />
+                <label className={values.password ? "filled" : ""}>Password</label>
               </div>
               <section className="validate">
                 <i className={errors.password ? "fa-solid fa-exclamation" : ""}></i>
@@ -153,32 +153,32 @@ const StepOne = ({ nextStep, handleFormData, values, phone, setPhone }) => {
               </section>
             </article>
             <article>
-            <div className="input-container">
-              <input
-                type="password"
-                name="name"
-                className="forms-input"
-                value={matchPass}
-                onChange={(e) => setMatchPass(e.target.value)}
-              />
-              <label className={matchPass ? "filled" : ""}>Confirm Password</label>
+              <div className="input-container">
+                <input
+                  type="password"
+                  name="name"
+                  className="forms-input"
+                  value={matchPass}
+                  onChange={(e) => setMatchPass(e.target.value)}
+                />
+                <label className={matchPass ? "filled" : ""}>Confirm Password</label>
               </div>
               <section className="validate">
                 <i className={errors.password ? "fa-solid fa-exclamation" : ""}></i>
                 <small style={{ paddingLeft: "5px" }}>{errors.password}</small>
               </section>
             </article>
-            <article style={{alignItems: "center"}}>
-            <button 
-              className="register-btn"
-              type="submit"
+            <article style={{ alignItems: "center" }}>
+              <button
+                className="register-btn"
+                type="submit"
               >CONTINUE</button>
             </article>
-         
+
           </form>
         </article>
       </section>
-      
+
     </header>
   )
 

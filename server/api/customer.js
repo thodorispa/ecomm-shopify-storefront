@@ -7,23 +7,11 @@ var router = express.Router()
 // Create customer
 router.post('/sign-up', async (req, res) => {
 
-  const user = {
-    email: req.body.email,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    password: req.body.password,
-    phone: req.body.phone
-  }
-  
-  const address = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    address1: req.body.address1,
-    city: req.body.city,
-    country: req.body.country.label,
-    zip: req.body.zip,
-    phone: req.body.phone,
-  }
+  const user = req.body.values
+  const address = req.body.address
+  console.log(user);
+  console.log(address);
+
 
   try {
     const { customer, customerUserErrors, customerAccessToken } = await Customer.create(user, address);

@@ -56,8 +56,10 @@ router.post('/update', async (req, res) => {
     zip: req.body.zip,
     phone: req.body.phone,
   }
-  
+
   try {
+    console.log("here api ");
+
     const { customerAddress, customerUserErrors } = await Address.update(address, req.cookies.accessToken);
 
     if (customerUserErrors) {

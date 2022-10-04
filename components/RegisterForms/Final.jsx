@@ -2,27 +2,14 @@ import React from "react";
 import Axios from "axios";
 
 
-const Final = ({ values, addressValues, country, phone }) => {
+const Final = ({ values, address }) => {
+  console.log("address", address);
+  console.log("valeus", values);
 
   const handleRegister = async () => {
-    console.log(values);
-    console.log(addressValues);
-    console.log(country);
-    console.log(phone);
-    
+  
     try {
-
-      const { data } = await Axios.post(`http://localhost:3000/api/customer/sign-up`, {
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
-        password: values.password,
-        phone: phone,
-        address1: addressValues.address1,
-        city: addressValues.city,
-        country: country,
-        zip: addressValues.zip,
-      });
+      const { data } = await Axios.post(`/api/customer/sign-up`, { values, address }); 
 
       if (data.customer) {
         dispatch({ type: "SET_USER", payload: data.customer })
@@ -62,7 +49,7 @@ const Final = ({ values, addressValues, country, phone }) => {
             </section>
             <section className="overview-container">
               <label className="forms-label">Phone:&nbsp;</label>
-              <strong className="overview-strong">{phone}</strong>
+              <strong className="overview-strong">{values.phone}</strong>
             </section>
           </article>
           <article className="billing-info-overview">
@@ -74,22 +61,22 @@ const Final = ({ values, addressValues, country, phone }) => {
             <section className="overview-container">
               <label className="forms-label">Home Address:&nbsp;</label>
               <strong className="overview-strong">
-                {addressValues.address1}
+                {address.address1}
               </strong>
             </section>
             <section className="overview-container">
               <label className="forms-label">City:&nbsp;</label>
-              <strong className="overview-strong">{addressValues.city}</strong>
+              <strong className="overview-strong">{address.city}</strong>
             </section>
             <section className="overview-container">
               <label className="forms-label">Country:&nbsp;</label>
               <strong className="overview-strong">
-                {country.label}
+                {address.country}
               </strong>
             </section>
             <section className="overview-container">
               <label className="forms-label">Zip Code:&nbsp;</label>
-              <strong className="overview-strong">{addressValues.zip}</strong>
+              <strong className="overview-strong">{address.zip}</strong>
             </section>
           </article>
         </section>

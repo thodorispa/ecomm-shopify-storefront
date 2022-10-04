@@ -11,26 +11,20 @@ const CreateAccount = () => {
     firstName: "",
     lastName: "",
     email: "",
+    phone: "",
     password: "",
   })
 
-  const [addressData, setAddressData] = useState({
+  const [address, setAddress] = useState({
     firstName: "",
     lastName: "",
     address1: "",
+    country: "",
     city: "",
     zip: "",
+    phone: "",
   })
-
-  console.log(addressData);
-
-  const [country, setCountry] = useState("");
-  const [phone, setPhone] = useState();
-  const [addressPhone, setAddressPhone] = useState();
-
-  const changeCountryHandler = country => {
-    setCountry(country);
-  }
+  console.log("formData", address);
 
   const nextStep = () => {
     setstep(step + 1);
@@ -40,27 +34,32 @@ const CreateAccount = () => {
     setstep(step - 1);
   };
   
-  const handleInputData = input => e => {
-    const { value } = e?.target;
+  const handleFormData = (input) => (e) => {
+    let value = "";
+    if (input === "phone" || input === "country") {
+      value = e;
+    } else {
+      value = e.target.value;
+    }
 
-    setFormData(prevState => ({
-      ...prevState,
-      [input]: value
-  }));
-  }
-  const handleBillingData = input => e => {
-    const { value } = e.target;
+    if (step === 1) {
+      setFormData((prevState) => ({
+        ...prevState,
+        [input]: value,
+      }));
+    } else {
+      setAddress((prevState) => ({
+        ...prevState,
+        [input]: value,
+      }));
+    }
+  };
 
-    setAddressData(prevState => ({
-      ...prevState,
-      [input]: value
-  }));
-  }
   switch (step) {
     case 1:
       return (
         <header className="register">
-          <StepOne nextStep={nextStep} handleFormData={handleInputData} values={formData} phone={phone} setPhone={setPhone} />
+          <StepOne nextStep={nextStep} handleFormData={handleFormData} values={formData} />
         </header>
       );
     case 2:
@@ -69,18 +68,14 @@ const CreateAccount = () => {
         <StepTwo 
           nextStep={nextStep} 
           prevStep={prevStep} 
-          handleFormData={handleBillingData} 
-          handleCountry={changeCountryHandler} 
-          country={country} 
-          values={addressData}
-          phone={addressPhone}
-          setPhone={setAddressPhone} />
+          handleFormData={handleFormData} 
+          address={address} />
       </header>
       );
     case 3:
       return (
         <header className="register">
-           <Final values={formData} addressValues={addressData} country={country} phone={phone} addressPhone={addressPhone} />
+           <Final values={formData} address={address} />
         </header>
       );
     // default case to show nothing

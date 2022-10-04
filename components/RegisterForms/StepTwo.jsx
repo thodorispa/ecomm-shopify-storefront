@@ -1,32 +1,17 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import validator from "validator";
 import AddressForm from '../AddressForm'
-import Select from 'react-select';
-import countryList from 'react-select-country-list';
 
-const StepTwo = ({ nextStep, handleFormData, prevStep, values, handleCountry, country, phone, setPhone }) => {
+const StepTwo = ({ nextStep, handleFormData, prevStep, address }) => {
 
   window.scrollTo(0, 0)
 
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const options = useMemo(() => countryList().getData(), [])
-
-  const customStyles = {
-    menu: (provided, state) => ({
-      ...provided,
-      padding: state.selectProps.padding,
-      color: '#111b0d',
-      maxWidth: "200px "
-    }),
-    indicatorsContainer: () => ({
-      padding: '7px',
-    }),
-  }
 
   const submitFormData = (e) => {
     e.preventDefault();
-    setErrors(validate(values));
+    setErrors(validate(address));
     setIsSubmit(true);
   }
 
@@ -34,11 +19,10 @@ const StepTwo = ({ nextStep, handleFormData, prevStep, values, handleCountry, co
     if (Object.keys(errors).length === 0 && isSubmit) {
       nextStep();
     }
-  },[errors])
+  }, [errors])
 
   const validate = (values) => {
     const error = {};
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
     if (!values.firstName) {
       error.firstName = "First Name is required";
@@ -54,50 +38,50 @@ const StepTwo = ({ nextStep, handleFormData, prevStep, values, handleCountry, co
       error.city = "City or Town is required";
     }
 
-    if (!country) {
+    if (!values.country) {
       error.country = "Country is required";
     }
     if (!values.zip) {
       error.zip = "Zip Code is required";
     }
-    if (!phone) {
+    if (!values.phone) {
       error.phone = "Mobile Phone is required";
-    } else if (!validator.isMobilePhone(phone)) {
+    } else if (!validator.isMobilePhone(values.phone)) {
       error.phone = "This is not a valid mobile phone format";
     }
 
     return error;
   };
-  return ( 
+  return (
     <header>
+      <article >
+        <h1 style={{ margin: "0" }}>Shipping Information</h1>
+        
+      </article>
       <section className="form-container">
         <article>
-        <AddressForm 
-          values={values} 
-          handleFormData={handleFormData} 
-          country={country} 
-          handleCountry={handleCountry} 
-          phone={phone}
-          setPhone={setPhone}
-          errors={errors} />
-          <section>  
-              <button 
+          <AddressForm
+            address={address}
+            handleFormData={handleFormData}
+            errors={errors} />
+          <section>
+            <button
               className="start-over-btn"
               type="submit"
-              style={{width: "40%", margin: "10px"}}
+              style={{ width: "40%", margin: "10px" }}
               onClick={prevStep}
-              >GO BACK</button>
-                <button 
+            >GO BACK</button>
+            <button
               className="register-btn"
               type="submit"
-              style={{width: "40%", margin: "10px"}}
+              style={{ width: "40%", margin: "10px" }}
               onClick={submitFormData}
-              >CONTINUE</button>
-              </section>
+            >CONTINUE</button>
+          </section>
         </article>
       </section>
     </header>
-   );
+  );
 }
- 
+
 export default StepTwo;

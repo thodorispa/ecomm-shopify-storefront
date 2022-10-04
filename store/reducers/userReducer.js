@@ -1,4 +1,4 @@
-import update from 'react-addons-update'; 
+import update from 'react-addons-update';
 
 
 const authReducer = (state = {}, action) => {
@@ -13,16 +13,16 @@ const authReducer = (state = {}, action) => {
       addresses.splice(index, 1);
       addresses.splice(index, 0, updated);
       console.log(addresses, "after");
-      return update(state, { 
-        addresses: { 
-          index: {
-            $set: action.payload
-          }
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          addresses: addresses
         }
-      });
-    default: 
+      }
+    default:
       return state
-  } 
+  }
 }
 
 export default authReducer

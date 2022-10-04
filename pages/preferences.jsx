@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import TabMenu from '../components/TabMenu'
 import Security from '../components/Preferences/Security'
-import Shipping from '../components/Preferences/Shipping/Shipping'
+import CustomerAddresses from '../components/Preferences/Addresses/CustomerAddresses'
 
 const Preferences = () => {
 
@@ -16,35 +16,35 @@ const Preferences = () => {
   const showOrderHistory = () => {
     setOption(3);
   }
-  
-  useEffect(() => {
-    
-  },[])
 
-   switch (option) {
+  useEffect(() => {
+
+  }, [])
+
+  switch (option) {
     case 1: {
       return (
         <>
-        <TabMenu option={option} security={showSecurityOption} orderHistory={showOrderHistory} shipping={showShippingOption}/>
-        <Security/>
+          <TabMenu option={option} security={showSecurityOption} orderHistory={showOrderHistory} customerAddresses={showShippingOption} />
+          <Security />
         </>
       )
     } case 2: {
       return (
         <>
-        <TabMenu option={option} security={showSecurityOption} orderHistory={showOrderHistory} shipping={showShippingOption}/>
-        <Shipping/>
+          <TabMenu option={option} security={showSecurityOption} orderHistory={showOrderHistory} customerAddresses={showShippingOption} />
+          <CustomerAddresses />
         </>
       )
     } case 3: {
       return (
         <>
-        <TabMenu option={option} security={showSecurityOption} orderHistory={showOrderHistory} shipping={showShippingOption}/>
-        <header>
-          <h1>
-            gre
-          </h1>
-        </header>
+          <TabMenu option={option} security={showSecurityOption} orderHistory={showOrderHistory} customerAddresses={showShippingOption} />
+          <header>
+            <h1>
+              gre
+            </h1>
+          </header>
         </>
       )
     } default:
@@ -53,7 +53,7 @@ const Preferences = () => {
           <h1>There's nothing here...</h1>
         </header>
       )
-   }
+  }
 }
- 
+
 export default Preferences;

@@ -102,6 +102,7 @@ const create = async (address, accessToken) => {
 }
 
 const update = async (address, accessToken) => {
+  console.log( "address", address);
   try {
     var query = await client.query({
       data: `mutation{
@@ -116,6 +117,13 @@ const update = async (address, accessToken) => {
         }, customerAccessToken: "${accessToken}", id: "${address.id}") {
           customerAddress {
             id
+            firstName
+            lastName
+            address1
+            country
+            zip
+            city
+            phone
           }
           customerUserErrors {
             code
@@ -131,6 +139,7 @@ const update = async (address, accessToken) => {
 
   const { customerAddressUpdate, customerUserErrors } = query.body.data || null;
   const { customerAddress } = customerAddressUpdate || null;
+  console.log("here utils ", customerAddress);
 
   return { customerAddress, customerUserErrors };
 }

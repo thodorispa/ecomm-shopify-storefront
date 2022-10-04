@@ -1,50 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import UpdateAddress from './UpdateAddress';
+import AddressFormModal from './AddressFormModal';
+import { useDispatch } from 'react-redux';
 
 
-const Shipping = () => {
-
+const CustomerAddresses = () => {
+  const dispatch = useDispatch();
   const { customer } = useSelector(x => x.customer);
-  const [disabled, setDisabled] = useState({
-    input: true,
-    button: false,
-  })
-  const [selectedAddress, setSelectedAddress] = useState()
+  const  selectedAddress  = useSelector(x => x.selectedAddress) || null;
+
   const [isActive, setIsActive] = useState(false);
   const [popUp, setPopUp] = useState(false);
-
-  const [phone, setPhone] = useState();
-
-  const [addressData, setAddressData] = useState({
-    address1: "",
-    city: "",
-    zip: "",
-  })  
-
-  const handleAddressData = input => e => {
-    const { value } = e.target
-    setAddressData(prevState => ({
-      ...prevState,
-      [input]: value,
-    }))
-  }
-
-  const edit = (e) => {
-    e.preventDefault();
-    setDisabled(prevState => ({
-      ...prevState,
-      input: !disabled.input
-    }));
-
-    if (!disabled.input) {
-      setDisabled(prevState => ({
-        ...prevState,
-        input: true,
-        button: true,
-      }))
-    }
-  }
 
   return (
     <>
@@ -55,12 +21,12 @@ const Shipping = () => {
           <article style={{ alignItems: "center" }}>
             <form className="forms">
               <section>
-                <h3 style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}>Personal Information</h3>
+                <h3 style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}> Personal Information </h3>
                 {selectedAddress ?
                   <>
                     <button
                       className="edit-btn"
-                      style={{width: "30%"}}
+                      style={{ width: "30%" }}
                       onClick={(e) => {
                         e.preventDefault()
                         setPopUp(!popUp)
@@ -68,10 +34,11 @@ const Shipping = () => {
                       <i className="fas fa-pen"></i>
                       <span>ΕΠΕΞΕΡΓΑΣΙΑ</span>
                     </button>
-                    <UpdateAddress trigger={popUp} popUp={popUp} setPopUp={setPopUp} address={selectedAddress} />
+                    <AddressFormModal trigger={popUp} setPopUp={setPopUp}/>
                   </> :
                   ""}
               </section>
+
               <article>
                 {customer.addresses.map((address, i) => (
                   <section
@@ -86,8 +53,7 @@ const Shipping = () => {
                       className='address-container'
                       style={{ borderColor: isActive[`${i}`] ? "red" : "black" }}
                       onClick={() => {
-                        setIsActive(current => !current);
-                        setSelectedAddress(address)
+                        dispatch({ type: 'SET_SELECTED_ADDRESS', payload: address })
                         setIsActive(prevState => ({
                           [i]: !prevState[i]
                         }))
@@ -105,15 +71,6 @@ const Shipping = () => {
 
                 ))}
               </article>
-              <article style={{ alignItems: "center" }}>
-                <button
-                  className="register-btn"
-                  onClick={edit}
-                  disabled={disabled.button}
-                >{disabled.input && !disabled.button ? <span>ΕΠΕΞΕΡΓΑΣΙΑ</span> : <span>ΕΝΗΜΕΡΩΣΗ</span>}</button>
-              </article>
-
-
             </form>
           </article>
         </section>
@@ -123,4 +80,4 @@ const Shipping = () => {
   );
 }
 
-export default Shipping;
+export default CustomerAddresses;

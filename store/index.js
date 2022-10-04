@@ -8,6 +8,7 @@ import collectionsReducer from './reducers/collectionsReducer.js'
 import authReducer from './reducers/userReducer.js'
 import sideCartReducer from './reducers/sideCartReducer.js'
 import sideNavReducer from './reducers/sideNavReducer.js'
+import selectedAddressReducer from './reducers/focusedAddressReducer.js'
 
 export const store = createStore(
   combineReducers({
@@ -16,6 +17,7 @@ export const store = createStore(
     collections: collectionsReducer,
     cartClasses: sideCartReducer,
     sideNav: sideNavReducer,
+    selectedAddress: selectedAddressReducer
   }),
   {
     customer: false,
@@ -23,6 +25,7 @@ export const store = createStore(
     collections: null,
     cartClasses: "side-cart",
     sideNav: false,
+    selectedAddress: null
   },
   // typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   composeWithDevTools(applyMiddleware(thunk))
