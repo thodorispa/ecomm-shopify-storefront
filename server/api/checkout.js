@@ -6,20 +6,10 @@ var router = express.Router()
 
 // Create cart
 router.post('/create', async (req, res) => {
-  const cart = req.body.lines;
-  
-  const lines = [];
-  // for (let i = 0; i < cart.length; i++) {
-  //   const line = cart[i];
-  //   lines.push({
-  //     variantId: "\""+(line.merchandise.id) + "\"",
-  //     quantity: line.quantity,
-  //   });
-  // }
-
+  const { cart } = req.body;
   try {
+    var { checkout, Errors } = await Checkout.create(cart.lines);
 
-    var { checkout, Errors } = await Checkout.create(lines);
 
     if (Errors) {
       return res.status(400).send(Errors.message);

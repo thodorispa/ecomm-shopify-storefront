@@ -6,82 +6,108 @@ const { SHOP, STOREFRONT_TOKEN, GID } = process.env;
 const client = new Shopify.Clients.Storefront(SHOP, STOREFRONT_TOKEN);
 
 const create = async (lines) => {
-
-  const address ={
-    "address1": "123 Main St",
-    "city": "San Francisco",
-    "country": "US",
-    "firstName": "John",
-    "lastName": "Smith",
-    "phone": "555-555-5555",
-    "zip": "94111"
+  let lineItems = '';
+  for (let i = 0; i < lines.length; i++) {
+    const { quantity, product } = lines[i];
+    const variantId = product.variants[0].id;
+    switch (i) {
+      case 0:
+        lineItems += `[{variantId: "${variantId}", quantity: ${quantity}}`;
+        break;
+      case lines.length - 1:
+        lineItems += `, {variantId: "${variantId}", quantity: ${quantity}}]`;
+        break;
+      default:
+        lineItems += `, {variantId: "${variantId}", quantity: ${quantity}}`;
+        break;
+    }
   }
- 
 
-  
+
 
   try {
     var query = await client.query({
-      // data: `
-      // mutation {
-      //   checkoutCreate(input: {lineItems: "${lines}"  }) {
-      //             checkout {
-      //               webUrl
-      //             }
-      //           }
-      //         }
-              
-      //         `,
       data: `mutation {
-checkoutCreate(input: {lineItems:[{ variantId: "gid://shopify/ProductVariant/41964670583025", 
-quantity: 1 }, { variantId: "gid://shopify/ProductVariant/41964670583025", 
-quantity: 1 }] }) {
+                checkoutCreate(input: {
+                  lineItems: ${lineItems}
+                  
+                }) {
+                  checkout {
+                            id
+                            webUrl
+                          }
+                        }
+                }
+        
+        `,
+    });
+
+
+
+    var { checkout } = query.body.data.checkoutCreate;
+    console.log(checkout);
+
+  } catch (e) {
+    console.log(e.response.errors);
+    return { checkoutUserErrors: e.response.errors };
+  }
+
+  try {
+    var accountQuery = await client.query({
+      data: `mutation {
+        checkoutCustomerAssociateV2(checkoutId: "${checkout.id}", customerAccessToken: "0b31b8460ef9163330b993e7223f2ab5") {
           checkout {
             id
             webUrl
           }
-        }
-      }
-      
-      `,
-    });
-  const { checkout } = query.body.data.checkoutCreate;
-  const id = checkout.id;
-  console.log(checkout);
-    var query2 = await client.query({
-      data: `mutation 
-        checkoutCustomerAssociateV2(
-          id: "gid://shopify/Checkout/425fb526bda3ebadcf44b1071b17cfe7?key=08af77e4a1e24cd41cdfb4b6684545c3",
-          customerAccessToken: "c491d66767d8ac847dd724c84a05afd7"
-          ) {
-          checkout {
-            id 
-            webUrl
-          }
           checkoutUserErrors {
-            # CheckoutUserError fields
+            code
+            field
+            message
           }
           customer {
-            # Customer fields
+            id
           }
         }
-      `
-    })
+      }
+      `,
+    });
   } catch (e) {
-    console.log(e.response.errors);
-    return { Errors: { message: e.response.errors } };
+    console.log("ASSOCIATE CUSTOMER: ", e.response.errors);
+    return { checkoutUserErrors: e.response.errors };
   }
 
+  // try {
+  //   var emailQuery = await client.query({
+  //     data: `mutation {
+  //         checkoutEmailUpdateV2(checkoutId: "${checkout.id}", email: "t.pachis@yahoo.com"}) {
+  //           checkout {
+  //             id
+  //             webUrl
+  //           }
+  //           checkoutUserErrors {
+  //             # CheckoutUserError fields
+  //           }
+  //         }
+  //               }
+        
+  //       `,
+  //   });
+  
+  // } catch (e) {
+  //   console.log("ASSOCIATE EMAIL: ", e.response.errors);
+  //   return { checkoutUserErrors: e.response.errors };
+  // }
 
-  const test = query2.body.data.checkoutCustomerAssociateV2.checkout.webUrl;
-  console.log(test);
+
+  // const { checkoutEmail } = emailQuery.body.data.checkoutEmailUpdateV2;
+  const checkout1  = accountQuery.body.data.checkoutCustomerAssociateV2.checkout;
 
 
-
+  console.log("DSICOOOSOOS ", checkout1);
 
   return { checkout };
 }
-
 export {
   create
 }

@@ -56,7 +56,7 @@ router.post('/update', async (req, res) => {
     zip: req.body.zip,
     phone: req.body.phone,
   }
-  console.log(address);
+  console.log("address in api ", address);
 
   try {
     const { customerAddress, customerUserErrors } = await Address.update(address, req.cookies.accessToken);
