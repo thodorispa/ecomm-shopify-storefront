@@ -35,6 +35,12 @@ const AddressFormModal = (props) => {
     setErrors(validate(address));
     setIsSubmit(true);  
   };
+  const cancelOnClick = () => {
+    console.log('here');
+    props.setPopUp(false);
+    setAddress(selectedAddress);
+    setMessage("");
+  }
 
   useEffect(async () => {
     if (Object.keys(errors).length === 0 && isSubmit) {
@@ -57,7 +63,7 @@ const AddressFormModal = (props) => {
         if (data.customerAddress) {
           dispatch({ type: "UPDATE_SELECTED_ADDRESS", payload: address })
           setIsLoading(false);
-          setMessage("Επιτυχές ενημέρωση")
+          props.setPopUp(false);
         }
       } catch (error) {
         console.log(error);
@@ -121,10 +127,6 @@ const AddressFormModal = (props) => {
           <AddressForm
             handleFormData={handleFormData}
             address={address}
-            // country={country}
-            // handleCountry={countryOnChange}
-            // phone={phone}
-            // setPhone={setPhone}
             errors={errors} />
           <section
             style={{
@@ -136,7 +138,7 @@ const AddressFormModal = (props) => {
             {!isLoading ? (
               <article>
                 <section style={{ minWidth: "250px" }}>
-                  <button className="cancel-update-btn" onClick={() => props.setPopUp(false)}>
+                  <button className="cancel-update-btn" onClick={cancelOnClick}>
                     ΑΚΥΡΩΣΗ
                   </button>
                   {props.children}

@@ -22,7 +22,7 @@ const CustomerAddresses = () => {
             <form className="forms">
               <section>
                 <h3 style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}> Personal Information </h3>
-                {selectedAddress ?
+                {isActive ?
                   <>
                     <button
                       className="edit-btn"
@@ -51,12 +51,10 @@ const CustomerAddresses = () => {
                   >
                     <article
                       className='address-container'
-                      style={{ borderColor: isActive[`${i}`] ? "red" : "black" }}
+                      style={{ borderColor: isActive ? "red" : "black" }}
                       onClick={() => {
                         dispatch({ type: 'SET_SELECTED_ADDRESS', payload: address })
-                        setIsActive(prevState => ({
-                          [i]: !prevState[i]
-                        }))
+                        setIsActive(!isActive)
                       }}>
                       <section className='address-info'>
                         <span>{address.address1},&nbsp;{address.zip}</span>
