@@ -9,8 +9,9 @@ const Cart = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { cart } = useSelector(x => x)
+  const { customer } = useSelector(x => x)
 
-  console.log(cart);
+  console.log(customer);
 
   const handleProductQuantity = async (product, status) => {
     const productId = product.id;

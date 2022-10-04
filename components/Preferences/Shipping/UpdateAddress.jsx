@@ -1,16 +1,13 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Axios from 'axios';
 import AddressForm from '../../AddressForm'
-import Select from "react-select";
-import countryList from "react-select-country-list";
 import validator from "validator";
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
 
 const UpdateAddress = (props) => {
 
-  const options = useMemo(() => countryList().getData(), []);
+  const dispatch = useDispatch();
+  const { customer } = useSelector( x => x.customer);
   const [country, setCountry] = useState(props.address.country);
   const [phone, setPhone] = useState(props.address.phone);
   const [errors, setErrors] = useState({});
@@ -35,12 +32,12 @@ const UpdateAddress = (props) => {
     lastName: props.address.lastName,
     address1: props.address.address1,
     city: props.address.city,
+    country: props.address.country,
     zip: props.address.zip,
+    phone: props.address.phone,
   });
-
   const addressDataOnChange = (input) => (e) => {
     const { value } = e.target;
-
     setAddressData((prevState) => ({
       ...prevState,
       [input]: value,
@@ -78,6 +75,11 @@ const UpdateAddress = (props) => {
   useEffect( async () => {
     if (Object.keys(errors).length === 0 && isSubmit) {
       setIsLoading(true);
+      setAddressData(prevState => ({
+        ...prevState,
+        phone: phone,
+        country: country,
+      }))
       try {
         const { data } = await Axios.post(
           `http://localhost:3000/api/address/update`,
@@ -87,14 +89,14 @@ const UpdateAddress = (props) => {
             lastName: addressData.lastName,
             address1: addressData.address1,
             city: addressData.city,
-            country: country,
+            country: addressData.country,
             zip: addressData.zip,
-            phone: phone,
+            phone: addressData.phone,
           }
         );
 
         if (data.customerAddress) {
-          console.log(data);
+          dispatch({ type: "UPDATE_SELECTED_ADDRESS", payload: addressData })
           setIsLoading(false);
           setMessage("Επιτυχές ενημέρωση")
         }
