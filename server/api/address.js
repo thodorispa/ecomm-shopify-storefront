@@ -45,9 +45,9 @@ router.get('/create', async (req, res) => {
   }
 });
 
-router.get('/update/:id', async (req, res) => {
+router.post('/update', async (req, res) => {
   const address = {
-    id: req.params.id,
+    id: req.body.id,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     address1: req.body.address1,
@@ -56,6 +56,7 @@ router.get('/update/:id', async (req, res) => {
     zip: req.body.zip,
     phone: req.body.phone,
   }
+  console.log(address);
 
   try {
     const { customerAddress, customerUserErrors } = await Address.update(address, req.cookies.accessToken);

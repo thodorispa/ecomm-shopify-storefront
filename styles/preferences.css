@@ -15,8 +15,7 @@
   margin: 15px;
   font-size: 17px;
   background-color: rgb(254, 255, 251);
-  background: 
-    linear-gradient(to right, #111b0d, #111b0d),
+  background: linear-gradient(to right, #111b0d, #111b0d),
     linear-gradient(to right, #4000ff, #323ffa, #bbff00);
   background-size: 100% 0.1em, 0 0.1em;
   background-position: 100% 100%, 0 100%;
@@ -33,8 +32,9 @@
   border-radius: 10px;
   font-size: 12px;
   width: 35%;
-  color:rgb(254, 255, 251);
-  transition:all 250ms ease-in;
+  color: rgb(254, 255, 251);
+  transition: all 250ms ease-in;
+  animation: fadeIn 250ms ease-in;
 }
 .update-btn {
   display: flex;
@@ -43,14 +43,51 @@
   border-radius: 10px;
   font-size: 12px;
   width: 35%;
-  color:rgb(254, 255, 251);
+  color: rgb(254, 255, 251);
   background-color: #8d9972;
-  transition:all 250ms ease-in;
+  transition: all 250ms ease-in;
 }
 .update-btn:disabled {
   color: rgb(192, 193, 190);
 }
-
+.cancel-update-btn {
+  padding: 7px;
+  border: 0;
+  background-color: #75585c;
+  border-radius: 7px;
+  width: 30%;
+  margin-top: 15px;
+  cursor: pointer;
+  padding: 12px;
+  font-size: 15px;
+  transition: 0.2s ease-in;
+  color: rgb(254, 255, 251);
+  animation: fadeIn 1s ease-in;
+}
+.cancel-update-btn:hover {
+  border-radius: 7px;
+  transform: scale(1.05);
+  transition: 0.2s ease-in;
+}
+.update-address-btn {
+  padding: 7px;
+  border: 0;
+  background-color: #91927b;
+  border-radius: 7px;
+  width: 30%;
+  margin-top: 15px;
+  cursor: pointer;
+  padding: 12px;
+  font-size: 15px;
+  transition: 0.2s ease-in;
+  color: rgb(254, 255, 251);
+  animation: fadeIn 1s ease-in;
+}
+.update-address-btn:hover {
+  border-radius: 7px;
+  transform: scale(1.05);
+  transition: 0.2s ease-in;
+}
 .address-container {
   display: flex;
   margin: 20px;
@@ -74,17 +111,22 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #8f938d;
+  overflow-y: scroll;
+  background-color: #8f938d82;
   z-index: 999;
+  animation: fadeIn 500ms ease-in-out;
 }
 .popup-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   padding: 32px;
-  width: 100%;
-  max-width: 640px;
+  border-radius: 10px;
   background-color: rgb(254, 255, 251);
+  animation: intro 300ms ease-in-out;
+  
 }
-
 .popup-inner .close-btn {
   position: absolute;
   top: 16px;
@@ -95,17 +137,32 @@
   background-size: 0 0.1em, 100% 0.1em;
   color: #111b0d;
 }
-.pref-input:enabled:focus{
-  box-shadow:  0 0px 0px 0 rgba(208, 208, 208, 0.319), 0 5px 30px 0 rgba(0, 0, 0, 0.19);
+.pref-input:enabled:focus {
+  box-shadow: 0 0px 0px 0 rgba(208, 208, 208, 0.319),
+    0 5px 30px 0 rgba(0, 0, 0, 0.19);
 }
 
 .PhoneInput {
   background-size: 0 0.1em, 100% 0.1em;
 }
 .PhoneInput:focus {
-  box-shadow:  0 0px 0px 0 rgba(208, 208, 208, 0.319), 0 5px 30px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 0px 0px 0 rgba(208, 208, 208, 0.319),
+    0 5px 30px 0 rgba(0, 0, 0, 0.19);
 }
 .PhoneInput--disabled {
   border-bottom: 1.5px solid#111b0d;
   background-size: 0 0.1em, 0% 0.1em;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes intro {
+  from { transform: translateY(5%); }
+  to { transform: translateY(0%); }
 }

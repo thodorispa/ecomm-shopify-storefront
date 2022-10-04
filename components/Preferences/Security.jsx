@@ -42,8 +42,6 @@ const Security = () => {
     }
 
   }
-  
-  console.log(disabled);
 
   return ( 
     <>

@@ -14,17 +14,13 @@ const Shipping = () => {
   const [isActive, setIsActive] = useState(false);
   const [popUp, setPopUp] = useState(false);
 
-  const handleClick = (i, address) => {
-
-  }
-
   const [phone, setPhone] = useState();
 
   const [addressData, setAddressData] = useState({
     address1: "",
     city: "",
     zip: "",
-  })
+  })  
 
   const handleAddressData = input => e => {
     const { value } = e.target
@@ -64,6 +60,7 @@ const Shipping = () => {
                   <>
                     <button
                       className="edit-btn"
+                      style={{width: "30%"}}
                       onClick={(e) => {
                         e.preventDefault()
                         setPopUp(!popUp)

@@ -59,108 +59,168 @@ const StepTwo = ({ nextStep, handleFormData, prevStep, values, handleCountry, co
     <header>
       <section className="form-container">
         <article>
-          <form onSubmit={submitFormData} className="forms">
-          <h3 style={{opacity: "0.7", fontWeight: "100", textAlign: "center"}}>Billing Information</h3>
+          <form className="forms">
+            <h3
+              style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}
+            >
+              Billing Information
+            </h3>
             <article>
               <div className="input-container">
-              <input
-                type="text"
-                name="address1"
-                defaultValue={values.address1}
-                className="forms-input"
-                onChange={handleFormData("address1")}
-              />
-              <label className={values.address1 ? "filled" : ""}>Street Address</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  defaultValue={addressData.firstName}
+                  className="forms-input"
+                  onChange={addressDataOnChange("firstName")}
+                />
+                <label className="filled">First Name</label>
               </div>
-              <section className="validate">
-                <i className={errors.address ? "fa-solid fa-exclamation" : ""}></i>
+              <section className="validate" style={{ paddingLeft: "20px" }}>
+                <i
+                  className={errors.firstName ? "fa-solid fa-exclamation" : ""}
+                ></i>
+                <small style={{ paddingLeft: "5px" }}>{errors.firstName}</small>
+              </section>
+              <div className="input-container">
+                <input
+                  type="text"
+                  name="lastName"
+                  defaultValue={addressData.lastName}
+                  className="forms-input"
+                  onChange={addressDataOnChange("lastName")}
+                />
+                <label className="filled">Last Name</label>
+              </div>
+              <section className="validate" style={{ paddingLeft: "20px" }}>
+                <i
+                  className={errors.lastName ? "fa-solid fa-exclamation" : ""}
+                ></i>
+                <small style={{ paddingLeft: "5px" }}>{errors.lastName}</small>
+              </section>
+              <div className="input-container">
+                <input
+                  type="text"
+                  name="address1"
+                  defaultValue={addressData.address1}
+                  className="forms-input"
+                  onChange={addressDataOnChange("address1")}
+                />
+                <label className="filled">Street Address</label>
+              </div>
+              <section className="validate" style={{ paddingLeft: "20px" }}>
+                <i
+                  className={errors.address ? "fa-solid fa-exclamation" : ""}
+                ></i>
                 <small style={{ paddingLeft: "5px" }}>{errors.address}</small>
               </section>
             </article>
             <article>
-            <div className="input-container">
-              <input
-                type="text"
-                name="city"
-                defaultValue={values.city}
-                className="forms-input"
-                onChange={handleFormData("city")}
-              />
-              <label className={values.city ? "filled" : ""}>Town/City</label>
+              <div className="input-container">
+                <input
+                  type="text"
+                  name="city"
+                  defaultValue={addressData.city}
+                  className="forms-input"
+                  onChange={addressDataOnChange("city")}
+                />
+                <label className="filled">Town/City</label>
               </div>
-              <section className="validate">
+              <section className="validate" style={{ paddingLeft: "20px" }}>
                 <i className={errors.city ? "fa-solid fa-exclamation" : ""}></i>
                 <small style={{ paddingLeft: "5px" }}>{errors.city}</small>
               </section>
             </article>
             <article>
-            <div className="input-container">
-            <Select 
-            placeholder={'Country'} 
-            className="country-input" 
-            styles={customStyles} 
-            theme={(theme) => ({
-              ...theme,
-              borderRadius: "7px",
-              padding: "15px",
-              colors: {
-                ...theme.colors,
-                primary25: '#d3d0ae',
-                primary50: '#d3d0ae',
-                primary: '#111b0d',
-                neutral10: 'rgb(254, 255, 251)',
-                neutral20: '#111b0d',
-                neutral30: '#111b0d',
-                neutral70: 'rgb(254, 255, 251)',
-                neutral80: 'rgb(87, 96, 78)',
-                neutral90: '#A19E84'
-              },
-            })}
-            options={options} 
-            defaultValue={country} 
-            onChange={handleCountry} />
-              {/* <input
-                type="text"
-                name="country"
-                options={options}
-                defaultValue={country} onChange={handleCountry}
-                className="forms-input"
-              /> */}
+              <div className="input-container">
+                <Select
+                  placeholder={props.address.country}
+                  className="country-input"
+                  input={props.address.country}
+                  styles={customStyles}
+                  theme={(theme) => ({
+                    ...theme,
+                    borderRadius: "7px",
+                    padding: "15px",
+                    colors: {
+                      ...theme.colors,
+                      primary25: "#d3d0ae",
+                      primary50: "#d3d0ae",
+                      primary: "#111b0d",
+                      neutral10: "rgb(254, 255, 251)",
+                      neutral20: "#111b0d",
+                      neutral30: "#111b0d",
+                      neutral40: "#111b0d",
+                      neutral50: "#111b0d",
+                      neutral60: "#111b0d",
+                      neutral70: "rgb(254, 255, 251)",
+                      neutral80: "#111b0d",
+                      neutral90: "#A19E84",
+                    },
+                  })}
+                  options={options}
+                  defaultValue={props.address.country}
+                  onChange={countryOnChange}
+                />
               </div>
-              <section className="validate">
-                <i className={errors.country ? "fa-solid fa-exclamation" : ""}></i>
+              <section className="validate" style={{ paddingLeft: "20px" }}>
+                <i
+                  className={errors.country ? "fa-solid fa-exclamation" : ""}
+                ></i>
                 <small style={{ paddingLeft: "5px" }}>{errors.country}</small>
               </section>
             </article>
             <article>
-            <div className="input-container">
-              <input
-                type="text"
-                name="zip"
-                defaultValue={values.zip}
-                className="forms-input"
-                onChange={handleFormData("zip")}
-              />
-              <label className={values.zip ? "filled" : ""}>Zip Code</label>
+              <div className="input-container">
+                <input
+                  type="text"
+                  name="zip"
+                  defaultValue={addressData.zip}
+                  className="forms-input"
+                  onChange={addressDataOnChange("zip")}
+                />
+                <label className="filled">Zip Code</label>
               </div>
-              <section className="validate">
+              <section className="validate" style={{ paddingLeft: "20px" }}>
                 <i className={errors.zip ? "fa-solid fa-exclamation" : ""}></i>
-                <small style={{ paddingLeft: "5px" }}>{errors.zip}</small>
+                <small style={{ paddingLeft: "10px" }}>{errors.zip}</small>
               </section>
             </article>
-            <section style={{alignItems: "center"}}>
-            <button 
+            <article>
+              <div className="input-container">
+                <PhoneInput
+                  placeholder="Mobile phone"
+                  value={phone}
+                  className="forms-input"
+                  onChange={setPhone}
+                />
+                {!phone ? (
+                  <></>
+                ) : (
+                  <label styles={{ border: "none" }} className="filled">
+                    Mobile Phone
+                  </label>
+                )}
+              </div>
+              <section className="validate" style={{ paddingLeft: "20px" }}>
+                <i className={errors.phone ? "fa-solid fa-exclamation" : ""}></i>
+                <small style={{ paddingLeft: "5px" }}>{errors.phone}</small>
+              </section>
+              <section>
+              <button 
+              className="register-btn"
+              type="submit"
+              style={{width: "40%", margin: "10px"}}
+              >CONTINUE</button>
+               <button 
               className="start-over-btn"
               type="submit"
               style={{width: "40%", margin: "10px"}}
               onClick={prevStep}
               >GO BACK</button>
-            <button 
-              className="register-btn"
-              type="submit"
-              style={{width: "40%", margin: "10px"}}
-              >CONTINUE</button>
+              </section>
             </section>
+            </article>
           </form>
         </article>
       </section>
