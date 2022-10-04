@@ -1,5 +1,6 @@
 import { } from 'dotenv/config'
 import { Shopify } from '@shopify/shopify-api'
+import * as Address from './addressUtils.js'
 
 const { SHOP, STOREFRONT_TOKEN, GID } = process.env;
 
@@ -8,7 +9,7 @@ const client = new Shopify.Clients.Storefront(SHOP, STOREFRONT_TOKEN);
 /*
   Creates a Customer in Shopify
 */
-const create = async (user) => {
+const create = async (user, address) => {
   try {
     var query = await client.query({
       data: `mutation {
@@ -38,15 +39,25 @@ const create = async (user) => {
     return { customerUserErrors: e.response.errors };
   }
 
-  const { customer, customerUserErrors } = query.body.data.customerCreate || null;
+  var { customer, customerUserErrors } = query.body.data.customerCreate || null;
 
   if (customer) {
     var { customerAccessToken } = await createAccessToken(user);
+    var { customerAddress } = await Address.create(address,customerAccessToken.accessToken);
+
   } else {
     console.log(customerUserErrors);
   }
 
-  return { customer, customerUserErrors, customerAccessToken };
+
+customer = {
+  ...customer,
+  ...customerAddress
+}
+  
+  
+
+  return { customer, customerUserErrors, customerAccessToken, customerAddress };
 }
 
 const getCustomer = async (accessToken) => {
@@ -61,6 +72,13 @@ const getCustomer = async (accessToken) => {
           phone
           defaultAddress {
             id
+            firstName
+            lastName
+            address1
+            country
+            zip
+            city
+            phone
           }
           addresses(first: 10) {
             edges {
@@ -72,6 +90,7 @@ const getCustomer = async (accessToken) => {
                 country
                 zip
                 city
+                phone
               }
             }
           }

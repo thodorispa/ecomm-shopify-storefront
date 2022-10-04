@@ -25,6 +25,72 @@
   transition: 250ms ease-in-out;
 }
 
+.edit-btn {
+  display: flex;
+  justify-content: space-around;
+  border: none;
+  background-color: #a88984;
+  border-radius: 10px;
+  font-size: 12px;
+  width: 35%;
+  color:rgb(254, 255, 251);
+  transition:all 250ms ease-in;
+}
+.update-btn {
+  display: flex;
+  justify-content: space-around;
+  border: none;
+  border-radius: 10px;
+  font-size: 12px;
+  width: 35%;
+  color:rgb(254, 255, 251);
+  background-color: #8d9972;
+  transition:all 250ms ease-in;
+}
+.update-btn:disabled {
+  color: rgb(192, 193, 190);
+}
+
+.address-container {
+  display: flex;
+  margin: 20px;
+  border: 1px solid #111b0d;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+.address-info {
+  padding: 10px;
+  min-width: 370px;
+}
+
+.popup {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #8f938d;
+  z-index: 999;
+}
+.popup-inner {
+  position: relative;
+  padding: 32px;
+  width: 100%;
+  max-width: 640px;
+  background-color: rgb(254, 255, 251);
+}
+
+.popup-inner .close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
 .pref-input:enabled {
   background-size: 0 0.1em, 100% 0.1em;
   color: #111b0d;

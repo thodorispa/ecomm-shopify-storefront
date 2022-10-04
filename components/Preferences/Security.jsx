@@ -52,8 +52,27 @@ const Security = () => {
     <article>
     <section className="form-container">
         <article style={{alignItems: "center"}}>
-          <form className="forms">
-          <h3 style={{opacity: "0.7", fontWeight: "100", textAlign: "center"}}>Personal Information</h3>
+          <form className="forms"
+          style={{justifyContent: "center"}}>
+            <section style={{justifyContent: "space-between", padding: "0px 0px 0px 15px"}}>
+              <h3 style={{opacity: "0.7", fontWeight: "100", textAlign: "center"}}>Personal Information</h3>
+              <button 
+              className={disabled.input && !disabled.button? "edit-btn" : "update-btn"}
+              onClick={buttonOnClick}
+              disabled={disabled.button}>
+              {disabled.input && !disabled.button ? 
+                <>
+                <i className="fas fa-pen"></i>
+                <span>ΕΠΕΞΕΡΓΑΣΙΑ</span> 
+                </>
+              : 
+                <><i className="fa-solid fa-check"></i>
+                <span>ΕΝΗΜΕΡΩΣΗ</span>
+                </>
+              }
+              </button>
+              
+            </section>
             <article>
               <div className="input-container">
               <input
@@ -154,14 +173,7 @@ const Security = () => {
               </section>
             </article> */}
             <article style={{alignItems: "center"}}>
-            <button 
-              className="register-btn"
-              onClick={buttonOnClick}
-              disabled={disabled.button}
-              >{disabled.input && !disabled.button ? <span>ΕΠΕΞΕΡΓΑΣΙΑ</span> : <span>ΕΝΗΜΕΡΩΣΗ</span>}</button>
             </article>
-            
-         
           </form>
         </article>
       </section>

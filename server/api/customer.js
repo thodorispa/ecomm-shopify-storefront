@@ -15,10 +15,20 @@ router.post('/sign-up', async (req, res) => {
     phone: req.body.phone
   }
   
-  try {
-    const { customer, customerUserErrors, customerAccessToken } = await Customer.create(user);
+  const address = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    address1: req.body.address1,
+    city: req.body.city,
+    country: req.body.country.label,
+    zip: req.body.zip,
+    phone: req.body.phone,
+  }
 
-    if (customerUserErrors) {
+  try {
+    const { customer, customerUserErrors, customerAccessToken } = await Customer.create(user, address);
+
+    if (customerUserErrors.length > 0) {
       return res.status(400).send(customerUserErrors[0].message);
     }
 

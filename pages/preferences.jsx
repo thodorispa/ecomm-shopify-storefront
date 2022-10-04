@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import TabMenu from '../components/TabMenu'
 import Security from '../components/Preferences/Security'
-import Shipping from '../components/Preferences/Shipping'
+import Shipping from '../components/Preferences/Shipping/Shipping'
 
 const Preferences = () => {
 

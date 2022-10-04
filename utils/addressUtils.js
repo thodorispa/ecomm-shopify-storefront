@@ -62,13 +62,13 @@ const create = async (address, accessToken) => {
         customerAddressCreate(
           customerAccessToken: "${accessToken}"
           address: {
-            lastName: ${address.lastName}
-            firstName: ${address.firstName}
-            address1: ${address.address1}
-            city: ${address.city}
-            country: ${address.country}
-            zip: ${address.zip}
-            phone: ${address.phone}
+            lastName: "${address.lastName}"
+            firstName: "${address.firstName}"
+            address1: "${address.address1}"
+            country: "${address.country}"
+            city: "${address.city}"
+            zip: "${address.zip}"
+            phone: "${address.phone}"
           }
         )
         {
@@ -79,13 +79,20 @@ const create = async (address, accessToken) => {
           }
           customerAddress {
             id
+            firstName
+            lastName
+            address1
+            country
+            zip
+            city
+            phone
           }
         }
       }
       `,
     });
   } catch (e) {
-    console.log(e.response.errors);
+    console.log(e.response.errors || e);
     return { customerUserErrors: e.response.errors };
   }
 
