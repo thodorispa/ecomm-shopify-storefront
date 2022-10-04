@@ -15,13 +15,18 @@ const CreateAccount = () => {
   })
 
   const [addressData, setAddressData] = useState({
+    firstName: "",
+    lastName: "",
     address1: "",
     city: "",
     zip: "",
   })
 
+  console.log(addressData);
+
   const [country, setCountry] = useState("");
   const [phone, setPhone] = useState();
+  const [addressPhone, setAddressPhone] = useState();
 
   const changeCountryHandler = country => {
     setCountry(country);
@@ -61,13 +66,21 @@ const CreateAccount = () => {
     case 2:
       return (
         <header className="register">
-        <StepTwo nextStep={nextStep} prevStep={prevStep} handleFormData={handleBillingData} handleCountry={changeCountryHandler} country={country} values={addressData} />
+        <StepTwo 
+          nextStep={nextStep} 
+          prevStep={prevStep} 
+          handleFormData={handleBillingData} 
+          handleCountry={changeCountryHandler} 
+          country={country} 
+          values={addressData}
+          phone={addressPhone}
+          setPhone={setAddressPhone} />
       </header>
       );
     case 3:
       return (
         <header className="register">
-           <Final values={formData} addressValues={addressData} country={country} phone={phone} />
+           <Final values={formData} addressValues={addressData} country={country} phone={phone} addressPhone={addressPhone} />
         </header>
       );
     // default case to show nothing

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import AddressForm from './AddressForm';
+import UpdateAddress from './UpdateAddress';
 
 
 const Shipping = () => {
@@ -68,7 +68,7 @@ const Shipping = () => {
                       <i className="fas fa-pen"></i>
                       <span>ΕΠΕΞΕΡΓΑΣΙΑ</span>
                     </button>
-                    <AddressForm trigger={popUp} popUp={popUp} setPopUp={setPopUp} address={selectedAddress} />
+                    <UpdateAddress trigger={popUp} popUp={popUp} setPopUp={setPopUp} address={selectedAddress} />
                   </> :
                   ""}
               </section>

@@ -55,8 +55,8 @@
   border: 0;
   background-color: #75585c;
   border-radius: 7px;
-  width: 30%;
   margin-top: 15px;
+  width: 40%;
   cursor: pointer;
   padding: 12px;
   font-size: 15px;
@@ -73,8 +73,8 @@
   padding: 7px;
   border: 0;
   background-color: #91927b;
+  width: 40;
   border-radius: 7px;
-  width: 30%;
   margin-top: 15px;
   cursor: pointer;
   padding: 12px;
