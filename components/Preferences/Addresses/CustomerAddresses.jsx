@@ -13,12 +13,24 @@ const CustomerAddresses = () => {
   const  selectedAddress  = useSelector(x => x.selectedAddress) || null;
 
   const wrapperRef = useRef(null);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState([].fill(false));
   const [popUp, setPopUp] = useState({
     update: false,
     add: false,
     delete: false,
   });
+
+  const changeSelection = (i, address) => {
+    setIsActive(prevState => ({
+      [i]: !prevState[i]
+    }))
+    if (!isActive[i]) {
+      dispatch({ type: 'SET_SELECTED_ADDRESS', payload: address })
+    } else {
+      dispatch({ type: 'DELETE_SELECTION', payload: null })
+    }
+  }
+
   
 
   return (
@@ -64,17 +76,7 @@ const CustomerAddresses = () => {
                       className='address-container'
                       style={{ borderColor: isActive[`${i}`] && selectedAddress ? "red" : "black" }}
                       onClick={() => {
-                        if (selectedAddress) {
-                          dispatch({ type: 'DELETE_SELECTION', payload: null })
-                          setIsActive((prevState) => ({
-                            [i]: false,
-                          }))
-                        } else {
-                          dispatch({ type: 'SET_SELECTED_ADDRESS', payload: address })
-                          setIsActive((prevState) => ({
-                          [i]: !prevState[i]
-                        }))
-                        }
+                          changeSelection(i, address)
                       }}>
                       <section className='address-info'>
                         <span>{address.address1},&nbsp;{address.zip}</span>
