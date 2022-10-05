@@ -20,8 +20,21 @@ const authReducer = (state = {}, action) => {
           addresses: addresses
         }
       }
-    default:
-      return state
+    case "DELETE_SELECTED_ADDRESS":
+      const deletion = action.payload;
+      const index1 = state.customer.addresses.findIndex(x => x.id === action.payload.id)
+      const addresses1 = state.customer.addresses;
+      addresses1.splice(index1, 1);
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          addresses: addresses1
+        }
+      }
+    default: 
+        return state
+   
   }
 }
 

@@ -3,8 +3,9 @@ import validator from "validator";
 import Head from 'next/head';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import  { handleFormData} from '../../helpers/FormHelper';
 
-const StepOne = ({ nextStep, handleFormData, values }) => {
+const StepOne = ({ nextStep, values, setValues, step }) => {
 
   const [matchPass, setMatchPass] = useState("");
   const [errors, setErrors] = useState({});
@@ -18,6 +19,7 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmit) {
+      window.scrollTo(0, 0);
       nextStep();
     }
   }, [errors])
@@ -80,7 +82,7 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
                   name="firstName"
                   value={values.firstName}
                   className="forms-input"
-                  onChange={handleFormData("firstName")}
+                  onChange={handleFormData("firstName",values, setValues, step)}
                 />
                 <label className={values.firstName ? "filled" : ""}>First Name</label>
               </div>
@@ -96,7 +98,7 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
                   name="lastName"
                   value={values.lastName}
                   className="forms-input"
-                  onChange={handleFormData("lastName")}
+                  onChange={handleFormData("lastName",values, setValues, step)}
                 />
                 <label className={values.lastName ? "filled" : ""}>Last Name</label>
               </div>
@@ -112,7 +114,7 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
                   name="email"
                   value={values.email}
                   className="forms-input"
-                  onChange={handleFormData("email")}
+                  onChange={handleFormData("email",values, setValues, step)}
                 />
                 <label className={values.email ? "filled" : ""}>Email</label>
               </div>
@@ -127,7 +129,7 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
                   placeholder="Mobile phone"
                   value={values.phone}
                   className="forms-input"
-                  onChange={(value) => handleFormData("phone")(value)}
+                  onChange={(value) => handleFormData("phone",values, setValues, step)(value)}
                 />
                 {!values.phone ? <></> : <label styles={{ border: "none" }} className="filled">Mobile Phone</label>}
               </div>
@@ -143,7 +145,7 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
                   name="password"
                   value={values.password}
                   className="forms-input"
-                  onChange={handleFormData("password")}
+                  onChange={handleFormData("password",values, setValues, step)}
                 />
                 <label className={values.password ? "filled" : ""}>Password</label>
               </div>

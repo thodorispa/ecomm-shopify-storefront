@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import AddressFormModal from './AddressFormModal';
+import AddAddressModal from './AddAddressModal'
+import DeleteAddressModal from './DeleteAddressModal'
 import { useDispatch } from 'react-redux';
+
 
 
 const CustomerAddresses = () => {
@@ -9,52 +12,69 @@ const CustomerAddresses = () => {
   const { customer } = useSelector(x => x.customer);
   const  selectedAddress  = useSelector(x => x.selectedAddress) || null;
 
+  const wrapperRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
-  const [popUp, setPopUp] = useState(false);
+  const [popUp, setPopUp] = useState({
+    update: false,
+    add: false,
+    delete: false,
+  });
+  
 
   return (
     <>
       <header className="pref-container">
+      <h3 style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}>Οι διευθύνσεις μου</h3>
       </header>
-      <article>
-        <section className="form-container">
           <article style={{ alignItems: "center" }}>
-            <form className="forms">
-              <section>
-                <h3 style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}> Personal Information </h3>
-                {isActive ?
+              <section className="address-header">
+                {isActive && selectedAddress ?
                   <>
                     <button
-                      className="edit-btn"
-                      style={{ width: "30%" }}
+                      className="delete-address-btn"
                       onClick={(e) => {
                         e.preventDefault()
-                        setPopUp(!popUp)
+                        setPopUp((prevState) => ({
+                          ...prevState,
+                          delete: !popUp.delete,
+                        }))
+                      }}>
+                      <i className="fas fa-pen"></i>
+                      <span>ΔΙΑΓΡΑΦΗ</span>
+                    </button>
+                    <DeleteAddressModal trigger={popUp.delete} setPopUp={setPopUp}/>
+                    <button
+                      className="edit-address-btn"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setPopUp((prevState) => ({
+                          ...prevState,
+                          update: !popUp.update,
+                        }))
                       }}>
                       <i className="fas fa-pen"></i>
                       <span>ΕΠΕΞΕΡΓΑΣΙΑ</span>
                     </button>
-                    <AddressFormModal trigger={popUp} setPopUp={setPopUp}/>
+                    <AddressFormModal trigger={popUp.update} setPopUp={setPopUp}/>
                   </> :
                   ""}
-              </section>
-
-              <article>
-                {customer.addresses.map((address, i) => (
-                  <section
-                    key={i}
-                    style={{
-                      justifyContent: "space-around",
-                      cursor: "pointer",
-                    }}
-
-                  >
-                    <article
+              </section>  
+                {customer.addresses?.map((address, i) => (
+                    <article key={i}
                       className='address-container'
-                      style={{ borderColor: isActive ? "red" : "black" }}
+                      style={{ borderColor: isActive[`${i}`] && selectedAddress ? "red" : "black" }}
                       onClick={() => {
-                        dispatch({ type: 'SET_SELECTED_ADDRESS', payload: address })
-                        setIsActive(!isActive)
+                        if (selectedAddress) {
+                          dispatch({ type: 'DELETE_SELECTION', payload: null })
+                          setIsActive((prevState) => ({
+                            [i]: false,
+                          }))
+                        } else {
+                          dispatch({ type: 'SET_SELECTED_ADDRESS', payload: address })
+                          setIsActive((prevState) => ({
+                          [i]: !prevState[i]
+                        }))
+                        }
                       }}>
                       <section className='address-info'>
                         <span>{address.address1},&nbsp;{address.zip}</span>
@@ -65,14 +85,20 @@ const CustomerAddresses = () => {
                         <span>{address.phone}</span>
                       </section>
                     </article>
-                  </section>
 
                 ))}
-              </article>
-            </form>
+                <button 
+                className="update-address-btn"
+                onClick={(e) => {
+                  e.preventDefault()
+                  setPopUp((prevState) => ({
+                    ...prevState,
+                    add: !popUp.add,
+                  }))
+                }}>
+                  ΠΡΟΣΘΗΚΗ ΔΙΕΥΘΥΝΣΗΣ</button>
+                  <AddAddressModal trigger={popUp.add} setPopUp={setPopUp}  />
           </article>
-        </section>
-      </article>
 
     </>
   );

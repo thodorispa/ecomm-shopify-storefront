@@ -24,7 +24,6 @@ const CreateAccount = () => {
     zip: "",
     phone: "",
   })
-  console.log("formData", address);
 
   const nextStep = () => {
     setstep(step + 1);
@@ -33,33 +32,15 @@ const CreateAccount = () => {
   const prevStep = () => {
     setstep(step - 1);
   };
-  
-  const handleFormData = (input) => (e) => {
-    let value = "";
-    if (input === "phone" || input === "country") {
-      value = e;
-    } else {
-      value = e.target.value;
-    }
-
-    if (step === 1) {
-      setFormData((prevState) => ({
-        ...prevState,
-        [input]: value,
-      }));
-    } else {
-      setAddress((prevState) => ({
-        ...prevState,
-        [input]: value,
-      }));
-    }
-  };
 
   switch (step) {
     case 1:
       return (
         <header className="register">
-          <StepOne nextStep={nextStep} handleFormData={handleFormData} values={formData} />
+          <StepOne 
+          nextStep={nextStep} 
+          values={formData} 
+          setValues={setFormData}/>
         </header>
       );
     case 2:
@@ -68,8 +49,8 @@ const CreateAccount = () => {
         <StepTwo 
           nextStep={nextStep} 
           prevStep={prevStep} 
-          handleFormData={handleFormData} 
-          address={address} />
+          address={address} 
+          setAddress={setAddress}/>  
       </header>
       );
     case 3:

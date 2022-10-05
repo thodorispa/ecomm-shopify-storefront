@@ -1,11 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { useSelector } from "react-redux";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 
-const AddressForm = ({ handleFormData, address, errors }) => {
+const AddressForm = ({ handleAddressData, address, setAddress, errors }) => {
   const options = useMemo(() => countryList().getData(), []);
 
   const customStyles = {
@@ -19,12 +18,9 @@ const AddressForm = ({ handleFormData, address, errors }) => {
       padding: "7px",
     }),
   };
-
   return (
-    <header>
-      <section className="form-container">
-        <article>
-          <form className="forms">
+    <>
+          <form className="address-form">
             <h3
               style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}
             >
@@ -36,7 +32,7 @@ const AddressForm = ({ handleFormData, address, errors }) => {
                   name="firstName"
                   value={address.firstName}
                   className="forms-input"
-                  onChange={handleFormData("firstName")}
+                  onChange={handleAddressData("firstName", address, setAddress)}
                 />
                 <label className={address.firstName ? "filled" : ""}>First Name</label>
               </div>
@@ -52,7 +48,7 @@ const AddressForm = ({ handleFormData, address, errors }) => {
                   name="lastName"
                   value={address.lastName}
                   className="forms-input"
-                  onChange={handleFormData("lastName")}
+                  onChange={handleAddressData("lastName", address, setAddress)}
                 />
                 <label className={address.lastName ? "filled" : ""}>Last Name</label>
               </div>
@@ -68,7 +64,7 @@ const AddressForm = ({ handleFormData, address, errors }) => {
                   name="address1"
                   value={address.address1}
                   className="forms-input"
-                  onChange={handleFormData("address1")}
+                  onChange={handleAddressData("address1", address, setAddress)}
                 />
                 <label className={address.address1 ? "filled" : ""}>Street Address</label>
               </div>
@@ -86,7 +82,7 @@ const AddressForm = ({ handleFormData, address, errors }) => {
                   name="city"
                   value={address.city}
                   className="forms-input"
-                  onChange={handleFormData("city")}
+                  onChange={handleAddressData("city", address, setAddress)}
                 />
                 <label className={address.city ? "filled" : ""}>Town/City</label>
               </div>
@@ -123,8 +119,7 @@ const AddressForm = ({ handleFormData, address, errors }) => {
                   })}
                   options={options}
                   value={address.country}
-                  onChange={(e) => {handleFormData("country")(e.label)
-                console.log(e);}}
+                  onChange={(e) => {handleAddressData("country", address, setAddress)(e.label)}}
                 />
               </div>
               <section className="validate" style={{ paddingLeft: "20px" }}>
@@ -141,7 +136,7 @@ const AddressForm = ({ handleFormData, address, errors }) => {
                   name="zip"
                   value={address.zip}
                   className="forms-input"
-                  onChange={handleFormData("zip")}
+                  onChange={handleAddressData("zip", address, setAddress)}
                 />
                 <label className={address.zip ? "filled" : ""}>Zip Code</label>
               </div>
@@ -156,7 +151,7 @@ const AddressForm = ({ handleFormData, address, errors }) => {
                   placeholder="Mobile phone"
                   value={address.phone}
                   className="forms-input"
-                  onChange={(value) => handleFormData("phone")(value)}
+                  onChange={(value) => handleAddressData("phone", address, setAddress)(value)}
                 />
                 {!address.phone ? (
                   <></>
@@ -172,9 +167,7 @@ const AddressForm = ({ handleFormData, address, errors }) => {
               </section>
             </article>
           </form>
-        </article>
-      </section>
-    </header>
+    </>
   );
 }
 

@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import validator from "validator";
 import AddressForm from '../AddressForm'
+import { handleAddressData, validate} from '../../helpers/FormHelper';
 
-const StepTwo = ({ nextStep, handleFormData, prevStep, address }) => {
-
-  window.scrollTo(0, 0)
+const StepTwo = ({ nextStep, prevStep, address, setAddress }) => {
 
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -21,37 +20,6 @@ const StepTwo = ({ nextStep, handleFormData, prevStep, address }) => {
     }
   }, [errors])
 
-  const validate = (values) => {
-    const error = {};
-
-    if (!values.firstName) {
-      error.firstName = "First Name is required";
-    }
-    if (!values.lastName) {
-      error.lastName = "Last Name is required";
-    }
-    if (!values.address1) {
-      error.address = "Street Address is required";
-    }
-
-    if (!values.city) {
-      error.city = "City or Town is required";
-    }
-
-    if (!values.country) {
-      error.country = "Country is required";
-    }
-    if (!values.zip) {
-      error.zip = "Zip Code is required";
-    }
-    if (!values.phone) {
-      error.phone = "Mobile Phone is required";
-    } else if (!validator.isMobilePhone(values.phone)) {
-      error.phone = "This is not a valid mobile phone format";
-    }
-
-    return error;
-  };
   return (
     <header>
       <article >
@@ -62,7 +30,8 @@ const StepTwo = ({ nextStep, handleFormData, prevStep, address }) => {
         <article>
           <AddressForm
             address={address}
-            handleFormData={handleFormData}
+            setAddress={setAddress}
+            handleAddressData={handleAddressData}
             errors={errors} />
           <section>
             <button

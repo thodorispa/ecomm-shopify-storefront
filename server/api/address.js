@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/create', async (req, res) => {
+router.post('/create', async (req, res) => {
 
   const address = {
     firstName: req.body.firstName,
@@ -73,7 +73,7 @@ router.post('/update', async (req, res) => {
   }
 });
 
-router.get('/delete', async (req, res) => {
+router.post('/delete', async (req, res) => {
   try {
     const { deletedCustomerAddressId, customerUserErrors } = await Address.deleteById(req.body.id, req.cookies.accessToken);
 

@@ -1,38 +1,25 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import Axios from 'axios';
 import AddressForm from '../../AddressForm'
 import validator from "validator";
 import { handleAddressData, validate} from '../../../helpers/FormHelper';
 
-const AddressFormModal = (props) => {
-  const dispatch = useDispatch();
-  const { selectedAddress } = useSelector(x => x);
-  const [address, setAddress] = useState();
-  
+const AddAddressModal = (props) => {
+
   const [errors, setErrors] = useState({});
+  const [address, setAddress] = useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    country: "",
+    city: "",
+    zip: "",
+    phone: "",
+  })
+
   const [isSubmit, setIsSubmit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);  
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    setAddress(selectedAddress)
-  },[selectedAddress])
-
-  const handleFormData = (input) => (e) => {
-    let value = "";
-    if (input === "phone" || input === "country") {
-      value = e;
-    } else {
-      value = e.target.value;
-    }
-
-    setAddress((prevState) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  };
-
 
   const submitFormData = (e) => {
     e.preventDefault();
@@ -40,11 +27,20 @@ const AddressFormModal = (props) => {
     setIsSubmit(true);  
   };
   const cancelOnClick = () => {
+    console.log('here');
     props.setPopUp((prevState) => ({
       ...prevState,
-      update: false,
+      add: false,
     }));
-    setAddress(selectedAddress);
+    setAddress({
+      firstName: "",
+      lastName: "",
+      address1: "",
+      country: "",
+      city: "",
+      zip: "",
+      phone: "",
+    });
     setMessage("");
   }
 
@@ -53,9 +49,8 @@ const AddressFormModal = (props) => {
       setIsLoading(true);
       try {
         const { data } = await Axios.post(
-          `http://localhost:3000/api/address/update`,
+          `http://localhost:3000/api/address/create`,
           {
-            id: address.id,
             firstName: address.firstName,
             lastName: address.lastName,
             address1: address.address1,
@@ -67,13 +62,8 @@ const AddressFormModal = (props) => {
         );
 
         if (data.customerAddress) {
-          dispatch({ type: "UPDATE_SELECTED_ADDRESS", payload: address })
-          dispatch({ type: "DELETE_SELECTION", payload: null })
           setIsLoading(false);
-          props.setPopUp((prevState) => ({
-            ...prevState,
-            update: false,
-          }));
+          props.setPopUp(false);
         }
       } catch (error) {
         console.log(error);
@@ -88,7 +78,7 @@ const AddressFormModal = (props) => {
       <header className="popup">
         <article className="popup-inner">
           <section>
-            <h1 style={{ fontSize: "25px" }}>Επεξεργασία στοιχείων διεύθυνσης</h1>
+            <h1 style={{ fontSize: "25px" }}>Προσθήκη νέας διεύθυνσης</h1>
             <i style={{
               padding: "10px",
               fontSize: "25px",
@@ -97,10 +87,7 @@ const AddressFormModal = (props) => {
               cursor: "pointer",
             }}
               className="fa-solid fa-xmark"
-              onClick={() => props.setPopUp((prevState) => ({
-                ...prevState,
-                update: false,
-              }))}>
+              onClick={() => props.setPopUp(false)}>
               {props.children}
             </i>
           </section>
@@ -125,7 +112,7 @@ const AddressFormModal = (props) => {
                   </button>
                   {props.children}
                   <button className="update-address-btn" onClick={submitFormData}>
-                    ΕΝΗΜΕΡΩΣΗ
+                    ΠΡΟΣΘΗΚΗ
                   </button>
                 </section>
                 {message ? <h4>{message}</h4> : ""}
@@ -148,4 +135,4 @@ const AddressFormModal = (props) => {
     ""
   );
 };
-export default AddressFormModal;
+export default AddAddressModal;
