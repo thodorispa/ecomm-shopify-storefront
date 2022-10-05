@@ -31,65 +31,12 @@ const CustomerAddresses = () => {
     }
   }
 
-  
-
   return (
     <>
+    {customer.addresses.length === 0 ? 
       <header className="pref-container">
-      <h3 style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}>Οι διευθύνσεις μου</h3>
-      </header>
-          <article style={{ alignItems: "center" }}>
-              <section className="address-header">
-                {isActive && selectedAddress ?
-                  <>
-                    <button
-                      className="delete-address-btn"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        setPopUp((prevState) => ({
-                          ...prevState,
-                          delete: !popUp.delete,
-                        }))
-                      }}>
-                      <i className="fas fa-pen"></i>
-                      <span>ΔΙΑΓΡΑΦΗ</span>
-                    </button>
-                    <DeleteAddressModal trigger={popUp.delete} setPopUp={setPopUp}/>
-                    <button
-                      className="edit-address-btn"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        setPopUp((prevState) => ({
-                          ...prevState,
-                          update: !popUp.update,
-                        }))
-                      }}>
-                      <i className="fas fa-pen"></i>
-                      <span>ΕΠΕΞΕΡΓΑΣΙΑ</span>
-                    </button>
-                    <AddressFormModal trigger={popUp.update} setPopUp={setPopUp}/>
-                  </> :
-                  ""}
-              </section>  
-                {customer.addresses?.map((address, i) => (
-                    <article key={i}
-                      className='address-container'
-                      style={{ borderColor: isActive[`${i}`] && selectedAddress ? "red" : "black" }}
-                      onClick={() => {
-                          changeSelection(i, address)
-                      }}>
-                      <section className='address-info'>
-                        <span>{address.address1},&nbsp;{address.zip}</span>
-                        <span>{address.firstName}&nbsp;{address.lastName}</span>
-                      </section>
-                      <section className='address-info'>
-                        <span>{address.city},&nbsp;{address.country}</span>
-                        <span>{address.phone}</span>
-                      </section>
-                    </article>
-
-                ))}
-                <button 
+        <h3 style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}>Δεν έχετε ορίσει κάποια διεύθυνση</h3>
+        <button 
                 className="update-address-btn"
                 onClick={(e) => {
                   e.preventDefault()
@@ -100,7 +47,77 @@ const CustomerAddresses = () => {
                 }}>
                   ΠΡΟΣΘΗΚΗ ΔΙΕΥΘΥΝΣΗΣ</button>
                   <AddAddressModal trigger={popUp.add} setPopUp={setPopUp}  />
-          </article>
+      </header>
+    :
+    <>
+    <header className="pref-container">
+    <h3 style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}>Οι διευθύνσεις μου</h3>
+    </header>
+        <article style={{ alignItems: "center" }}>
+            <section className="address-header">
+              {isActive && selectedAddress ?
+                <>
+                  <button
+                    className="delete-address-btn"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setPopUp((prevState) => ({
+                        ...prevState,
+                        delete: !popUp.delete,
+                      }))
+                    }}>
+                    <i className="fas fa-pen"></i>
+                    <span>ΔΙΑΓΡΑΦΗ</span>
+                  </button>
+                  <DeleteAddressModal trigger={popUp.delete} setPopUp={setPopUp}/>
+                  <button
+                    className="edit-address-btn"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setPopUp((prevState) => ({
+                        ...prevState,
+                        update: !popUp.update,
+                      }))
+                    }}>
+                    <i className="fas fa-pen"></i>
+                    <span>ΕΠΕΞΕΡΓΑΣΙΑ</span>
+                  </button>
+                  <AddressFormModal trigger={popUp.update} setPopUp={setPopUp}/>
+                </> :
+                ""}
+            </section>  
+              {customer.addresses?.map((address, i) => (
+                  <article key={i}
+                    className='address-container'
+                    style={{ borderColor: isActive[`${i}`] && selectedAddress ? "red" : "black" }}
+                    onClick={() => {
+                        changeSelection(i, address)
+                    }}>
+                    <section className='address-info'>
+                      <span>{address.address1},&nbsp;{address.zip}</span>
+                      <span>{address.firstName}&nbsp;{address.lastName}</span>
+                    </section>
+                    <section className='address-info'>
+                      <span>{address.city},&nbsp;{address.country}</span>
+                      <span>{address.phone}</span>
+                    </section>
+                  </article>
+
+              ))}
+              <button 
+              className="update-address-btn"
+              onClick={(e) => {
+                e.preventDefault()
+                setPopUp((prevState) => ({
+                  ...prevState,
+                  add: !popUp.add,
+                }))
+              }}>
+                ΠΡΟΣΘΗΚΗ ΔΙΕΥΘΥΝΣΗΣ</button>
+                <AddAddressModal trigger={popUp.add} setPopUp={setPopUp}  />
+        </article>
+        </>
+    }
 
     </>
   );
