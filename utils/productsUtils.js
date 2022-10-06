@@ -146,40 +146,7 @@ const fetchByTitle = async (title) => {
             
           }
         }
-      }`
-
-
-      // data: `query {
-      //   product(query:"title:${title}") {
-      //     id
-      //     title
-      //     description
-      //     productType
-      //     publishedAt
-      //     tags
-      //     images(first: 1) {
-      //       edges {
-      //         node {
-      //           src
-      //           altText
-      //         }
-      //       }
-      //     }
-      //     variants(first: 1) {
-      //       edges {
-      //         node {
-      //           id
-      //           quantityAvailable
-      //           priceV2 {
-      //             amount
-      //             currencyCode
-      //           }
-      //         }
-      //       }
-      //     }
-      //   }
-      // }`
-      ,
+      }`,
     });
   } catch (e) {
     console.log(e.response.errors);

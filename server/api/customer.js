@@ -1,6 +1,7 @@
 import { } from 'dotenv/config'
 import express from 'express'
 import * as Customer from '../../utils/customerUtils'
+import * as Order from '../../utils/orderUtils'
 
 var router = express.Router()
 
@@ -11,7 +12,6 @@ router.post('/sign-up', async (req, res) => {
   const address = req.body.address
   console.log(user);
   console.log(address);
-
 
   try {
     const { customer, customerUserErrors, customerAccessToken } = await Customer.create(user, address);
@@ -66,6 +66,25 @@ router.get('/', async (req, res) => {
       return res.status(400).send(customerUserErrors[0]?.message);
     }
 
+    res.send({ customer });
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({});
+  }
+});
+
+router.get('/update', async (req, res) => {
+  const targetCustomer = req.body.customer;
+  try {
+    const { customer, customerUserErrors } = await Customer.update(targetCustomer, req.cookies.accessToken);
+
+    if (customerUserErrors) {
+      return res.status(400).send(customerUserErrors[0]?.message);
+    }
+
+    const expiresAt = new Date(customerAccessToken.expiresAt) - new Date().getTime();
+
+    res.cookie("accessToken", customerAccessToken.accessToken, { maxAge: expiresAt });
     res.send({ customer });
   } catch (e) {
     console.log(e);

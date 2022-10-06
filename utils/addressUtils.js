@@ -92,7 +92,7 @@ const create = async (address, accessToken) => {
       `,
     });
   } catch (e) {
-    console.log(e.response.errors || e);
+    console.log(e);
     return { customerUserErrors: e.response.errors };
   }
 
@@ -102,7 +102,6 @@ const create = async (address, accessToken) => {
 }
 
 const update = async (address, accessToken) => {
-  console.log( "address", address);
   try {
     var query = await client.query({
       data: `mutation{
@@ -127,6 +126,8 @@ const update = async (address, accessToken) => {
           }
           customerUserErrors {
             code
+            field
+            message
           }
         }
       }
@@ -143,6 +144,63 @@ const update = async (address, accessToken) => {
 
   return { customerAddress, customerUserErrors };
 }
+
+const updateDefault = async (addressId, accessToken) => {
+  try {
+    var query = await client.query({
+      data: `mutation{
+        customerDefaultAddressUpdate(addressId: ${addressId}, customerAccessToken: ${accessToken}) {
+          customer{
+            id
+            firstName
+            lastName
+            email
+            phone
+            defaultAddress {
+              id
+              firstName
+              lastName
+              address1
+              country
+              zip
+              city
+              phone
+            }
+            addresses(first: 10) {
+              edges {
+                node {
+                  id
+                  firstName
+                  lastName
+                  address1
+                  country
+                  zip
+                  city
+                  phone
+                }
+              }
+            }
+          }
+          customerUserErrors {
+            code
+            field
+            message
+          }
+        }
+      }
+      `,
+    });
+  } catch (e) {
+    console.log(e.response.errors);
+    return { customerUserErrors: e.response.errors };
+  }
+
+  const { customerDefaultAddressUpdate, customerUserErrors } = query.body.data || null;
+  const { customer } = customerDefaultAddressUpdate || null;
+
+  return { customer, customerUserErrors };
+}
+
 
 const deleteById = async (id, accessToken) => {
   try {

@@ -3,15 +3,13 @@ import Card from '../components/Card'
 import Axios from 'axios';
 import Head from 'next/head';
 import { useSelector, useDispatch } from 'react-redux';
+import router from "next/router";
 
 const Cart = () => {
 
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { cart } = useSelector(x => x)
-  const { customer } = useSelector(x => x)
-
-  console.log(customer);
 
   const handleProductQuantity = async (product, status) => {
     const productId = product.id;
@@ -33,6 +31,8 @@ const Cart = () => {
     e.preventDefault();
     try {
       const { data } = await Axios.post(`api/checkout/create`, { cart })
+
+      console.log(data);
     } catch (error) {
       console.log(error);
     }

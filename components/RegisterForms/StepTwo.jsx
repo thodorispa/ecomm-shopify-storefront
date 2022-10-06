@@ -24,7 +24,6 @@ const StepTwo = ({ nextStep, prevStep, address, setAddress }) => {
     <header>
       <article >
         <h1 style={{ margin: "0" }}>Shipping Information</h1>
-        
       </article>
       <section className="form-container">
         <article>

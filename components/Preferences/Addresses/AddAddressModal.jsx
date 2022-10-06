@@ -49,16 +49,7 @@ const AddAddressModal = (props) => {
       setIsLoading(true);
       try {
         const { data } = await Axios.post(
-          `http://localhost:3000/api/address/create`,
-          {
-            firstName: address.firstName,
-            lastName: address.lastName,
-            address1: address.address1,
-            city: address.city,
-            country: address.country,
-            zip: address.zip,
-            phone: address.phone,
-          }
+          `http://localhost:3000/api/address/create`, {address}
         );
 
         if (data.customerAddress) {

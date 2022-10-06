@@ -3,9 +3,6 @@ import Axios from "axios";
 
 
 const Final = ({ values, address }) => {
-  console.log("address", address);
-  console.log("valeus", values);
-
   const handleRegister = async () => {
   
     try {

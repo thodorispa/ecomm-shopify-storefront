@@ -6,9 +6,6 @@ const { SHOP, STOREFRONT_TOKEN, GID } = process.env;
 
 const client = new Shopify.Clients.Storefront(SHOP, STOREFRONT_TOKEN);
 
-/*
-  Creates a Customer in Shopify
-*/
 const create = async (user, address) => {
   try {
     var query = await client.query({
@@ -43,19 +40,19 @@ const create = async (user, address) => {
 
   if (customer) {
     var { customerAccessToken } = await createAccessToken(user);
-    var { customerAddress } = await Address.create(address,customerAccessToken.accessToken);
+    var { customerAddress } = await Address.create(address, customerAccessToken.accessToken);
 
   } else {
     console.log(customerUserErrors);
   }
 
 
-customer = {
-  ...customer,
-  ...customerAddress
-}
-  
-  
+  customer = {
+    ...customer,
+    ...customerAddress
+  }
+
+
 
   return { customer, customerUserErrors, customerAccessToken, customerAddress };
 }
@@ -101,7 +98,7 @@ const getCustomer = async (accessToken) => {
   } catch (e) {
     console.log(e.response.errors);
     return { customerUserErrors: e.response.errors };
-  } 
+  }
 
   const { customer } = query.body.data;
 
@@ -145,12 +142,73 @@ const createAccessToken = async (user) => {
 
   const { customerAccessToken, customerUserErrors } = query.body.data.customerAccessTokenCreate || null;
 
-  return { customerAccessToken, customerUserErrors};
+  return { customerAccessToken, customerUserErrors };
 }
 
+const update = async (targetCustomer, accessToken) => {
+
+  try {
+    var query = await client.query({
+      data: `mutation {
+        customerUpdate(customer: ${targetCustomer}, customerAccessToken: "${accessToken}") {
+          customer {
+            id
+            firstName
+            lastName
+            email
+            phone
+            defaultAddress {
+              id
+              firstName
+              lastName
+              address1
+              country
+              zip
+              city
+              phone
+            }
+            addresses(first: 10) {
+              edges {
+                node {
+                  id
+                  firstName
+                  lastName
+                  address1
+                  country
+                  zip
+                  city
+                  phone
+                }
+              }
+            }
+          }
+          customerAccessToken {
+            accessToken
+            expiresAt
+          }
+          customerUserErrors {
+            code
+            field
+            message
+          }
+        }
+      }
+      `,
+    });
+  } catch (e) {
+    console.log(e.response.errors);
+    return { customerUserErrors: e.response.errors };
+  }
+
+  const { customerUpdate, customerUserErrors, customerAccessToken } = query.body.data.customerUpdate || null;
+  const { customer } = customerUpdate || null;
+
+  return { customer, customerUserErrors, customerAccessToken };
+}
 
 export {
   create,
   createAccessToken,
   getCustomer,
+  update
 }
