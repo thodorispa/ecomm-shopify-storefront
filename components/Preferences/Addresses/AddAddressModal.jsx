@@ -2,12 +2,14 @@ import React, { useState, useMemo, useEffect } from "react";
 import Axios from 'axios';
 import AddressForm from '../../AddressForm'
 import validator from "validator";
+import { useDispatch } from 'react-redux';
 import { handleAddressData, validate} from '../../../helpers/FormHelper';
 
 const AddAddressModal = (props) => {
 
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
-  const [address, setAddress] = useState({
+  const initValues = {
     firstName: "",
     lastName: "",
     address1: "",
@@ -15,7 +17,8 @@ const AddAddressModal = (props) => {
     city: "",
     zip: "",
     phone: "",
-  })
+  }
+  const [address, setAddress] = useState(initValues)
 
   const [isSubmit, setIsSubmit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);  
@@ -32,15 +35,7 @@ const AddAddressModal = (props) => {
       ...prevState,
       add: false,
     }));
-    setAddress({
-      firstName: "",
-      lastName: "",
-      address1: "",
-      country: "",
-      city: "",
-      zip: "",
-      phone: "",
-    });
+    setAddress(initValues);
     setMessage("");
   }
 
@@ -53,7 +48,9 @@ const AddAddressModal = (props) => {
         );
 
         if (data.customerAddress) {
+          dispatch({ type: "ADD_NEW_ADDRESS", payload: address })
           setIsLoading(false);
+          setAddress(initValues);
           props.setPopUp(false);
         }
       } catch (error) {

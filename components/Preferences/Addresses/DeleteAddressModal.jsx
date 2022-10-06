@@ -10,6 +10,9 @@ const DeleteAddressModal = (props) => {
   
   const deleteOnClick = async (e) => {
     e.preventDefault();
+    if (selectedAddress.id === props.defaultAddress.id) {
+      props.setFlag(true);
+    }
     setIsLoading(true);
       try {
         const { data } = await Axios.post(

@@ -17,7 +17,7 @@ export const store = createStore(
     collections: collectionsReducer,
     cartClasses: sideCartReducer,
     sideNav: sideNavReducer,
-    selectedAddress: selectedAddressReducer
+    selectedAddress: selectedAddressReducer,
   }),
   {
     customer: false,
@@ -25,7 +25,7 @@ export const store = createStore(
     collections: null,
     cartClasses: "side-cart",
     sideNav: false,
-    selectedAddress: null
+    selectedAddress: null,
   },
   // typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   composeWithDevTools(applyMiddleware(thunk))

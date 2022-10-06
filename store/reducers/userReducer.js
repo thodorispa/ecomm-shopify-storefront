@@ -6,13 +6,11 @@ const authReducer = (state = {}, action) => {
     case "SET_USER":
       return action.payload || false
     case "UPDATE_SELECTED_ADDRESS":
-      console.log(state.customer.addresses, "before");
       const updated = action.payload;
       const index = state.customer.addresses.findIndex(x => x.id === action.payload.id)
       const addresses = state.customer.addresses;
       addresses.splice(index, 1);
       addresses.splice(index, 0, updated);
-      console.log(addresses, "after");
       return {
         ...state,
         customer: {
@@ -32,6 +30,17 @@ const authReducer = (state = {}, action) => {
           addresses: addresses1
         }
       }
+      case "ADD_NEW_ADDRESS":
+        const newAddress = action.payload;
+        const addresses2 = state.customer.addresses;
+        addresses2.push(newAddress);
+        return {
+          ...state,
+          customer: {
+            ...state.customer,
+            addresses: addresses2,
+          }
+        }
     default: 
         return state
    

@@ -1,6 +1,8 @@
 .pref-container {
-  padding: 0px 120px 20px 120px;
+  padding: 0px 120px 5px 120px;
 }
+/* cute color:
+#Ce9e0e */
 
 .pref-input {
   height: 100%;
@@ -27,10 +29,12 @@
   display: flex;
   justify-content: space-around;
   border: none;
+  align-items: center;
   background-color: #a88984;
   border-radius: 10px;
   font-size: 12px;
   width: 30%;
+  min-height: 20px;
   color: rgb(254, 255, 251);
   transition: all 250ms ease-in;
   animation: fadeIn 250ms ease-in;
@@ -39,10 +43,12 @@
   display: flex;
   justify-content: space-around;
   border: none;
+  align-items: center;
   background-color: #766265;
   border-radius: 10px;
   font-size: 12px;
   width: 30%;
+  min-height: 20px;
   color: rgb(254, 255, 251);
   transition: all 250ms ease-in;
   animation: fadeIn 250ms ease-in;
@@ -134,12 +140,14 @@
   animation: fadeIn 0.8s ease-in;
 }
 .address-header {
+  position: absolute;
   min-width: 350px;
+  margin-bottom: 10px;
 }
 .address-container {
   display: flex;
   margin: 20px 0px;
-  border: 1px solid #111b0d;
+  border: 1.5px solid #241c02;
   border-radius: 10px;
   height: 100%;
   justify-content: space-between;
