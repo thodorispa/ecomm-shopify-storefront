@@ -87,6 +87,7 @@ const Security = () => {
 
   useEffect (async() => {
     if (Object.keys(errors).length === 0 && isSubmit) {
+      setIsLoading(true)
         setDisabled((prevState) => ({
           ...prevState,
           input: true,
@@ -243,7 +244,7 @@ const Security = () => {
                     <div></div>
                   </div>
                 </div>
-              </div> : ""}
+              </div> : <span>{message}</span>}
           </article>
     </>
   );
