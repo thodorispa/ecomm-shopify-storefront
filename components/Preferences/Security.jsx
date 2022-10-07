@@ -11,33 +11,46 @@ const Security = () => {
   const { customer } = useSelector((x) => x.customer);
   const [disabled, setDisabled] = useState({
     input: true,
-    button: false,
+    edit: false,
+    update: false,
   });
 
-  console.log(customer);
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);  
   const [message, setMessage] = useState("");
 
   const [formData, setFormData] = useState({
-    firstName: customer?.firstName,
-    lastName: customer?.lastName,
-    email: customer?.email,
-    phone: customer?.phone,
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
   });
 
-  const buttonOnClick = (e) => {
+  useEffect(() => {
+    setFormData({
+      firstName: customer?.firstName,
+      lastName: customer?.lastName,
+      email: customer?.email,
+      phone: customer?.phone,
+    })
+  },[customer])
+
+  const editOnClick = (e) => {
     e.preventDefault();
     setDisabled((prevState) => ({
       ...prevState,
       input: !disabled.input,
-    }));
-    if (!disabled.input) {
-      setErrors(validate(formData));
-      setIsSubmit(true);  
-    }
+    }))
   };
+
+  const submitFormData = (e) => {
+    e.preventDefault();
+    setErrors(validate(formData));
+    setIsSubmit(true);
+  }
+
+
   const validate = (values) => {
     const error = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -71,46 +84,44 @@ const Security = () => {
 
     return error;
   };
-  useEffect(() => {
-    if (Object.keys(errors).length === 0 && isSubmit)
-      setDisabled((prevState) => ({
-      ...prevState,
-      input: true,
-      button: true,
-      }));
-      // try {
-      //   const { data } = await Axios.post(
-      //     `http://localhost:3000/api/address/create`,
-      //     {
-      //       firstName: address.firstName,
-      //       lastName: address.lastName,
-      //       address1: address.address1,
-      //       city: address.city,
-      //       country: address.country,
-      //       zip: address.zip,
-      //       phone: address.phone,
-      //     }
-      //   );
 
-      //   if (data.customerAddress) {
-      //     setIsLoading(false);
-      //     props.setPopUp(false);
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      //   setIsLoading(false);
-      //   setMessage("Κάτι πήγε λάθος")
-      // }
+  useEffect (async() => {
+    if (Object.keys(errors).length === 0 && isSubmit) {
+        setDisabled((prevState) => ({
+          ...prevState,
+          input: true,
+          edit: true,
+        }));
+        const targetCustomer = formData;
+        console.log(targetCustomer);
+        try {
+          const { data } = await Axios.post(
+            `/api/customer/update`,
+            { targetCustomer }
+          );
+          if (data.customer) {
+            setIsLoading(false);
+            console.log("success");
+          }
+        } catch (error) {
+          console.log(error);
+          setIsLoading(false);
+          setMessage("Κάτι πήγε λάθος")
+        }
+    }
+   
   },[errors])
   
-  console.log(formData);
+  console.log(isLoading);
 
   return (
     <>
-      <header className="pref-container"></header>
-      <article>
-        <section className="form-container">
-          <article style={{ alignItems: "center" }}>
+      <header className="pref-container">
+
+      </header>
+          <article 
+          className="form-container"
+          style={{ alignItems: "center" }}>
             <form className="address-form" style={{ justifyContent: "center" }}>
               <section
                 style={{
@@ -128,26 +139,13 @@ const Security = () => {
                   Personal Information
                 </h3>
                 <button
-                  className={
-                    disabled.input && !disabled.button
-                      ? "edit-address-btn"
-                      : "update-btn"
-                  }
+                  className="edit-address-btn"
                   style={{width: "35%"}}
-                  onClick={buttonOnClick}
-                  disabled={disabled.button}
+                  onClick={editOnClick}
+                  disabled={disabled.edit}
                 >
-                  {disabled.input && !disabled.button ? (
-                    <>
-                      <i className="fas fa-pen"></i>
-                      <span>ΕΠΕΞΕΡΓΑΣΙΑ</span>
-                    </>
-                  ) : (
-                    <>
-                      <i className="fa-solid fa-check"></i>
-                      <span>ΕΝΗΜΕΡΩΣΗ</span>
-                    </>
-                  )}
+                    <i className="fas fa-pen"></i>
+                    <span>ΕΠΕΞΕΡΓΑΣΙΑ</span>
                 </button>
               </section>
               <article>
@@ -162,7 +160,7 @@ const Security = () => {
                   />
                   <label className="filled">First Name</label>
                 </div>
-                <section className="validate">
+                <section className="validate" style={{paddingLeft: "20px"}}>
                   <i className={errors.name ? "fa-solid fa-exclamation" : ""}></i> 
                   <small style={{ paddingLeft: "5px" }}>{errors.name}</small>
                 </section>
@@ -181,7 +179,7 @@ const Security = () => {
                     Last Name
                   </label>
                 </div>
-                <section className="validate">
+                <section className="validate" style={{paddingLeft: "20px"}}>
                   <i className={errors.surname ? "fa-solid fa-exclamation" : ""}></i>
                 <small style={{ paddingLeft: "5px" }}>{errors.surname}</small>
                 </section>
@@ -198,12 +196,12 @@ const Security = () => {
                   />
                   <label className="filled">Email</label>
                 </div>
-                <section className="validate">
+                <section className="validate" style={{paddingLeft: "20px"}}>
                   <i className={errors.email ? "fa-solid fa-exclamation" : ""}></i>
                 <small style={{ paddingLeft: "5px" }}>{errors.email}</small>
                 </section>
               </article>
-              <section>
+              <article>
                 <div className="input-container">
                   <PhoneInput
                     placeholder="Mobile phone"
@@ -220,16 +218,33 @@ const Security = () => {
                     </label>
                   )}
                 </div>
-                <section className="validate">
+                <section className="validate" style={{paddingLeft: "20px", paddingBottom: "10px"}}>
                   <i className={errors.phone ? "fa-solid fa-exclamation" : ""}></i>
                 <small style={{ paddingLeft: "5px" }}>{errors.phone}</small>
                 </section>
-              </section>
+              </article>
               <article style={{ alignItems: "center" }}></article>
             </form>
+            {!disabled.input ? 
+            <>
+              {!isLoading ? 
+              <article>
+                <button className="update-address-btn" onClick={submitFormData}>
+                ΕΝΗΜΕΡΩΣΗ
+              </button>
+              </article>
+                : ""}
+           </>
+            : ""}
+            {isLoading ? <div className="spinner">
+                <div className="loadingio-spinner-ripple-hb4ksrtc1us">
+                  <div className="ldio-uua8zfoilp">
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div> : ""}
           </article>
-        </section>
-      </article>
     </>
   );
 };

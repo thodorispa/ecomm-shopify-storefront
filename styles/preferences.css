@@ -39,6 +39,10 @@
   transition: all 250ms ease-in;
   animation: fadeIn 250ms ease-in;
 }
+.edit-address-btn:disabled {
+  color: rgba(131, 133, 126, 0.885);
+  background-color: #a88984d3;
+}
 .delete-address-btn {
   display: flex;
   justify-content: space-around;
@@ -68,6 +72,8 @@
   border-radius: 10px;
   font-size: 12px;
   width: 35%;
+  min-height: 20px;
+  align-items: center;
   color: rgb(254, 255, 251);
   background-color: #8d9972;
   transition: all 250ms ease-in;
@@ -245,6 +251,9 @@
   }
   .pref-container h4 {
     font-size: 20px;
+  }
+  .other-address-header {
+    top: 159px;
   }
   .popup-inner {
     display: flex;

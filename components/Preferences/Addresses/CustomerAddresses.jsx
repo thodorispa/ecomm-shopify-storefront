@@ -146,7 +146,7 @@ const CustomerAddresses = () => {
             </section>
             <article 
             style={{
-              border: isActive[0] ? "1.5px solid #510ece" : "", marginTop: "25px",
+              border: isActive[0] ? "1.5px solid #4000ff" : "", marginTop: "25px",
               boxShadow: isActive[0] ? "0 0px 0px 0 rgba(208, 208, 208, 0.319), 0 5px 30px 0 rgba(0, 0, 0, 0.19)" : ""
             }}
             className="address-container"
@@ -240,7 +240,7 @@ const CustomerAddresses = () => {
                 className="address-container"
                 style={{
                   borderColor:
-                    isActive[`${i + 1}`] && selectedAddress ? "#510ece" : "",
+                    isActive[`${i + 1}`] && selectedAddress ? "#4000ff" : "",
                     boxShadow: isActive[`${i + 1}`] ? "0 0px 0px 0 rgba(208, 208, 208, 0.319), 0 5px 30px 0 rgba(0, 0, 0, 0.19)" : ""
                 }}
                 onClick={() => {

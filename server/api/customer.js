@@ -73,8 +73,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/update', async (req, res) => {
-  const targetCustomer = req.body.customer;
+router.post('/update', async (req, res) => {
+  const targetCustomer  = req.body.targetCustomer;
   try {
     const { customer, customerUserErrors } = await Customer.update(targetCustomer, req.cookies.accessToken);
 
