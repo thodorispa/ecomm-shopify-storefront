@@ -146,10 +146,11 @@ const update = async (address, accessToken) => {
 }
 
 const updateDefault = async (addressId, accessToken) => {
+
   try {
     var query = await client.query({
       data: `mutation{
-        customerDefaultAddressUpdate(addressId: ${addressId}, customerAccessToken: ${accessToken}) {
+        customerDefaultAddressUpdate(addressId: "${addressId}", customerAccessToken: "${accessToken}") {
           customer{
             id
             firstName

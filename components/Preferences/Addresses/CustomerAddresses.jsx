@@ -34,12 +34,11 @@ const CustomerAddresses = () => {
   const changeDefaultAddress = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const id = selectedAddress.id.split("?")[0]
-    console.log(id);
+    const addressId = selectedAddress.id;
     try {
       const { data } = await Axios.post(
         `http://localhost:3000/api/address/update-default`,
-        { id }
+        { addressId }
       );
       if (data.customer) {
         dispatch({ type: "UPDATE_DEFAULT_ADDRESS", payload: selectedAddress})

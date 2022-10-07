@@ -58,11 +58,12 @@ router.post('/update', async (req, res) => {
 
 router.post('/update-default', async (req, res) => {
   const { addressId } = req.body
+  console.log(addressId);
 
   try {
     const { customer, customerUserErrors } = await Address.updateDefault(addressId, req.cookies.accessToken);
 
-    if (customerUserErrors.length > 0) {
+    if (customerUserErrors?.length > 0) {
       return res.status(400).send(customerUserErrors[0].message);
     }
 
