@@ -236,5 +236,6 @@ export {
   findAll,
   create,
   update,
-  deleteById
+  deleteById,
+  updateDefault,
 }

@@ -10,16 +10,16 @@ const CustomerAddresses = () => {
   const dispatch = useDispatch();
   const { customer } = useSelector((x) => x.customer);
   const selectedAddress = useSelector((x) => x.selectedAddress) || null;
-  const [defaultAddress, setDefaultAddress] = useState(customer.defaultAddress)
-  
+  const [defaultAddress, setDefaultAddress] = useState(customer.defaultAddress);
+
   const wrapperRef = useRef(null);
   const [isActive, setIsActive] = useState([].fill(false));
-  const [flag, setFlag] = useState(false);
   const [popUp, setPopUp] = useState({
     update: false,
     add: false,
     delete: false,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const changeSelection = (i, address) => {
     setIsActive((prevState) => ({
@@ -31,10 +31,26 @@ const CustomerAddresses = () => {
       dispatch({ type: "DELETE_SELECTION", payload: null });
     }
   };
-  const defaultAddressSelected = () => {
-    setDefAddressActive(!defAddressActive);
-    console.log(defAddressActive);  
-  }
+  const changeDefaultAddress = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const id = selectedAddress.id.split("?")[0]
+    console.log(id);
+    try {
+      const { data } = await Axios.post(
+        `http://localhost:3000/api/address/update-default`,
+        { id }
+      );
+      if (data.customer) {
+        dispatch({ type: "UPDATE_DEFAULT_ADDRESS", payload: selectedAddress})
+        dispatch({ type: "DELETE_SELECTION", payload: null })
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+}
+
 
   return (
     <>
@@ -92,9 +108,15 @@ const CustomerAddresses = () => {
                   <DeleteAddressModal
                     trigger={popUp.delete}
                     setPopUp={setPopUp}
-                    setFlag={setFlag}
                     defaultAddress={defaultAddress}
                   />
+                  {selectedAddress.id != customer.defaultAddress.id ?
+                    <button
+                    className="edit-address-btn"
+                    onClick={changeDefaultAddress}>
+                      ΟΡΙΣΜΟΣ ΠΡ.
+                    </button>
+                  : ""}
                   <button
                     className="edit-address-btn"
                     onClick={(e) => {
@@ -128,7 +150,7 @@ const CustomerAddresses = () => {
                 [0]: !prevState[0],
               }));
               if (!isActive[0]) {
-                dispatch({ type: "SET_SELECTED_ADDRESS", payload: defaultAddress });
+                dispatch({ type: "SET_SELECTED_ADDRESS", payload: customer.defaultAddress });
               } else {
                 dispatch({ type: "DELETE_SELECTION", payload: null });
               }
@@ -140,7 +162,7 @@ const CustomerAddresses = () => {
             </h4>
               <section className="address-info">
                 <span>
-                  {customer.addresses.address1},&nbsp;{customer.defaultAddress.zip}
+                  {customer.defaultAddress.address1},&nbsp;{customer.defaultAddress.zip}
                 </span>
                 <span>
                   {customer.defaultAddress.firstName}&nbsp;{customer.defaultAddress.lastName}
@@ -183,19 +205,32 @@ const CustomerAddresses = () => {
                 </section>
               </article>
             })}
-            <button
-              className="update-address-btn"
-              onClick={(e) => {
-                e.preventDefault();
-                setPopUp((prevState) => ({
-                  ...prevState,
-                  add: !popUp.add,
-                }));
-              }}
+            {!isLoading ? 
+            <>
+             <button
+             className="update-address-btn"
+             onClick={(e) => {
+               e.preventDefault();
+               setPopUp((prevState) => ({
+                 ...prevState,
+                 add: !popUp.add,
+               }));
+             }}
             >
               ΠΡΟΣΘΗΚΗ ΔΙΕΥΘΥΝΣΗΣ
             </button>
             <AddAddressModal trigger={popUp.add} setPopUp={setPopUp} />
+           </>
+           : 
+           <div className="spinner">
+           <div className="loadingio-spinner-ripple-hb4ksrtc1us">
+             <div className="ldio-uua8zfoilp">
+               <div></div>
+               <div></div>
+             </div>
+           </div>
+         </div>
+         }
           </article>
         </>
       )}
