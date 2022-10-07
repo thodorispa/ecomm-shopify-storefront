@@ -7,6 +7,7 @@ import DeleteAddressModal from "./DeleteAddressModal";
 import { useDispatch } from "react-redux";
 
 const CustomerAddresses = () => {
+
   const dispatch = useDispatch();
   const { customer } = useSelector((x) => x.customer);
   const selectedAddress = useSelector((x) => x.selectedAddress) || null;
@@ -37,19 +38,29 @@ const CustomerAddresses = () => {
     const addressId = selectedAddress.id;
     try {
       const { data } = await Axios.post(
-        `http://localhost:3000/api/address/update-default`,
+        `/api/address/update-default`,
         { addressId }
       );
       if (data.customer) {
         dispatch({ type: "UPDATE_DEFAULT_ADDRESS", payload: selectedAddress})
         dispatch({ type: "DELETE_SELECTION", payload: null })
+        setIsLoading(false)
       }
     } catch (error) {
       console.log(error);
       setIsLoading(false);
     }
-}
-
+  }
+  useEffect(() => {
+  if (popUp.update || popUp.add || popUp.delete) {
+    if (typeof window != 'undefined' && window.document) {
+      document.body.style.overflow = 'hidden';
+    }
+  } else {
+    document.body.style.overflow = 'unset';
+  }
+  },[popUp])
+  console.log(isActive[0]);
 
   return (
     <>
@@ -77,39 +88,22 @@ const CustomerAddresses = () => {
       ) : (
         <>
           <header className="pref-container">
-            <h3
+            <h4
               style={{ 
                 opacity: "0.7", 
                 fontWeight: "100", 
                 textAlign: "center",  
                }}
             >
-              Οι διευθύνσεις μου
-            </h3>
+              Προεπιλεγμένη διεύθυνση
+            </h4>
           </header>
           <article style={{ alignItems: "center" }}>
             <section className="address-header">
-              {isActive && selectedAddress ? (
+              {isActive[0] && selectedAddress === defaultAddress ? (
                 <>
-                  <button
-                    className="delete-address-btn"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setPopUp((prevState) => ({
-                        ...prevState,
-                        delete: !popUp.delete,
-                      }));
-                    }}
-                  >
-                   <i className="fa-solid fa-trash"></i>
-                    <span>ΔΙΑΓΡΑΦΗ</span>
-                  </button>
-                  <DeleteAddressModal
-                    trigger={popUp.delete}
-                    setPopUp={setPopUp}
-                    defaultAddress={defaultAddress}
-                  />
-                  {selectedAddress.id != customer.defaultAddress.id ?
+                
+                  {selectedAddress?.id != customer?.defaultAddress.id ?
                     <button
                     className="edit-address-btn"
                     onClick={changeDefaultAddress}>
@@ -133,6 +127,24 @@ const CustomerAddresses = () => {
                     trigger={popUp.update}
                     setPopUp={setPopUp}
                   />
+                    <button
+                    className="delete-address-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPopUp((prevState) => ({
+                        ...prevState,
+                        delete: !popUp.delete,
+                      }));
+                    }}
+                  >
+                   <i className="fa-solid fa-trash"></i>
+                    <span>ΔΙΑΓΡΑΦΗ</span>
+                  </button>
+                  <DeleteAddressModal
+                    trigger={popUp.delete}
+                    setPopUp={setPopUp}
+                    defaultAddress={defaultAddress}
+                  />
                 </>
               ) : (
                 ""
@@ -154,11 +166,7 @@ const CustomerAddresses = () => {
                 dispatch({ type: "DELETE_SELECTION", payload: null });
               }
             }}>
-               <h4
-              style={{ opacity: "0.7", fontWeight: "100", textAlign: "center", padding: "5px 0px" }}
-            >
-              Προεπιλεγμένη διεύθυνση
-            </h4>
+               
               <section className="address-info">
                 <span>
                   {customer.defaultAddress.address1},&nbsp;{customer.defaultAddress.zip}
@@ -174,6 +182,63 @@ const CustomerAddresses = () => {
                 <span>{customer.defaultAddress.phone}</span>
               </section>
             </article>
+            <h4
+              style={{ opacity: "0.7", fontWeight: "100", textAlign: "center", padding: "5px 0px", marginBottom: "22px" }}
+            >
+              Άλλες διευθύνσεις
+            </h4>
+            <section className="other-address-header">
+              {!isActive[0] && selectedAddress != defaultAddress && selectedAddress ? (
+                <>
+                  <button
+                    className="edit-address-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPopUp((prevState) => ({
+                        ...prevState,
+                        update: !popUp.update,
+                      }));
+                    }}
+                  >
+                    <i className="fas fa-pen"></i>
+                    <span>ΕΠΕΞΕΡΓΑΣΙΑ</span>
+                  </button>
+                  <AddressFormModal
+                    trigger={popUp.update}
+                    setPopUp={setPopUp}
+                  />
+                  
+                  {selectedAddress?.id != customer?.defaultAddress.id ?
+                    <button
+                    className="edit-address-btn"
+                    onClick={changeDefaultAddress}>
+                      ΟΡΙΣΜΟΣ ΠΡ.
+                    </button>
+                  : ""}
+                  
+                  <button
+                    className="delete-address-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPopUp((prevState) => ({
+                        ...prevState,
+                        delete: !popUp.delete,
+                      }));
+                    }}
+                  >
+                   <i className="fa-solid fa-trash"></i>
+                    <span>ΔΙΑΓΡΑΦΗ</span>
+                  </button>
+                  <DeleteAddressModal
+                    trigger={popUp.delete}
+                    setPopUp={setPopUp}
+                    defaultAddress={defaultAddress}
+                  />
+                </>
+              ) : (
+                ""
+              )}
+            </section>
             {customer?.addresses.map((address, i) => {
               return address.id === defaultAddress.id ? "" :
               <article

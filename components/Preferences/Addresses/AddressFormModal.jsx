@@ -114,7 +114,6 @@ const AddressFormModal = (props) => {
               justifyContent: "space-evenly",
               alignSelf: "center",
               minWidth: "380px",
-              marginRight: "20px"
             }}
           >
             {!isLoading ? (

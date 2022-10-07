@@ -42,6 +42,7 @@ const authReducer = (state = {}, action) => {
           }
         }
         case "UPDATE_DEFAULT_ADDRESS":
+          console.log(action.payload);
         return {
           ...state,
           customer: {

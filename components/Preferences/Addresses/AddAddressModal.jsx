@@ -89,7 +89,6 @@ const AddAddressModal = (props) => {
               justifyContent: "space-evenly",
               alignSelf: "center",
               minWidth: "380px",
-              marginRight: "20px"
             }}
           >
             {!isLoading ? (

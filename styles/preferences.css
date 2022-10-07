@@ -144,9 +144,15 @@
   min-width: 350px;
   margin-bottom: 10px;
 }
+.other-address-header {
+  position: absolute;
+  top: 145px; 
+  min-width: 350px;
+  margin-bottom: 10px;
+}
 .address-container {
   display: flex;
-  margin: 20px 0px;
+  margin-bottom: 20px;
   border: 1.5px solid #241c02;
   border-radius: 10px;
   height: 100%;
@@ -218,9 +224,6 @@
   background-size: 0 0.1em, 0% 0.1em;
 }
 @media screen and (max-width: 540px) {
-  .address-form {
-    padding-right: 40px;
-  }
   .popup {
     right: 0;
   }
@@ -234,8 +237,30 @@
   }
 }
 @media screen and (max-width: 420px) {
+  .popup {
+    overflow-y: scroll;
+  }
   .popup-inner {
+    display: flex;
+    position: fixed;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    height: 100%;
     max-width: 380px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+  .address-form {
+    width: 100%;
+  }
+  .address-form-btns {
+    padding-bottom: 30px;
+  }
+  .cancel-update-btn {
+    margin: 0;
+  }
+  .update-address-btn {
+    margin: 0
   }
 }
 
