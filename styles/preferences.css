@@ -155,7 +155,7 @@
 }
 .other-address-header {
   position: absolute;
-  top: 155px; 
+  top: 185px; 
   min-width: 350px;
   margin-bottom: 10px;
 }
@@ -253,7 +253,7 @@
     font-size: 20px;
   }
   .other-address-header {
-    top: 159px;
+    top: 187px;
   }
   .popup-inner {
     display: flex;

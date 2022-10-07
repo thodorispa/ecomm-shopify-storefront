@@ -12,7 +12,7 @@ const Navbar = () => {
 
   const { collections, cart, sideNav, cartClasses } = useSelector(x => x);
   const { customer } = useSelector(x => x)
-  console.log(customer);
+
   const [nav, setNav] = useState(false);
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -21,13 +21,14 @@ const Navbar = () => {
     second: false,
     third: false,
   });
-
+  
   const controlNavbar = () => {
     if (typeof window !== 'undefined') {
+      
       if (window.scrollY > lastScrollY) { // if scroll down hide the navbar
         if (sideNav || nav) {
           setShow(true)
-        } else if (!sideNav && !nav) {
+        } else if (!sideNav && !nav && window.pageYOffset > 40 ) {
           setShow(false)
         }
       } else { // if scroll up show the navbar
@@ -36,7 +37,7 @@ const Navbar = () => {
       setLastScrollY(window.scrollY);
     }
   };
-
+  
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', controlNavbar);

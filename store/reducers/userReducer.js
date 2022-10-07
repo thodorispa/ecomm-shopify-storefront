@@ -6,7 +6,7 @@ const authReducer = (state = false, action) => {
       return action.payload || false
     case "UPDATE_SELECTED_ADDRESS":
       const updated = action.payload;
-      const index = state.customer.addresses.findIndex(x => x.id === action.payload.id)
+      const index = state.customer?.addresses.findIndex(x => x.id === action.payload.id)
       existingAddresses.splice(index, 1);
       existingAddresses.splice(index, 0, updated);
       return {
@@ -28,8 +28,8 @@ const authReducer = (state = false, action) => {
         addresses: existingAddresses,
       }
     case "UPDATE_DEFAULT_ADDRESS":
-      const oldDefaultIndex = state.addresses.findIndex(x => x.id === state.defaultAddress.id)
-      const newDefaultIndex = state.addresses.findIndex(x => x.id === action.payload.id)
+      const oldDefaultIndex = state.addresses?.findIndex(x => x.id === state.defaultAddress.id)
+      const newDefaultIndex = state.addresses?.findIndex(x => x.id === action.payload.id)
 
       console.log(oldDefaultIndex);
       console.log(newDefaultIndex);

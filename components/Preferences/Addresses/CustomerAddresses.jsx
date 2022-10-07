@@ -93,7 +93,7 @@ const CustomerAddresses = () => {
           </header>
           <article style={{ alignItems: "center" }}>
             <section className="address-header">
-              {isActive[0] && selectedAddress === defaultAddress ? (
+              {isActive[0] && selectedAddress === customer.defaultAddress ? (
                 <>
                   <button
                     className="delete-address-btn"
@@ -135,24 +135,6 @@ const CustomerAddresses = () => {
                   <AddressFormModal
                     trigger={popUp.update}
                     setPopUp={setPopUp}
-                  />
-                    <button
-                    className="delete-address-btn"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setPopUp((prevState) => ({
-                        ...prevState,
-                        delete: !popUp.delete,
-                      }));
-                    }}
-                  >
-                   <i className="fa-solid fa-trash"></i>
-                    <span>ΔΙΑΓΡΑΦΗ</span>
-                  </button>
-                  <DeleteAddressModal
-                    trigger={popUp.delete}
-                    setPopUp={setPopUp}
-                    defaultAddress={defaultAddress}
                   />
                 </>
               ) : (
