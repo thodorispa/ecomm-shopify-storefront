@@ -134,8 +134,8 @@ const update = async (address, accessToken) => {
       `,
     });
   } catch (e) {
-    console.log(e.response.errors);
-    return { customerUserErrors: e.response.errors };
+    console.log(e.response?.errors);
+    return { customerUserErrors: e.response?.errors };
   }
 
   const { customerAddressUpdate, customerUserErrors } = query.body.data || null;

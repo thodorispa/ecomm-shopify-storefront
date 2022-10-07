@@ -54,7 +54,7 @@
   animation: fadeIn 250ms ease-in;
 }
 .address-form-btns {
-  padding: 20px;
+  padding: 5px 20px;
   min-width: 300px;
 }
 .address-form-btns button{
@@ -80,7 +80,6 @@
   border: 0;
   background-color: #75585c;
   border-radius: 7px;
-  margin-top: 15px;
   width: 40%;
   cursor: pointer;
   padding: 12px;
@@ -94,7 +93,6 @@
   border: 0;
   background-color: #70252f;
   border-radius: 7px;
-  margin-top: 15px;
   width: 40%;
   cursor: pointer;
   padding: 12px;
@@ -119,7 +117,6 @@
   background-color: #91927b;
   width: 40;
   border-radius: 7px;
-  margin-top: 15px;
   cursor: pointer;
   padding: 12px;
   font-size: 15px;
@@ -144,9 +141,15 @@
   min-width: 350px;
   margin-bottom: 10px;
 }
+.address-title {
+  opacity: 0.7;
+  font-weight: 100;
+  text-align: center;
+  font-size: 20px;
+}
 .other-address-header {
   position: absolute;
-  top: 145px; 
+  top: 155px; 
   min-width: 350px;
   margin-bottom: 10px;
 }
@@ -237,8 +240,11 @@
   }
 }
 @media screen and (max-width: 420px) {
-  .popup {
-    overflow-y: scroll;
+  .pref-container {
+    padding: 3px 10px;
+  }
+  .pref-container h4 {
+    font-size: 20px;
   }
   .popup-inner {
     display: flex;
@@ -255,12 +261,6 @@
   }
   .address-form-btns {
     padding-bottom: 30px;
-  }
-  .cancel-update-btn {
-    margin: 0;
-  }
-  .update-address-btn {
-    margin: 0
   }
 }
 

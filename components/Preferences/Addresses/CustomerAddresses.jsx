@@ -88,13 +88,7 @@ const CustomerAddresses = () => {
       ) : (
         <>
           <header className="pref-container">
-            <h4
-              style={{ 
-                opacity: "0.7", 
-                fontWeight: "100", 
-                textAlign: "center",  
-               }}
-            >
+            <h4 className="address-title">
               Προεπιλεγμένη διεύθυνση
             </h4>
           </header>
@@ -182,8 +176,8 @@ const CustomerAddresses = () => {
                 <span>{customer.defaultAddress.phone}</span>
               </section>
             </article>
-            <h4
-              style={{ opacity: "0.7", fontWeight: "100", textAlign: "center", padding: "5px 0px", marginBottom: "22px" }}
+            <h4 className="address-title"
+              style={{padding: "5px 0px", marginBottom: "27px" }}
             >
               Άλλες διευθύνσεις
             </h4>
