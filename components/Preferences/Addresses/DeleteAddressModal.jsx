@@ -5,25 +5,24 @@ import { useSelector, useDispatch } from 'react-redux';
 const DeleteAddressModal = (props) => {
 
   const { selectedAddress } = useSelector(x => x);
-  const { customer } = useSelector(x => x.customer);
+  const { customer } = useSelector(x => x);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
   const deleteOnClick = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    if (selectedAddress.id === props.defaultAddress.id) {
-      console.log("in");
-      let newDefAddress = customer.addresses[1];
+    if (selectedAddress.id === customer.defaultAddress.id) {
+
+      const newDefAddress = customer.addresses[1];
       dispatch({ type: "UPDATE_DEFAULT_ADDRESS", payload: newDefAddress})
     }
       try {
         const { data } = await Axios.post(
-          `http://localhost:3000/api/address/delete`,
-          {
-            id: selectedAddress.id,
-          }
+          `/api/address/delete`,
+          { id: selectedAddress.id }
         );
+
         if (data.deletedCustomerAddressId) {
           dispatch({ type: "DELETE_SELECTED_ADDRESS", payload: selectedAddress })
           dispatch({ type: "DELETE_SELECTION", payload: null })

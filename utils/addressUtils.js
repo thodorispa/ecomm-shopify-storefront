@@ -48,9 +48,10 @@ const findAll = async (accessToken) => {
     return { customerUserErrors: [{ message: "No customer found" }] };
   }
 
-  const addresses = {}
-  addresses.default = customer.defaultAddress;
-  addresses.all = customer.addresses.edges.map((n) => n.node);
+  const addresses = {
+    default: customer.defaultAddress,
+    addresses: customer.addresses.edges.map((edge) => edge.node),
+  }
 
   return { addresses };
 }
@@ -140,7 +141,6 @@ const update = async (address, accessToken) => {
 
   const { customerAddressUpdate, customerUserErrors } = query.body.data || null;
   const { customerAddress } = customerAddressUpdate || null;
-  console.log("here utils ", customerAddress);
 
   return { customerAddress, customerUserErrors };
 }
@@ -201,7 +201,6 @@ const updateDefault = async (addressId, accessToken) => {
 
   return { customer, customerUserErrors };
 }
-
 
 const deleteById = async (id, accessToken) => {
   try {

@@ -40,8 +40,8 @@ const SignIn = () => {
       const { data } = await Axios.post("/api/customer/login", { email, password });
 
       if (data.customer) {
-        dispatch({ type: "SET_USER", payload: data.customer })
-        router.push(router.query.redirect || '/')
+        dispatch({ type: "SET_USER", payload: data.customer.customer })
+        router.push('/')
       }
 
     } catch (err) {

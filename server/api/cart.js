@@ -56,7 +56,6 @@ router.post('/update', async (req, res) => {
 
 // Create cart
 router.post('/remove', async (req, res) => {
-  console.log(req.body);
   const product = req.body.product;
   const existingCart = decodeURIComponent(req.cookies.cart) || null;
 

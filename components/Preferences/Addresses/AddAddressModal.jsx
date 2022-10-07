@@ -3,7 +3,7 @@ import Axios from 'axios';
 import AddressForm from '../../AddressForm'
 import validator from "validator";
 import { useDispatch } from 'react-redux';
-import { handleAddressData, validate} from '../../../helpers/FormHelper';
+import { handleAddressData, validate } from '../../../helpers/FormHelper';
 
 const AddAddressModal = (props) => {
 
@@ -21,16 +21,15 @@ const AddAddressModal = (props) => {
   const [address, setAddress] = useState(initValues)
 
   const [isSubmit, setIsSubmit] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);  
+  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const submitFormData = (e) => {
     e.preventDefault();
     setErrors(validate(address));
-    setIsSubmit(true);  
+    setIsSubmit(true);
   };
   const cancelOnClick = () => {
-    console.log('here');
     props.setPopUp((prevState) => ({
       ...prevState,
       add: false,
@@ -44,10 +43,11 @@ const AddAddressModal = (props) => {
       setIsLoading(true);
       try {
         const { data } = await Axios.post(
-          `http://localhost:3000/api/address/create`, {address}
+          `/api/address/create`, { address }
         );
 
         if (data.customerAddress) {
+          address.id = data.customerAddress.id;
           dispatch({ type: "ADD_NEW_ADDRESS", payload: address })
           setIsLoading(false);
           setAddress(initValues);

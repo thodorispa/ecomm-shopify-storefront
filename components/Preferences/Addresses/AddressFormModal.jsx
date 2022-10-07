@@ -8,6 +8,7 @@ import { handleAddressData, validate} from '../../../helpers/FormHelper';
 const AddressFormModal = (props) => {
   const dispatch = useDispatch();
   const { selectedAddress } = useSelector(x => x);
+  const { customer } = useSelector(x => x);
   const [address, setAddress] = useState();
   
   const [errors, setErrors] = useState({});
@@ -19,26 +20,12 @@ const AddressFormModal = (props) => {
     setAddress(selectedAddress)
   },[selectedAddress])
 
-  const handleFormData = (input) => (e) => {
-    let value = "";
-    if (input === "phone" || input === "country") {
-      value = e;
-    } else {
-      value = e.target.value;
-    }
-
-    setAddress((prevState) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  };
-
-
   const submitFormData = (e) => {
     e.preventDefault();
     setErrors(validate(address));
     setIsSubmit(true);  
   };
+
   const cancelOnClick = () => {
     props.setPopUp((prevState) => ({
       ...prevState,
@@ -53,17 +40,8 @@ const AddressFormModal = (props) => {
       setIsLoading(true);
       try {
         const { data } = await Axios.post(
-          `http://localhost:3000/api/address/update`,
-          {
-            id: address.id,
-            firstName: address.firstName,
-            lastName: address.lastName,
-            address1: address.address1,
-            city: address.city,
-            country: address.country,
-            zip: address.zip,
-            phone: address.phone,
-          }
+          `/api/address/update`,
+          { address }
         );
 
         if (data.customerAddress) {

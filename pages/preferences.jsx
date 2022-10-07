@@ -4,7 +4,6 @@ import Security from '../components/Preferences/Security'
 import CustomerAddresses from '../components/Preferences/Addresses/CustomerAddresses'
 
 const Preferences = () => {
-
   const [option, setOption] = useState(1);
 
   const showSecurityOption = () => {

@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Head from "next/head";
 import Axios from "axios"
-import Card from "../../components/Card";
-import { cart } from "../../store/reducers/cartReducer.js"
 import { useSelector, useDispatch } from "react-redux"
-import Cookies from 'js-cookie';
-
-
 
 const SingleProduct = ({ _product }) => {
   const dispatch = useDispatch()

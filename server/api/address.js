@@ -20,8 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-
-  const {address} = req.body
+  const { address } = req.body
 
   try {
     const { customerAddress, customerUserErrors } = await Address.create(address, req.cookies.accessToken);
@@ -43,7 +42,7 @@ router.post('/update', async (req, res) => {
   try {
     const { customerAddress, customerUserErrors } = await Address.update(address, req.cookies.accessToken);
 
-    if (customerUserErrors.length > 0) {
+    if (customerUserErrors) {
       return res.status(400).send(customerUserErrors[0].message);
     }
 
@@ -58,7 +57,6 @@ router.post('/update', async (req, res) => {
 
 router.post('/update-default', async (req, res) => {
   const { addressId } = req.body
-  console.log(addressId);
 
   try {
     const { customer, customerUserErrors } = await Address.updateDefault(addressId, req.cookies.accessToken);
@@ -78,7 +76,7 @@ router.post('/delete', async (req, res) => {
   try {
     const { deletedCustomerAddressId, customerUserErrors } = await Address.deleteById(req.body.id, req.cookies.accessToken);
 
-    if (customerUserErrors.length > 0) {
+    if (customerUserErrors?.length > 0) {
       return res.status(400).send(customerUserErrors[0].message);
     }
 

@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 export const UseOutsideAlerter = async (ref, dispatch) => {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        console.log("outside click");
         dispatch({ type: "DELETE_SELECTION", payload: null })
       }
     }

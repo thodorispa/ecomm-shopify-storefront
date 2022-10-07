@@ -10,8 +10,6 @@ router.post('/sign-up', async (req, res) => {
 
   const user = req.body.values
   const address = req.body.address
-  console.log(user);
-  console.log(address);
 
   try {
     const { customer, customerUserErrors, customerAccessToken } = await Customer.create(user, address);

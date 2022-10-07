@@ -150,7 +150,13 @@ const update = async (targetCustomer, accessToken) => {
   try {
     var query = await client.query({
       data: `mutation {
-        customerUpdate(customer: ${targetCustomer}, customerAccessToken: "${accessToken}") {
+        customerUpdate(customer: {
+          firstName: "${targetCustomer.firstName}"
+          lastName: "${targetCustomer.lastName}"
+          email: "${targetCustomer.email}"
+          phone: "${targetCustomer.phone}"
+        },
+          customerAccessToken: "${accessToken}") {
           customer {
             id
             firstName
@@ -200,8 +206,8 @@ const update = async (targetCustomer, accessToken) => {
     return { customerUserErrors: e.response.errors };
   }
 
-  const { customerUpdate, customerUserErrors, customerAccessToken } = query.body.data.customerUpdate || null;
-  const { customer } = customerUpdate || null;
+  const { customer, customerUserErrors, customerAccessToken } = query.body.data.customerUpdate || null;
+  
 
   return { customer, customerUserErrors, customerAccessToken };
 }

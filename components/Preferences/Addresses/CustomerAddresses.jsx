@@ -9,9 +9,8 @@ import { useDispatch } from "react-redux";
 const CustomerAddresses = () => {
 
   const dispatch = useDispatch();
-  const { customer } = useSelector((x) => x.customer);
+  const { customer } = useSelector(x => x);
   const selectedAddress = useSelector((x) => x.selectedAddress) || null;
-  const [defaultAddress, setDefaultAddress] = useState(customer.defaultAddress);
 
   const wrapperRef = useRef(null);
   const [isActive, setIsActive] = useState([].fill(false));
@@ -41,6 +40,7 @@ const CustomerAddresses = () => {
         `/api/address/update-default`,
         { addressId }
       );
+
       if (data.customer) {
         dispatch({ type: "UPDATE_DEFAULT_ADDRESS", payload: selectedAddress})
         dispatch({ type: "DELETE_SELECTION", payload: null })
@@ -60,11 +60,10 @@ const CustomerAddresses = () => {
     document.body.style.overflow = 'unset';
   }
   },[popUp])
-  console.log(isActive[0]);
 
   return (
     <>
-      {customer.addresses.length === 0 ? (
+      {customer.addresses?.length === 0 ? (
         <header className="pref-container">
           <h3
             style={{ opacity: "0.7", fontWeight: "100", textAlign: "center" }}
@@ -96,14 +95,30 @@ const CustomerAddresses = () => {
             <section className="address-header">
               {isActive[0] && selectedAddress === defaultAddress ? (
                 <>
-                
-                  {selectedAddress?.id != customer?.defaultAddress.id ?
+                  <button
+                    className="delete-address-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPopUp((prevState) => ({
+                        ...prevState,
+                        delete: !popUp.delete,
+                      }));
+                    }}
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                    <span>ΔΙΑΓΡΑΦΗ</span>
+                  </button>
+                  <DeleteAddressModal
+                    trigger={popUp.delete}
+                    setPopUp={setPopUp}
+                  />
+                  {selectedAddress.id != customer.defaultAddress.id ?
                     <button
-                    className="edit-address-btn"
-                    onClick={changeDefaultAddress}>
+                      className="edit-address-btn"
+                      onClick={changeDefaultAddress}>
                       ΟΡΙΣΜΟΣ ΠΡ.
                     </button>
-                  : ""}
+                    : ""}
                   <button
                     className="edit-address-btn"
                     onClick={(e) => {
@@ -144,23 +159,27 @@ const CustomerAddresses = () => {
                 ""
               )}
             </section>
-            <article 
-            style={{
-              border: isActive[0] ? "1.5px solid #4000ff" : "", marginTop: "25px",
-              boxShadow: isActive[0] ? "0 0px 0px 0 rgba(208, 208, 208, 0.319), 0 5px 30px 0 rgba(0, 0, 0, 0.19)" : ""
-            }}
-            className="address-container"
-            onClick={() => {
-              setIsActive((prevState) => ({
-                [0]: !prevState[0],
-              }));
-              if (!isActive[0]) {
-                dispatch({ type: "SET_SELECTED_ADDRESS", payload: customer.defaultAddress });
-              } else {
-                dispatch({ type: "DELETE_SELECTION", payload: null });
-              }
-            }}>
-               
+            <article
+              style={{
+                border: isActive[0] ? "1.5px solid #510ece" : "", marginTop: "25px",
+                boxShadow: isActive[0] ? "0 0px 0px 0 rgba(208, 208, 208, 0.319), 0 5px 30px 0 rgba(0, 0, 0, 0.19)" : ""
+              }}
+              className="address-container"
+              onClick={() => {
+                setIsActive((prevState) => ({
+                  [0]: !prevState[0],
+                }));
+                if (!isActive[0]) {
+                  dispatch({ type: "SET_SELECTED_ADDRESS", payload: customer.defaultAddress });
+                } else {
+                  dispatch({ type: "DELETE_SELECTION", payload: null });
+                }
+              }}>
+              <h4
+                style={{ opacity: "0.7", fontWeight: "100", textAlign: "center", padding: "5px 0px" }}
+              >
+                Προεπιλεγμένη διεύθυνση
+              </h4>
               <section className="address-info">
                 <span>
                   {customer.defaultAddress.address1},&nbsp;{customer.defaultAddress.zip}
@@ -182,7 +201,7 @@ const CustomerAddresses = () => {
               Άλλες διευθύνσεις
             </h4>
             <section className="other-address-header">
-              {!isActive[0] && selectedAddress != defaultAddress && selectedAddress ? (
+              {!isActive[0] && selectedAddress != customer.defaultAddress && selectedAddress ? (
                 <>
                   <button
                     className="edit-address-btn"
@@ -226,7 +245,6 @@ const CustomerAddresses = () => {
                   <DeleteAddressModal
                     trigger={popUp.delete}
                     setPopUp={setPopUp}
-                    defaultAddress={defaultAddress}
                   />
                 </>
               ) : (
@@ -234,7 +252,7 @@ const CustomerAddresses = () => {
               )}
             </section>
             {customer?.addresses.map((address, i) => {
-              return address.id === defaultAddress.id ? "" :
+              return address.id === customer.defaultAddress.id ? "" :
               <article
                 key={i+1}
                 className="address-container"
@@ -242,53 +260,53 @@ const CustomerAddresses = () => {
                   borderColor:
                     isActive[`${i + 1}`] && selectedAddress ? "#4000ff" : "",
                     boxShadow: isActive[`${i + 1}`] ? "0 0px 0px 0 rgba(208, 208, 208, 0.319), 0 5px 30px 0 rgba(0, 0, 0, 0.19)" : ""
-                }}
-                onClick={() => {
-                  changeSelection(i+1, address);
-                }}
-              >
-                <section className="address-info">
-                  <span>
-                    {address.address1},&nbsp;{address.zip}
-                  </span>
-                  <span>
-                    {address.firstName}&nbsp;{address.lastName}
-                  </span>
-                </section>
-                <section className="address-info">
-                  <span>
-                    {address.city},&nbsp;{address.country}
-                  </span>
-                  <span>{address.phone}</span>
-                </section>
-              </article>
+                  }}
+                  onClick={() => {
+                    changeSelection(i + 1, address);
+                  }}
+                >
+                  <section className="address-info">
+                    <span>
+                      {address.address1},&nbsp;{address.zip}
+                    </span>
+                    <span>
+                      {address.firstName}&nbsp;{address.lastName}
+                    </span>
+                  </section>
+                  <section className="address-info">
+                    <span>
+                      {address.city},&nbsp;{address.country}
+                    </span>
+                    <span>{address.phone}</span>
+                  </section>
+                </article>
             })}
-            {!isLoading ? 
-            <>
-             <button
-             className="update-address-btn"
-             onClick={(e) => {
-               e.preventDefault();
-               setPopUp((prevState) => ({
-                 ...prevState,
-                 add: !popUp.add,
-               }));
-             }}
-            >
-              ΠΡΟΣΘΗΚΗ ΔΙΕΥΘΥΝΣΗΣ
-            </button>
-            <AddAddressModal trigger={popUp.add} setPopUp={setPopUp} />
-           </>
-           : 
-           <div className="spinner">
-           <div className="loadingio-spinner-ripple-hb4ksrtc1us">
-             <div className="ldio-uua8zfoilp">
-               <div></div>
-               <div></div>
-             </div>
-           </div>
-         </div>
-         }
+            {!isLoading ?
+              <>
+                <button
+                  className="update-address-btn"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPopUp((prevState) => ({
+                      ...prevState,
+                      add: !popUp.add,
+                    }));
+                  }}
+                >
+                  ΠΡΟΣΘΗΚΗ ΔΙΕΥΘΥΝΣΗΣ
+                </button>
+                <AddAddressModal trigger={popUp.add} setPopUp={setPopUp} />
+              </>
+              :
+              <div className="spinner">
+                <div className="loadingio-spinner-ripple-hb4ksrtc1us">
+                  <div className="ldio-uua8zfoilp">
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            }
           </article>
         </>
       )}

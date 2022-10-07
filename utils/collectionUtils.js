@@ -26,8 +26,8 @@ const getAll = async () => {
       `,
     });
   } catch (e) {
-    console.log(e.response.errors[0]);
-    return { Errors: e.response.errors[0] };
+    console.log(e.response?.errors[0]);
+    return { Errors: e.response?.errors[0] };
   }
 
 

@@ -7,8 +7,7 @@ import PhoneInput from "react-phone-number-input";
 import { handleFormData, validate } from '../../helpers/FormHelper'
 
 const Security = () => {
-
-  const { customer } = useSelector((x) => x.customer);
+  const { customer } = useSelector(x => x);
   const [disabled, setDisabled] = useState({
     input: true,
     edit: false,
@@ -94,7 +93,6 @@ const Security = () => {
           edit: true,
         }));
         const targetCustomer = formData;
-        console.log(targetCustomer);
         try {
           const { data } = await Axios.post(
             `/api/customer/update`,
@@ -102,7 +100,7 @@ const Security = () => {
           );
           if (data.customer) {
             setIsLoading(false);
-            console.log("success");
+            dispatch({ type: "SET_USER", payload: data.customer })
           }
         } catch (error) {
           console.log(error);
@@ -113,7 +111,6 @@ const Security = () => {
    
   },[errors])
   
-  console.log(isLoading);
 
   return (
     <>

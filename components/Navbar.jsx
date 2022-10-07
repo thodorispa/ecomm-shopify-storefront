@@ -11,7 +11,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const { collections, cart, sideNav, cartClasses } = useSelector(x => x);
-  const { customer } = useSelector(x => x.customer)
+  const { customer } = useSelector(x => x)
+  console.log(customer);
   const [nav, setNav] = useState(false);
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);

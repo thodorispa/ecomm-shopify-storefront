@@ -101,18 +101,18 @@ app.prepare().then(() => {
     req.env = NODE_ENV
 
     const accessToken = req.cookies.accessToken
-
+    
     if (accessToken) {
       try {
         const customer = await Customer.getCustomer(accessToken)
 
         if (customer) {
-          req.customer = customer;
+          req.customer = customer.customer;
         } else {
           res.cookie('accessToken', '', { maxAge: 0 })
         }
       } catch (e) {
-        res.cookie('', '', { maxAge: 0 })
+        res.cookie('accessToken', '', { maxAge: 0 })
       }
     }
 

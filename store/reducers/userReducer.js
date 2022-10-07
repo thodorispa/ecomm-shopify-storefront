@@ -1,58 +1,53 @@
-import update from 'react-addons-update';
 
-
-const authReducer = (state = {}, action) => {
+const authReducer = (state = false, action) => {
+  let existingAddresses = state?.addresses;
   switch (action.type) {
     case "SET_USER":
       return action.payload || false
     case "UPDATE_SELECTED_ADDRESS":
       const updated = action.payload;
       const index = state.customer.addresses.findIndex(x => x.id === action.payload.id)
-      const addresses = state.customer.addresses;
-      addresses.splice(index, 1);
-      addresses.splice(index, 0, updated);
+      existingAddresses.splice(index, 1);
+      existingAddresses.splice(index, 0, updated);
       return {
         ...state,
-        customer: {
-          ...state.customer,
-          addresses: addresses
-        }
+        addresses: existingAddresses
       }
     case "DELETE_SELECTED_ADDRESS":
-      const deletion = action.payload;
       const index1 = state.customer.addresses.findIndex(x => x.id === action.payload.id)
-      const addresses1 = state.customer.addresses;
-      addresses1.splice(index1, 1);
+      existingAddresses.splice(index1, 1);
       return {
         ...state,
-        customer: {
-          ...state.customer,
-          addresses: addresses1
-        }
+        addresses: existingAddresses
       }
-      case "ADD_NEW_ADDRESS":
-        const newAddress = action.payload;
-        const addresses2 = state.customer.addresses;
-        addresses2.push(newAddress);
-        return {
-          ...state,
-          customer: {
-            ...state.customer,
-            addresses: addresses2,
-          }
-        }
-        case "UPDATE_DEFAULT_ADDRESS":
-          console.log(action.payload);
-        return {
-          ...state,
-          customer: {
-            ...state.customer,
-            defaultAddress: action.payload,
-          }
-        }
-    default: 
-        return state
-   
+    case "ADD_NEW_ADDRESS":
+      const newAddress = action.payload;
+      existingAddresses.push(newAddress);
+      return {
+        ...state,
+        addresses: existingAddresses,
+      }
+    case "UPDATE_DEFAULT_ADDRESS":
+      const oldDefaultIndex = state.addresses.findIndex(x => x.id === state.defaultAddress.id)
+      const newDefaultIndex = state.addresses.findIndex(x => x.id === action.payload.id)
+
+      console.log(oldDefaultIndex);
+      console.log(newDefaultIndex);
+
+
+      // swap places of old default and new default
+      const temp = existingAddresses[oldDefaultIndex];
+      existingAddresses[oldDefaultIndex] = existingAddresses[newDefaultIndex];
+      existingAddresses[newDefaultIndex] = temp;
+
+      return {
+        ...state,
+        defaultAddress: action.payload,
+        addresses: existingAddresses
+      }
+    default:
+      return state
+
   }
 }
 
