@@ -46,9 +46,7 @@
     "shopify-buy": "^2.16.1",
     "shortid": "^2.2.16",
     "swell-node": "^4.0.10",
-    "validator": "^13.7.0"
-  },
-  "devDependencies": {
+    "validator": "^13.7.0",
     "@babel/node": "^7.18.10",
     "@babel/plugin-transform-runtime": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
