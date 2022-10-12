@@ -55,7 +55,6 @@
     "@types/shopify-buy": "^2.10.10",
     "babel-loader": "^8.2.5",
     "babel-node": "^0.0.1-security",
-    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.1",
     "nodemon": "^2.0.19",
     "redux-devtools-extension": "^2.13.9",
