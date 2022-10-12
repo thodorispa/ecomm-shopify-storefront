@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import App from 'next/App'
+import App from 'next/app'
 import { Provider } from 'react-redux';
 import { store } from "../store/index";
 
