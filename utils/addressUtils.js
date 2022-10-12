@@ -1,4 +1,4 @@
-import { } from 'dotenv/config'
+import 'dotenv/config'
 import { Shopify } from '@shopify/shopify-api'
 
 const { SHOP, STOREFRONT_TOKEN } = process.env;
