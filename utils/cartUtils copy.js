@@ -158,9 +158,7 @@ const add = async (cartId, prodcutId, quantity) => {
 
   const { cart } = query.body.data.cartLinesAdd;
   cart.lines = cart.lines.edges.map(n => n.node);
-  console.log("CART", cart.lines[0].merchandise);
-
-
+  
   return { cart };
 }
 

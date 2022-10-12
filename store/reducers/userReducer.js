@@ -31,10 +31,6 @@ const authReducer = (state = false, action) => {
       const oldDefaultIndex = state.addresses?.findIndex(x => x.id === state.defaultAddress.id)
       const newDefaultIndex = state.addresses?.findIndex(x => x.id === action.payload.id)
 
-      console.log(oldDefaultIndex);
-      console.log(newDefaultIndex);
-
-
       // swap places of old default and new default
       const temp = existingAddresses[oldDefaultIndex];
       existingAddresses[oldDefaultIndex] = existingAddresses[newDefaultIndex];

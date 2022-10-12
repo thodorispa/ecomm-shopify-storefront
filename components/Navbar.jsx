@@ -10,8 +10,7 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
 
-  const { collections, cart, sideNav, cartClasses } = useSelector(x => x);
-  const { customer } = useSelector(x => x)
+  const { collections, cart, sideNav, cartClasses, customer } = useSelector(x => x);
 
   const [nav, setNav] = useState(false);
   const [show, setShow] = useState(true);
