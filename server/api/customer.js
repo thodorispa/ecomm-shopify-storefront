@@ -1,4 +1,4 @@
-import 'dotenv/config'
+require('dotenv').config()
 import express from 'express'
 import * as Customer from '../../utils/customerUtils'
 import * as Order from '../../utils/orderUtils'

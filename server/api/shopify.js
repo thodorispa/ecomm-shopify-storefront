@@ -1,4 +1,4 @@
-import 'dotenv/config'
+require('dotenv').config()
 import express from 'express'
 import { Shopify, ApiVersion } from '@shopify/shopify-api'
 

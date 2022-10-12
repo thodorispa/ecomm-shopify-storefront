@@ -1,4 +1,4 @@
-import 'dotenv/config'
+require('dotenv').config()
 import Cart from '../server/models/cart'
 
 const createAndAdd = async (productId, quantity, product) => {
