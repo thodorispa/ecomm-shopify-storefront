@@ -6,6 +6,10 @@
     "start:dev": "nodemon --exec babel-node server/index.js",
     "lint": "next lint"
   },
+  "engines": {
+    "node": "v18.7.0",
+    "npm": "8.15.0"
+  },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
