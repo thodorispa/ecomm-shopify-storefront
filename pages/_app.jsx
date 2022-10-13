@@ -34,7 +34,7 @@ const MyApp = ({ Component, pageProps }) => {
   const { cartClasses } = pageProps
   const { sideNav } = pageProps
 
-  if (config?.publicRuntimeConfig?.NODE_ENV === "development") {
+  if (config?.publicRuntimeConfig?.NODE_ENV === "production") {
     return (
       <body style={{
         height: '100vh', backgroundImage: `url(/BACKCOVER.png)`,
