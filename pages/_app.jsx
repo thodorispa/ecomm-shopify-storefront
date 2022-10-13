@@ -24,6 +24,7 @@ import '../styles/contact.css'
 import '../styles/sidemenu.css'
 import '../styles/preferences.css'
 
+
 const config = getConfig();
 
 const MyApp = ({ Component, pageProps }) => {
@@ -33,14 +34,23 @@ const MyApp = ({ Component, pageProps }) => {
   const { cartClasses } = pageProps
   const { sideNav } = pageProps
 
-  if (config?.publicRuntimeConfig?.NODE_ENV === "production") {
-   return (
-    <h1>Coming soon..</h1>
-   )
-  } 
+  if (config?.publicRuntimeConfig?.NODE_ENV === "development") {
+    return (
+      <body style={{
+        height: '100vh', backgroundImage: `url(/BACKCOVER.png)`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover',
+        backgroundAttachment: 'fixed',
+        overflow: 'hidden'
+
+      }}>
+        <h1 style={{ justifyContent: "center", display: "flex", marginTop: "8%", color: 'white ', overflow: 'hidden', }}>Σύντομα κοντά σας...</h1>
+      </body>
+    )
+  }
 
   return (
-    
     <Provider store={store}>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
       <Init {...pageProps} cart={cart} collections={collections} cartClasses={cartClasses} />
@@ -50,7 +60,7 @@ const MyApp = ({ Component, pageProps }) => {
     </Provider>
   )
 
-  
+
 }
 
 MyApp.getInitialProps = async (ctx) => {
