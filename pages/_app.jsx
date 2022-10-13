@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import App from 'next/app'
 import { Provider } from 'react-redux';
 import { store } from "../store/index";
+import getConfig from "next/config";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -23,6 +24,7 @@ import '../styles/contact.css'
 import '../styles/sidemenu.css'
 import '../styles/preferences.css'
 
+const config = getConfig();
 
 const MyApp = ({ Component, pageProps }) => {
   const { cart } = pageProps
@@ -31,8 +33,14 @@ const MyApp = ({ Component, pageProps }) => {
   const { cartClasses } = pageProps
   const { sideNav } = pageProps
 
+  if (config?.publicRuntimeConfig?.NODE_ENV === "production") {
+   return (
+    <h1>Coming soon..</h1>
+   )
+  } 
 
   return (
+    
     <Provider store={store}>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
       <Init {...pageProps} cart={cart} collections={collections} cartClasses={cartClasses} />
@@ -41,6 +49,8 @@ const MyApp = ({ Component, pageProps }) => {
       <Footer {...pageProps} />
     </Provider>
   )
+
+  
 }
 
 MyApp.getInitialProps = async (ctx) => {

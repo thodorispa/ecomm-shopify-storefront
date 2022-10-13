@@ -1,0 +1,1 @@
+module.exports = { publicRunTimeConfig: { NODE_ENV: process.env.NODE_ENV } };
