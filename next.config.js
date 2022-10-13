@@ -1,1 +1,1 @@
-module.exports = { publicRunTimeConfig: { NODE_ENV: process.env.NODE_ENV } };
+module.exports = { publicRuntimeConfig: { NODE_ENV: process.env.NODE_ENV } };
